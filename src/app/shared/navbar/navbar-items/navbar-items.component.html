@@ -1,0 +1,18 @@
+<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <button
+    class="navbar-toggler d-lg-none nav-item"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <app-navbar-item
+    *ngFor="let item of navItems"
+    [nav-item]="item"
+    class="nav-item"
+  ></app-navbar-item>
+</ul>

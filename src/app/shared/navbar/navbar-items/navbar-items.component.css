@@ -1,0 +1,18 @@
+.navbar-nav {
+  height: 100%;
+  box-shadow: -9px 0 14px 0px rgb(0 0 0 / 6%);
+}
+.navbar-toggler {
+  padding: 0.625rem 2rem;
+  text-align: left;
+  color: var(--primary-color);
+  border: none;
+  font-size: 1.875rem;
+  cursor: pointer;
+}
+@media (min-width: 991.98px) {
+  .navbar-nav {
+    height: auto;
+    box-shadow: none;
+  }
+}

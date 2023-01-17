@@ -1,0 +1,18 @@
+.nav-item{
+    padding: 0.625rem 2rem;
+    border-top: 1px solid rgb(0 0 0 / 10%);
+    font-size: .9rem;
+}
+@media (min-width: 991.98px) { 
+ .nav-item{
+        padding: 1rem;
+        border-top: none;
+        font-size: 1.2rem;
+    }
+ }
+@media (min-width: 1199.98px) { 
+   
+ }
+
+/* // X-Large devices (large desktops, less than 1400px) */
+@media (min-width: 1399.98px) {  }
