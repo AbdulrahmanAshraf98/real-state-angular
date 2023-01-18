@@ -42,6 +42,9 @@
 
 /* // Medium devices (tablets, less than 992px) */
 @media (min-width: 991.98px) {
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
   .navbar-collapse {
     width: 50%;
     height: auto;
