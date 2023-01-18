@@ -10,5 +10,7 @@ export class NavbarComponent {
   navItems: NavbarItemInterface[] = [
     { name: 'home', path: '/' },
     { name: 'projects', path: '/projects' },
+    { name: 'buildings', path: '/buildings' },
+    { name: 'units', path: '/units' },
   ];
 }

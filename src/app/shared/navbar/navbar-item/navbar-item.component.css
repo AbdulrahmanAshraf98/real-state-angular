@@ -2,10 +2,14 @@
     padding: 0.625rem 2rem;
     border-top: 1px solid rgb(0 0 0 / 10%);
     font-size: .9rem;
+    transition: 0.4s ease;
+}
+.active-link{
+    color: var(--primary-color);
 }
 @media (min-width: 991.98px) { 
  .nav-item{
-        padding: 1rem;
+        padding: 0.5rem;
         border-top: none;
         font-size: 1.2rem;
     }
