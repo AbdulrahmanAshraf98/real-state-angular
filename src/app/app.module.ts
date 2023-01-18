@@ -10,6 +10,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { BuildingsComponent } from './pages/buildings/buildings.component';
 import { UnitsComponent } from './pages/units/units.component';
+import { ProjectCardComponent } from './components/project-card/project-card.component';
+import { ProjectCardsComponent } from './components/project-cards/project-cards.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ProjectComponent } from './pages/single/project/project.component';
 
 @NgModule({
   declarations: [
@@ -21,8 +25,11 @@ import { UnitsComponent } from './pages/units/units.component';
     ProjectsComponent,
     BuildingsComponent,
     UnitsComponent,
+    ProjectCardComponent,
+    ProjectCardsComponent,
+    ProjectComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -1,0 +1,11 @@
+<div class="card">
+    <div class="card-img overflow-hidden">
+        <img src="http://localhost:8000/api/v1/public/uploads/projects/{{project.projectImages[0]}}" class="card-img-top" alt="...">
+    </div>
+    <div class="card-body text-center">
+        <h3 class="card-title">
+            <a routerLink="/projects/{{project._id}}" >{{project.name}}</a>
+        </h3>  
+      <p class="card-text">{{project.type}}</p>
+    </div>
+  </div>
