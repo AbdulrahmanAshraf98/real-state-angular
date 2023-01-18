@@ -1,0 +1,28 @@
+.card{
+    text-transform: uppercase;
+    border: none;
+}
+.card:hover .card-img-top{
+   transform: scale(1.2)
+}
+.card-img {
+    width: 100%;
+}
+.card-img .card-img-top {
+    transition: all 1s ease
+}
+.card-title a{
+    font-size: 1.25rem;
+    color: var(--heading-font-color);
+    line-height: var(--heading-line-height);
+    font-weight: var(--heading-font-weight);
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+.card-title a:hover{
+    text-decoration: underline;
+}
+.card-text{
+    color: var(--body-font-color);
+
+}
