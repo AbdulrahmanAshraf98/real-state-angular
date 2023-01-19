@@ -20,11 +20,11 @@ export class ProjectComponent implements OnInit {
   constructor(
     private activated: ActivatedRoute,
     private global: GlobalService
-  ) {}
-  ngOnInit(): void {
+  ) {
     let projectId = this.activated.snapshot.paramMap.get('projectId');
     this.global.get(`project/${projectId}`).subscribe((response) => {
       this.project = response.data;
     });
   }
+  ngOnInit(): void {}
 }

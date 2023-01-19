@@ -1,1 +1,109 @@
-<p>{{project.name}}</p>
+<section class="slider">
+  <div
+    id="carouselExampleInterval"
+    class="carousel slide"
+    data-bs-ride="carousel"
+  >
+    <div class="carousel-inner">
+      <ng-container
+        *ngFor="let projectImage of project.projectImages; let i = index"
+      >
+        <div
+          class="carousel-item"
+          [ngClass]="{ active: i == 0 }"
+          data-bs-interval="10000"
+        >
+          <img
+            class="d-block w-100"
+            src="http://localhost:8000/api/v1/public/uploads/projects/{{
+              projectImage
+            }}"
+            class="card-img-top"
+            alt="..."
+          />
+        </div>
+      </ng-container>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleInterval"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleInterval"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</section>
+
+<section>
+  <div class="project-details text-center">
+    <h3>{{ project.name }}</h3>
+  </div>
+  <div class="project-info">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
+      <div class="card border-0">
+        <div class="row g-0 align-items-center justify-content-center">
+          <div class="card-icon col-md-1 text-center">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <h5 class="card-title">ProjectType</h5>
+              <p class="card-text">{{ project?.type }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card border-0">
+        <div class="row g-0 align-items-center">
+          <div class="card-icon col-md-1 text-center">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <div class="col-md-6">
+            <div class="card-body">
+              <h5 class="card-title">Buildings numbers</h5>
+              <p class="card-text">{{ project?.buildings?.length }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="text-center my-4">
+    <h3>Buildings</h3>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col" *ngFor="let build of project.buildings">
+      <div class="card">
+        <div class="card-img overflow-hidden">
+          <img
+            src="http://localhost:8000/api/v1/public/uploads/buildings/{{
+              build?.buildingImages[0]
+            }}"
+            class="card-img-top"
+            alt="..."
+          />
+        </div>
+        <div class="card-body text-center">
+          <h3 class="card-title">
+            <a routerLink="/building/{{ build._id }}">{{ build.name }}</a>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

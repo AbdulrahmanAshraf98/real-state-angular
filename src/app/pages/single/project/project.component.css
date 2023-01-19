@@ -1,0 +1,17 @@
+.project-details{
+    margin-bottom: 2rem;
+}
+.project-info{
+    padding: 1rem;
+    background: var(--body-background-color);
+    box-shadow: 0 10px 15px rgb(25 25 25 / 10%);
+}
+.card-icon{
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+.card-title{
+   
+    font-size: 1.2rem;
+    font-weight: 700;
+}
