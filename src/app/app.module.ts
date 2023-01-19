@@ -17,6 +17,7 @@ import { ProjectComponent } from './pages/single/project/project.component';
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AuthInterceptor } from './interceptor/auth.interceptor';
     ProjectCardsComponent,
     ProjectComponent,
     LoginComponent,
+    CarouselComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
