@@ -6,6 +6,7 @@ import { BuildingsComponent } from './pages/buildings/buildings.component';
 import { UnitsComponent } from './pages/units/units.component';
 import { ProjectComponent } from './pages/single/project/project.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'units', component: UnitsComponent },
   { path: 'projects/:projectId', component: ProjectComponent },
   { path: 'login', component: LoginComponent },
+  { path: '**', component: ErrorComponent },
 ];
 
 @NgModule({
