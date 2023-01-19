@@ -3,6 +3,6 @@ export interface projectInterface {
   name: string;
   type: string;
   createdBy: string;
-  buildings: object[];
+  buildings: any[];
   projectImages: string[];
 }
