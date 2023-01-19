@@ -1,48 +1,6 @@
 <section class="slider">
-  <div
-    id="carouselExampleInterval"
-    class="carousel slide"
-    data-bs-ride="carousel"
-  >
-    <div class="carousel-inner">
-      <ng-container
-        *ngFor="let projectImage of project.projectImages; let i = index"
-      >
-        <div
-          class="carousel-item"
-          [ngClass]="{ active: i == 0 }"
-          data-bs-interval="10000"
-        >
-          <img
-            class="d-block w-100"
-            src="http://localhost:8000/api/v1/public/uploads/projects/{{
-              projectImage
-            }}"
-            class="card-img-top"
-            alt="..."
-          />
-        </div>
-      </ng-container>
-    </div>
-    <button
-      class="carousel-control-prev"
-      type="button"
-      data-bs-target="#carouselExampleInterval"
-      data-bs-slide="prev"
-    >
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button
-      class="carousel-control-next"
-      type="button"
-      data-bs-target="#carouselExampleInterval"
-      data-bs-slide="next"
-    >
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
+    <app-carousel [images]=project.projectImages  imagePath="http://localhost:8000/api/v1/public/uploads/projects"></app-carousel>
+   
 </section>
 
 <section>
