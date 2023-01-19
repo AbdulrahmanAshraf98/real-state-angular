@@ -1,0 +1,8 @@
+.sidebar {
+    background: var(--body-background-color) !important;
+    box-shadow: 0 10px 15px rgb(25 25 25 / 10%);
+  }
+.active{
+    color: #fff !important;
+    background-color: var(--primary-color) !important;
+}

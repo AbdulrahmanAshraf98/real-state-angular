@@ -19,6 +19,10 @@ import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { ErrorComponent } from './pages/error/error.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +40,10 @@ import { ErrorComponent } from './pages/error/error.component';
     LoginComponent,
     CarouselComponent,
     ErrorComponent,
+    ProfileComponent,
+    SidebarComponent,
+    ProfileInfoComponent,
+    EditProfileComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [

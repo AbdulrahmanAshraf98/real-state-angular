@@ -1,0 +1,34 @@
+<section>
+    <div class="row">
+        <app-sidebar class="sidebar col-8 col-md-3 " [sidebarLinks]=sidebarLinks></app-sidebar>
+        <div class="col content g-3">
+            <div class="col-12 text-center">
+                <div class="profile-image">
+                    <img src="http://localhost:8000/api/v1/public/uploads/users/{{currentUserInfo.profileImage}}" class="w-25 h-25  rounded-circle"/>
+                </div>
+            </div>
+            <h3 class="">Public profile</h3>
+            <hr/>
+            <div class="row">
+                <div class="info col-12 row ">
+                    <div class="w-auto">fName :</div>
+                    <div class="w-auto">{{currentUserInfo.fName}}</div> 
+                </div>
+                <div class="info col-12 row ">
+                    <div class="w-auto">lName :</div>
+                    <div class="w-auto">{{currentUserInfo.lName}}</div> 
+                </div>
+                <div class="info col-12 row ">
+                    <div class="w-auto">email :</div>
+                    <div class="w-auto">{{currentUserInfo.email}}</div> 
+                </div>
+                <div class="info col-12 row ">
+                    <div class="w-auto">age :</div>
+                    <div class="w-auto">{{currentUserInfo.age}}</div> 
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

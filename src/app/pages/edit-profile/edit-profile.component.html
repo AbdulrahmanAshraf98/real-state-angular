@@ -1,0 +1,83 @@
+<section>
+    <div class="row">
+        <app-sidebar class="sidebar col-8 col-md-3 " [sidebarLinks]=sidebarLinks></app-sidebar>
+        <div class="col content g-3">
+            <div class="col-12 text-center">
+                <div class="profile-image">
+                    <img src="http://localhost:8000/api/v1/public/uploads/users/{{currentUserInfo.profileImage}}" class="w-25 h-25  rounded-circle"/>
+                </div>
+            </div>
+            <h3 class="">Edit profile</h3>
+            <hr/>
+      
+                <form #f="ngForm" class="row gy-3" (ngSubmit)="submitHandler(f)">
+                  <div class=" col-12 ">
+                    <label for="exampleInputEmail1" class="form-label" name="username"
+                      >First Name</label
+                    >
+                    <input
+                      #fName="ngModel"
+                      type="text"
+                      class="form-control"
+                      name="fName"
+                      [(ngModel)]="model.fName"
+                      placeholder="{{currentUserInfo.fName}}"
+                
+                    />
+                    <div class="alert alert-danger" *ngIf="fName.invalid&&f.submitted">
+                      <div *ngIf="fName.errors?.['required']">
+                        <h3>fName is required</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class=" col-12 ">
+                    <label for="exampleInputEmail1" class="form-label" name="username"
+                      >Last Name</label
+                    >
+                    <input
+                      #lName="ngModel"
+                      type="text"
+                      class="form-control"
+                      name="lName"
+                      required
+                      [(ngModel)]="model.lName"
+                      placeholder="{{currentUserInfo.lName}}"
+                    
+                    />
+                    <div class="alert alert-danger" *ngIf="lName.invalid&&f.submitted">
+                      <div *ngIf="lName.errors?.['required']">
+                        <h3>lName is required</h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class=" col-12 ">
+                    <label for="exampleInputEmail1" class="form-label" name="username"
+                      >Age</label
+                    >
+                    <input
+                      #age="ngModel"
+                      type="text"
+                      class="form-control"
+                      name="age"
+                      [(ngModel)]="model.age"
+                      placeholder="{{currentUserInfo.age}}"
+                     
+                    />
+                    <div class="alert alert-danger" *ngIf="age.invalid&&f.submitted">
+                      <div *ngIf="age.errors?.['required']">
+                        <h3>age is required</h3>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-type-primary">
+                      update
+                    </button>
+                  </div>
+                </form>
+              
+              
+        </div>
+    </div>
+</section>

@@ -42,3 +42,6 @@ p{
   outline:  var(--primary-color) !important;
   border: none !important;
 }
+.nav-link{
+  color: var(--body-font-color) !important;
+}
