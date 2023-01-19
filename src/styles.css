@@ -30,14 +30,15 @@ a{
 section{
   padding:2rem 0;
 }
-.btn-type-primary{
-  background-color: var(--primary-color) !important;
-  outline:  var(--primary-color) !important;
-  border: none !important;
-}
+
 p{
   color:var( --paragraph-color);
   font-size: var(--body-font-size);
   font-weight:var(--body-font-weight);
   line-height:var( --body-line-height);
+}
+.btn-type-primary,.btn-type-primary:hover,.btn-type-primary:focus,.btn-type-primary:active,.btn-type-primary:focus-visible{
+  background-color: var(--primary-color) !important;
+  outline:  var(--primary-color) !important;
+  border: none !important;
 }

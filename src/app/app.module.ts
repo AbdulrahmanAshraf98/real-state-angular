@@ -18,6 +18,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { ErrorComponent } from './pages/error/error.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     ProjectComponent,
     LoginComponent,
     CarouselComponent,
+    ErrorComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
