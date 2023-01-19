@@ -12,8 +12,11 @@ import { BuildingsComponent } from './pages/buildings/buildings.component';
 import { UnitsComponent } from './pages/units/units.component';
 import { ProjectCardComponent } from './components/project-card/project-card.component';
 import { ProjectCardsComponent } from './components/project-cards/project-cards.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProjectComponent } from './pages/single/project/project.component';
+import { LoginComponent } from './pages/login/login.component';
+import { FormsModule } from '@angular/forms';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,9 +31,12 @@ import { ProjectComponent } from './pages/single/project/project.component';
     ProjectCardComponent,
     ProjectCardsComponent,
     ProjectComponent,
+    LoginComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  providers: [],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

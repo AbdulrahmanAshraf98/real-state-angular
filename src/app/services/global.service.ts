@@ -12,4 +12,9 @@ export class GlobalService {
   get(url: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}${url}`);
   }
+  post(url: string, data: any, headers: any = {}) {
+    if (Object.keys(headers).length > 0)
+      return this.http.post<any>(`${this.baseUrl}${url}`, data, headers);
+    return this.http.post<any>(`${this.baseUrl}${url}`, data);
+  }
 }
