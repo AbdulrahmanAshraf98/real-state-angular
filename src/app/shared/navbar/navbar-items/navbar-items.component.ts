@@ -7,5 +7,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./navbar-items.component.css'],
 })
 export class NavbarItemsComponent {
-  @Input('nav-items') navItems: NavbarItemInterface[] = [];
+  @Input('nav-items') navItems: NavbarItemInterface[] = [
+    { path: '', name: '' },
+  ];
 }
