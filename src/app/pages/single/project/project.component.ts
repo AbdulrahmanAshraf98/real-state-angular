@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { projectInterface } from 'src/app/interface/projectInterface';
 import { GlobalService } from 'src/app/services/global.service';
@@ -8,7 +8,7 @@ import { GlobalService } from 'src/app/services/global.service';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css'],
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnDestroy {
   subscribe: any;
   project: projectInterface = {
     _id: '',
@@ -28,6 +28,9 @@ export class ProjectComponent implements OnInit {
       .subscribe((response) => {
         this.project = response.data;
       });
+  }
+  ngOnDestroy(): void {
+    this.subscribe.unsubscribe();
   }
   ngOnInit(): void {}
 }

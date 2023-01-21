@@ -1,6 +1,6 @@
 import { GlobalService } from './../../../services/global.service';
 import { ActivatedRoute } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { buildingInterface } from 'src/app/interface/buildingInterface';
 
 @Component({
@@ -8,7 +8,7 @@ import { buildingInterface } from 'src/app/interface/buildingInterface';
   templateUrl: './building.component.html',
   styleUrls: ['./building.component.css'],
 })
-export class BuildingComponent {
+export class BuildingComponent implements OnDestroy {
   subscribe: any;
   building: buildingInterface = {
     _id: '',
@@ -32,5 +32,7 @@ export class BuildingComponent {
         this.building = response.data;
       });
   }
-  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.subscribe.unsubscribe();
+  }
 }
