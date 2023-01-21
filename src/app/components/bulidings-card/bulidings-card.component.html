@@ -1,0 +1,21 @@
+<div class="row row-cols-1 row-cols-md-2 g-4"> 
+    <div class="col" *ngFor="let building of buildings">
+        <div class="card">
+            <div class="card-img overflow-hidden">
+                <img src="http://localhost:8000/api/v1/public/uploads/buildings/{{building.buildingImages[0]}}" class="card-img-top" alt="...">
+            </div>
+            <div class="card-body text-center">
+                <h3 class="card-title ">
+                    <a class="text-decoration-none text-dark" routerLink="/building/{{building._id}}" >{{building.name}}</a>
+                </h3>  
+                <p class="card-text">
+                    buildNumber:  {{building.buildNumber}}
+                </p>  
+                <p class="card-text">
+                    total units:  {{building.units.length}}
+                </p>  
+          
+            </div>
+          </div>
+    </div>
+</div>

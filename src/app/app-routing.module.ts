@@ -11,6 +11,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { UpdateProfileImageComponent } from './pages/update-profile-image/update-profile-image.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { ForgerPasswordComponent } from './pages/forger-password/forger-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
   { path: 'buildings', component: BuildingsComponent },
   { path: 'units', component: UnitsComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'forget-password', component: ForgerPasswordComponent },
   {
     path: 'profile',
     children: [
@@ -42,33 +44,6 @@ const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: 'upload-new-image',
-  //   component: UpdateProfileImageComponent,
-  //   outlet: 'profileRouter',
-  // },
-  // {
-  //   path: 'profile',
-  //   children: [
-  //     { path: '', component: ProfileComponent },
-  //     {
-  //       path: 'edit',
-  //       component: EditProfileComponent,
-  //       outlet: 'profileRouter',
-  //     },
-  //     {
-  //       path: 'upload-new-image',
-  //       component: UpdateProfileImageComponent,
-  //       outlet: 'profileRouter',
-  //     },
-  //   ],
-  // },
-  // {
-  //   path: 'upload-new-image',
-  //   component: UpdateProfileImageComponent,
-  //   outlet: 'profileRouter',
-  // },
-
   { path: '**', component: ErrorComponent },
 ];
 

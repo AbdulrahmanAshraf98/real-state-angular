@@ -25,6 +25,8 @@ import { ProfileInfoComponent } from './components/profile-info/profile-info.com
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { UpdateProfileImageComponent } from './pages/update-profile-image/update-profile-image.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { ForgerPasswordComponent } from './pages/forger-password/forger-password.component';
+import { BulidingsCardComponent } from './components/bulidings-card/bulidings-card.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
     EditProfileComponent,
     UpdateProfileImageComponent,
     ChangePasswordComponent,
+    ForgerPasswordComponent,
+    BulidingsCardComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [

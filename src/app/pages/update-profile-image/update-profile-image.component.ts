@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { userInterface } from 'src/app/interface/userInterface';
 import { GlobalService } from 'src/app/services/global.service';
@@ -16,7 +16,10 @@ export class UpdateProfileImageComponent {
     { path: '/profile/change-password', name: 'changePassword' },
   ];
   subscription: any;
-  userProfileImage: any = this.global.currentUserInfo.profileImage;
+
+  profileImageSrc: string = `http://localhost:8000/api/v1/public/uploads/users/${
+    this.global.currentUserInfo.profileImage
+  }?${Math.random().toString()}`;
   model = {
     profileImage: '',
   };
@@ -26,7 +29,9 @@ export class UpdateProfileImageComponent {
     if (!this.global.currentUserInfo.email)
       this.subscription = this.global.get('me').subscribe((responseData) => {
         this.global.currentUserInfo = responseData.data;
-        this.userProfileImage = this.global.currentUserInfo.profileImage;
+        this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${
+          this.global.currentUserInfo.profileImage
+        }?${Math.random().toString()}`;
       });
   }
 
@@ -42,13 +47,22 @@ export class UpdateProfileImageComponent {
     formData.append('photo', this.profileImageFile, this.profileImageFile.name);
     this.subscription = this.global
       .edit('me/changeProfileImage', formData)
-      .subscribe(
-        (responseData) => {
+      .subscribe({
+        next: (responseData: any) => {
+          console.log(responseData);
           this.global.currentUserInfo = responseData.data;
-          this.userProfileImage = this.global.currentUserInfo.profileImage;
+          this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${
+            this.global.currentUserInfo.profileImage
+          }?${Math.random().toString()}`;
         },
-        (err: Error) => console.error('Observer got an error: ' + err)
-      );
+      });
+    // (responseData) => {
+    //   this.global.currentUserInfo = responseData.data;
+    //   this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${
+    //     this.global.currentUserInfo.profileImage
+    //   }?${Math.random().toString()}`;
+    // },
+    // (err: Error) => console.error('Observer got an error: ' + err)
   }
   ngOnDestroy(): void {
     if (this.subscription) this.subscription.unsubscribe();
