@@ -1,0 +1,58 @@
+<section>
+  <div class="row">
+    <app-sidebar
+      class="sidebar col-12  col-md-4  col-lg-3"
+      [sidebarLinks]="sidebarLinks"
+    ></app-sidebar>
+    <div class="col-12 col-md content g-3 d-flex align-items-center align-items-lg-start py-4 justify-content-center justify-content-lg-start">
+      <div class="col row  p-3">
+        <div class="col-12 mb-4 text-center">
+            <div class="profile-image">
+              <ng-container *ngIf="userProfileImage">
+                <img
+                src="http://localhost:8000/api/v1/public/uploads/users/{{
+                  this.userProfileImage
+                }}"
+                class="w-25 h-25 rounded-circle "
+              />
+              </ng-container>
+            
+            </div>
+          </div>
+          <h5 class="">Upload New profile Image</h5>
+          <hr />
+    
+          <form #f="ngForm" class="row gap-4" (ngSubmit)="submitHandler(f)">
+            <div class="col-12">
+              <div>
+                <label for="formFileLg" class="form-label">ProfileImage</label>
+                <input
+                  #profileImage="ngModel"
+                  class="form-control form-control-lg"
+                  id="formFileLg"
+                  type="file"
+                  name="profileImage"
+                  required
+                  [(ngModel)]="model.profileImage"
+                  (change)="selectImageHandler($event)"
+                />
+              </div>
+              <div
+                class="alert alert-danger"
+                *ngIf="profileImage.invalid && f.submitted"
+              >
+                <div *ngIf="profileImage.errors?.['required']">
+                  <h3>profileImage is required</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-type-primary">
+                update
+              </button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</section>

@@ -45,3 +45,6 @@ p{
 .nav-link{
   color: var(--body-font-color) !important;
 }
+label{
+  color: var(--body-font-color) !important;
+}

@@ -1,13 +1,21 @@
 <section>
     <div class="row">
-        <app-sidebar class="sidebar col-8 col-md-3 " [sidebarLinks]=sidebarLinks></app-sidebar>
+        <app-sidebar class="sidebar col-12 col-md-4  col-lg-3 " [sidebarLinks]=sidebarLinks></app-sidebar>
         <div class="col content g-3">
             <div class="col-12 text-center">
                 <div class="profile-image">
-                    <img src="http://localhost:8000/api/v1/public/uploads/users/{{currentUserInfo.profileImage}}" class="w-25 h-25  rounded-circle"/>
+                  <ng-container *ngIf="currentUserInfo.profileImage">
+                    <img
+                    src="http://localhost:8000/api/v1/public/uploads/users/{{
+                        currentUserInfo.profileImage
+                    }}"
+                    class="w-25 h-25 rounded-circle"
+                  />
+                  </ng-container>
+
                 </div>
             </div>
-            <h3 class="">Edit profile</h3>
+            <h5 class="">Edit profile</h5>
             <hr/>
       
                 <form #f="ngForm" class="row gy-3" (ngSubmit)="submitHandler(f)">

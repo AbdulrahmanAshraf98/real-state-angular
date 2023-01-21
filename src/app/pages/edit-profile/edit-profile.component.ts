@@ -12,6 +12,8 @@ export class EditProfileComponent implements OnInit, OnDestroy {
   sidebarLinks = [
     { path: '/profile', name: 'profile' },
     { path: '/profile/edit', name: 'editProfile' },
+    { path: '/profile/upload-new-image', name: 'updateProfileImage' },
+    { path: '/profile/change-password', name: 'changePassword' },
   ];
   subscription: any;
   currentUserInfo: userInterface = {

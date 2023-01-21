@@ -23,6 +23,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { UpdateProfileImageComponent } from './pages/update-profile-image/update-profile-image.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
     SidebarComponent,
     ProfileInfoComponent,
     EditProfileComponent,
+    UpdateProfileImageComponent,
+    ChangePasswordComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [

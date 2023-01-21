@@ -6,4 +6,5 @@ export interface userInterface {
   phone?: number[];
   role?: object;
   profileImage?: string;
+  updatedAt?: number;
 }

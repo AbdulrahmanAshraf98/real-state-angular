@@ -10,9 +10,27 @@
   font-size: 1.875rem;
   cursor: pointer;
 }
+.nav-item{
+  padding: 0.625rem 2rem;
+  border-top: 1px solid rgb(0 0 0 / 10%);
+  font-size: .9rem;
+  transition: 0.4s ease;
+}
+.active-link{
+  color: var(--primary-color);
+}
+
+
+/* // X-Large devices (large desktops, less than 1400px) */
+@media (min-width: 1399.98px) {  }
 @media (min-width: 991.98px) {
   .navbar-nav {
     height: auto;
     box-shadow: none;
   }
+  .nav-item{
+    padding: 0.5rem;
+    border-top: none;
+    font-size: 1.2rem;
+}
 }

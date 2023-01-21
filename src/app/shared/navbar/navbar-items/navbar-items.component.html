@@ -1,4 +1,4 @@
-<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center">
   <button
     class="navbar-toggler d-lg-none nav-item"
     type="button"
@@ -10,9 +10,13 @@
   >
     <i class="fa-solid fa-bars"></i>
   </button>
+
   <app-navbar-item
     *ngFor="let item of navItems"
     [nav-item]="item"
-    class="nav-item"
+   
   ></app-navbar-item>
+ 
+ 
+  
 </ul>

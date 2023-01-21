@@ -9,6 +9,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { UpdateProfileImageComponent } from './pages/update-profile-image/update-profile-image.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -26,9 +28,47 @@ const routes: Routes = [
     path: 'profile',
     children: [
       { path: '', component: ProfileComponent },
-      { path: 'edit', component: EditProfileComponent },
+      {
+        path: 'edit',
+        component: EditProfileComponent,
+      },
+      {
+        path: 'upload-new-image',
+        component: UpdateProfileImageComponent,
+      },
+      {
+        path: 'change-password',
+        component: ChangePasswordComponent,
+      },
     ],
   },
+  // {
+  //   path: 'upload-new-image',
+  //   component: UpdateProfileImageComponent,
+  //   outlet: 'profileRouter',
+  // },
+  // {
+  //   path: 'profile',
+  //   children: [
+  //     { path: '', component: ProfileComponent },
+  //     {
+  //       path: 'edit',
+  //       component: EditProfileComponent,
+  //       outlet: 'profileRouter',
+  //     },
+  //     {
+  //       path: 'upload-new-image',
+  //       component: UpdateProfileImageComponent,
+  //       outlet: 'profileRouter',
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: 'upload-new-image',
+  //   component: UpdateProfileImageComponent,
+  //   outlet: 'profileRouter',
+  // },
+
   { path: '**', component: ErrorComponent },
 ];
 
