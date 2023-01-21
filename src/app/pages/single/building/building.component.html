@@ -1,0 +1,100 @@
+
+<section class="slider">
+    
+    <app-carousel [images]=building.buildingImages  imagePath="http://localhost:8000/api/v1/public/uploads/buildings"></app-carousel>
+   
+</section>
+
+<section>
+  <div class="project-details text-center">
+    <h3>{{ building.name }}</h3>
+  </div>
+  <div class="project-info">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+        <div class="card border-0 flex-grow-0">
+            <div class="row g-0 align-items-center">
+              <div class="card-icon col-md-1 text-center">
+                <i class="fa-solid fa-building"></i>
+              </div>
+              <div class="col-md-6">
+                <div class="card-body">
+                  <h5 class="card-title">name</h5>
+                  <p class="card-text">{{ building.name }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="card border-0 flex-grow-1">
+            <div class="row g-0 align-items-center">
+              <div class="card-icon col-md-1 text-center">
+                <i class="fa-solid fa-building"></i>
+              </div>
+              <div class="col">
+                <div class="card-body">
+                  <h5 class="card-title">buildNumber</h5>
+                  <p class="card-text">{{ building.buildNumber }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+      <div class="card border-0 flex-grow-1">
+        <div class="row g-0 align-items-center justify-content-center">
+          <div class="card-icon col-md-1 text-center">
+            <i class="fa-solid fa-building"></i>
+          </div>
+         
+          <div class="col">
+            <div class="card-body">
+              <h5 class="card-title">project</h5>
+              <p class="card-text">
+                <a class="text-dark" routerLink="/projects/{{ building.projectId }}">{{ building.projectId }}</a>
+              </p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card border-0 flex-grow-1">
+        <div class="row g-0 align-items-center">
+          <div class="card-icon col-md-1 text-center">
+            <i class="fa-solid fa-building"></i>
+          </div>
+          <div class="col">
+            <div class="card-body">
+              <h5 class="card-title">units numbers</h5>
+              <p class="card-text">{{ building?.units?.length }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="text-center my-4">
+    <h3>Buildings</h3>
+  </div>
+
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col" *ngFor="let unit of building.units">
+      <div class="card">
+        <div class="card-img overflow-hidden">
+          <img
+            src="http://localhost:8000/api/v1/public/uploads/units/{{
+                unit?.unitImages[0]
+            }}"
+            class="card-img-top"
+            alt="..."
+          />
+        </div>
+        <div class="card-body text-center">
+          <h3 class="card-title">
+            <a routerLink="/unit/{{ unit._id }}">{{ unit.name }}</a>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

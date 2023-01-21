@@ -12,6 +12,7 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
 import { UpdateProfileImageComponent } from './pages/update-profile-image/update-profile-image.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { ForgerPasswordComponent } from './pages/forger-password/forger-password.component';
+import { BuildingComponent } from './pages/single/building/building.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -22,7 +23,13 @@ const routes: Routes = [
       { path: ':projectId', component: ProjectComponent },
     ],
   },
-  { path: 'buildings', component: BuildingsComponent },
+  {
+    path: 'buildings',
+    children: [
+      { path: '', component: BuildingsComponent },
+      { path: ':buildingId', component: BuildingComponent },
+    ],
+  },
   { path: 'units', component: UnitsComponent },
   { path: 'login', component: LoginComponent },
   { path: 'forget-password', component: ForgerPasswordComponent },

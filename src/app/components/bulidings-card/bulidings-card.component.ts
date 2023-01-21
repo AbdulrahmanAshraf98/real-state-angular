@@ -7,5 +7,5 @@ import { buildingInterface } from 'src/app/interface/buildingInterface';
   styleUrls: ['./bulidings-card.component.css'],
 })
 export class BulidingsCardComponent {
-  @Input('items') buildings: any[] = [];
+  @Input('items') buildings: buildingInterface[] = [];
 }

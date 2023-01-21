@@ -9,6 +9,7 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./project.component.css'],
 })
 export class ProjectComponent implements OnInit {
+  subscribe: any;
   project: projectInterface = {
     _id: '',
     name: '',
@@ -22,9 +23,11 @@ export class ProjectComponent implements OnInit {
     private global: GlobalService
   ) {
     let projectId = this.activated.snapshot.paramMap.get('projectId');
-    this.global.get(`project/${projectId}`).subscribe((response) => {
-      this.project = response.data;
-    });
+    this.subscribe = this.global
+      .get(`project/${projectId}`)
+      .subscribe((response) => {
+        this.project = response.data;
+      });
   }
   ngOnInit(): void {}
 }

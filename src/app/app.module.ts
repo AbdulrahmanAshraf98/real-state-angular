@@ -27,6 +27,7 @@ import { UpdateProfileImageComponent } from './pages/update-profile-image/update
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { ForgerPasswordComponent } from './pages/forger-password/forger-password.component';
 import { BulidingsCardComponent } from './components/bulidings-card/bulidings-card.component';
+import { BuildingComponent } from './pages/single/building/building.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { BulidingsCardComponent } from './components/bulidings-card/bulidings-ca
     ChangePasswordComponent,
     ForgerPasswordComponent,
     BulidingsCardComponent,
+    BuildingComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
   providers: [
