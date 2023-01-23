@@ -62,7 +62,7 @@ export class UpdateProfileImageComponent {
           this.global.currentUserInfo = this.data;
           setTimeout(() => {
             this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
-          }, 300);
+          }, 100);
 
           // console.log(this.data.profileImage);
         }
