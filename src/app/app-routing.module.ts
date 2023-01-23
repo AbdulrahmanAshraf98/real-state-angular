@@ -13,6 +13,10 @@ import { UpdateProfileImageComponent } from './pages/update-profile-image/update
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { ForgerPasswordComponent } from './pages/forger-password/forger-password.component';
 import { BuildingComponent } from './pages/single/building/building.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { AlluserComponent } from './components/admin/users/alluser/alluser.component';
+import { EdituserComponent } from './components/admin/users/edituser/edituser.component';
+import { AdduserComponent } from './components/admin/users/adduser/adduser.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -35,8 +39,10 @@ const routes: Routes = [
   { path: 'forget-password', component: ForgerPasswordComponent },
   {
     path: 'profile',
+
     children: [
       { path: '', component: ProfileComponent },
+
       {
         path: 'edit',
         component: EditProfileComponent,
@@ -48,6 +54,32 @@ const routes: Routes = [
       {
         path: 'change-password',
         component: ChangePasswordComponent,
+      },
+    ],
+  },
+  {
+    path: 'admin',
+    children: [
+      {
+        path: '',
+        component: DashboardComponent,
+      },
+      {
+        path: 'users',
+        children: [
+          {
+            path: '',
+            component: AlluserComponent,
+          },
+          {
+            path: 'add',
+            component: AdduserComponent,
+          },
+          {
+            path: ':userId/edit',
+            component: EdituserComponent,
+          },
+        ],
       },
     ],
   },

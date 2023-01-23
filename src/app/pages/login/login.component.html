@@ -1,24 +1,21 @@
 <section>
-  <form #f="ngForm" class="row gy-3" (ngSubmit)="submitHandler(f)">
+  <form [formGroup]="loginForm" class="row gy-3" (ngSubmit)="submitHandler(loginForm)">
+   
     <div class=" col-12 col-lg-6">
       <label for="exampleInputEmail1" class="form-label" name="username"
         >Email address</label
       >
-      <input
-        #email="ngModel"
+      <input 
         type="email"
         class="form-control"
         name="email"
-        required
-        [(ngModel)]="model.email"
-        required
-        email
+        formControlName="email"
       />
-      <div class="alert alert-danger" *ngIf="email.invalid&&(email.dirty||f.submitted)">
-        <div *ngIf="email.errors?.['required']">
+      <div class="alert alert-danger" *ngIf="loginForm.controls?.['email']?.errors&& (loginForm.controls?.['email']?.touched ||isSubmit) ">
+        <div *ngIf="loginForm.controls?.['email']?.errors?.['required']">
           <h3>email is required</h3>
         </div>
-        <div *ngIf="email.errors?.['email']">
+        <div *ngIf="loginForm.controls?.['email']?.errors?.['email']">
             <h3>email must be valid</h3>
           </div>
       </div>
@@ -26,18 +23,15 @@
     <div class=" col-12 col-lg-6">
       <label for="exampleInputEmail1" class="form-label">password</label>
       <input
-        #password="ngModel"
+
         type="password"
         class="form-control"
         name="password"
-        [(ngModel)]="model.password"
-        required
+        formControlName="password"
       />
-      <div class="alert alert-danger" *ngIf="password.invalid&&(password.dirty||f.submitted)">
-        <div class="alert alert-danger" *ngIf="f.submitted">
-          <div *ngIf="password.errors?.['required']">
-            <h3>password is required</h3>
-          </div>
+      <div class="alert alert-danger" *ngIf="loginForm.controls?.['password']?.errors&& (loginForm.controls?.['password']?.touched ||isSubmit)">
+        <div *ngIf="loginForm.controls?.['password']?.errors?.['required']">
+          <h3>password is required</h3>
         </div>
       </div>
     </div>

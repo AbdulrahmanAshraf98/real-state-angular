@@ -1,3 +1,4 @@
+import { AlluserComponent } from './components/admin/users/alluser/alluser.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -15,7 +16,7 @@ import { ProjectCardsComponent } from './components/project-cards/project-cards.
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ProjectComponent } from './pages/single/project/project.component';
 import { LoginComponent } from './pages/login/login.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { CarouselComponent } from './components/carousel/carousel.component';
 import { ErrorComponent } from './pages/error/error.component';
@@ -28,6 +29,9 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { ForgerPasswordComponent } from './pages/forger-password/forger-password.component';
 import { BulidingsCardComponent } from './components/bulidings-card/bulidings-card.component';
 import { BuildingComponent } from './pages/single/building/building.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { EdituserComponent } from './components/admin/users/edituser/edituser.component';
+import { AdduserComponent } from './components/admin/users/adduser/adduser.component';
 
 @NgModule({
   declarations: [
@@ -54,8 +58,18 @@ import { BuildingComponent } from './pages/single/building/building.component';
     ForgerPasswordComponent,
     BulidingsCardComponent,
     BuildingComponent,
+    DashboardComponent,
+    AlluserComponent,
+    EdituserComponent,
+    AdduserComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, FormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
