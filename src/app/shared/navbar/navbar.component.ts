@@ -8,11 +8,11 @@ import { NavbarItemInterface } from './navbar-item.interface';
 })
 export class NavbarComponent {
   navItems: NavbarItemInterface[] = [
-    { name: 'home', path: '/' },
+    { name: 'home', path: '' },
     { name: 'projects', path: '/projects' },
     { name: 'buildings', path: '/buildings' },
-    { name: 'units', path: '/units' },
     { name: 'login', path: '/login' },
     { name: 'profile', path: '/profile' },
+    { name: 'units', path: '/units' },
   ];
 }

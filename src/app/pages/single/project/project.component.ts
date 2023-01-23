@@ -22,15 +22,21 @@ export class ProjectComponent implements OnDestroy {
     private activated: ActivatedRoute,
     private global: GlobalService
   ) {
-    let projectId = this.activated.snapshot.paramMap.get('projectId');
+   ;
+   
+  }
+  ngOnDestroy(): void {
+    this.subscribe.unsubscribe();
+  }
+  ngOnInit(): void {
+    let projectId;
+    this.activated.paramMap.subscribe((res) => {
+      projectId = res.get('projectId');
+    });
     this.subscribe = this.global
       .get(`project/${projectId}`)
       .subscribe((response) => {
         this.project = response.data;
       });
   }
-  ngOnDestroy(): void {
-    this.subscribe.unsubscribe();
-  }
-  ngOnInit(): void {}
 }

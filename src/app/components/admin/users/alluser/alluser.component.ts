@@ -21,6 +21,7 @@ export class AlluserComponent implements OnInit {
     'actions',
   ];
   constructor(private global: GlobalService) {}
+  change = false;
 
   ngOnInit() {
     this.subscription = this.global.get('user/').subscribe({
@@ -30,9 +31,20 @@ export class AlluserComponent implements OnInit {
       error: (error) => {},
     });
   }
+  ngDoCheck() {
+    if (this.change) {
+      this.global.get('user/').subscribe({
+        next: (responseData) => {
+          this.users = responseData.data;
+        },
+      });
+      this.change = false;
+    }
+  }
   deleteUserHandler(id: any) {
-    console.log(id);
-    this.global.delete(`user/${id}`).subscribe((response) => {});
+    this.global.delete(`user/${id}`).subscribe((response) => {
+      this.change = true;
+    });
   }
 
   ngOnDestroy(): void {}

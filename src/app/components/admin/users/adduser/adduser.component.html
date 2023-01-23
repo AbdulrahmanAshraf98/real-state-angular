@@ -5,41 +5,45 @@
             </div>
             <h5 class=""> add user</h5>
             <hr/>
-            <form #f="ngForm" class="row gy-3" (ngSubmit)="submitHandler(f)">
+            <form [formGroup]="addUserForm"  class="row gy-3" (ngSubmit)="submitHandler(addUserForm)">
                 <div class="col-12">
                   <label for="exampleInputEmail1" class="form-label" name="email"
                     >email</label
                   >
                   <input
-                    #email="ngModel"
+                   
                     type="email"
                     class="form-control"
                     name="email"
                     email
-                    [(ngModel)]="model.email"              
+                    formControlName="email"            
                   />
-                  <div class="alert alert-danger" *ngIf="email.invalid&&f.submitted">
-                      <div *ngIf="email.errors?.['required']">
-                        <h3>email is required</h3>
-                      </div>
+                  <div class="alert alert-danger" *ngIf="addUserForm.controls?.['email']?.errors&& (addUserForm.controls?.['email']?.touched ||isSubmit) ">
+                    <div *ngIf="addUserForm.controls?.['email']?.errors?.['required']">
+                      <h3>email is required</h3>
                     </div>
-                </div>
+                    <div *ngIf="addUserForm.controls?.['email']?.errors?.['email']">
+                        <h3>email must be valid</h3>
+                      </div>
+                  </div>
+                 </div> 
                 <div class=" col-12 ">
                     <label for="exampleInputEmail1" class="form-label" name="username"
                       >password</label
                     >
                     <input
-                      #password="ngModel"
+                     
                       type="password"
                       class="form-control"
-                      name="password"
-                      [(ngModel)]="model.password"
+                      formControlName="password"
+                     
                      
                     />
-                    <div class="alert alert-danger" *ngIf="age.invalid&&f.submitted">
-                      <div *ngIf="age.errors?.['required']">
-                        <h3>age is required</h3>
+                    <div class="alert alert-danger" *ngIf="addUserForm.controls?.['password']?.errors&& (addUserForm.controls?.['password']?.touched ||isSubmit) ">
+                      <div *ngIf="addUserForm.controls?.['password']?.errors?.['required']">
+                        <h3>password is required</h3>
                       </div>
+                   
                     </div>
                 </div>
                 <div class=" col-12 ">
@@ -47,16 +51,17 @@
                     >First Name</label
                   >
                   <input
-                    #fName="ngModel"
+                  
                     type="text"
                     class="form-control"
                     name="fName"
-                    [(ngModel)]="model.fName"
+                    formControlName="fName"
+                    
               
                   />
-                  <div class="alert alert-danger" *ngIf="fName.invalid&&f.submitted">
-                    <div *ngIf="fName.errors?.['required']">
-                      <h3>fName is required</h3>
+                  <div class="alert alert-danger" *ngIf="addUserForm.controls?.['fName']?.errors&& (addUserForm.controls?.['fName']?.touched ||isSubmit) ">
+                    <div *ngIf="addUserForm.controls?.['fName']?.errors?.['required']">
+                      <h3>first name is required</h3>
                     </div>
                   </div>
                 </div>
@@ -65,17 +70,17 @@
                     >Last Name</label
                   >
                   <input
-                    #lName="ngModel"
+                   
                     type="text"
                     class="form-control"
                     name="lName"
-                    [(ngModel)]="model.lName"
+                    formControlName="lName"
                 
                   
                   />
-                  <div class="alert alert-danger" *ngIf="lName.invalid&&f.submitted">
-                    <div *ngIf="lName.errors?.['required']">
-                      <h3>lName is required</h3>
+                  <div class="alert alert-danger" *ngIf="addUserForm.controls?.['lName']?.errors&& (addUserForm.controls?.['lName']?.touched ||isSubmit) ">
+                    <div *ngIf="addUserForm.controls?.['lName']?.errors?.['required']">
+                      <h3>last name is required</h3>
                     </div>
                   </div>
                 </div>
@@ -84,25 +89,25 @@
                     >Age</label
                   >
                   <input
-                    #age="ngModel"
+                   
                     type="number"
                     class="form-control"
                     name="age"
-                    [(ngModel)]="model.age"
+                    formControlName="age"
                    
                   />
-                  <div class="alert alert-danger" *ngIf="age.invalid&&f.submitted">
-                    <div *ngIf="age.errors?.['required']">
-                      <h3>age is required</h3>
+                  <div class="alert alert-danger" *ngIf="addUserForm.controls?.['age']?.errors&& (addUserForm.controls?.['age']?.touched ||isSubmit) ">
+                    <div *ngIf="addUserForm.controls?.['age']?.errors?.['required']">
+                      <h3>age  is required</h3>
                     </div>
-                  </div>
+                 
                 </div>
-
+                </div>
                
                 <ng-container *ngIf="admin">
                     <div class="col-12">
                       <label for="exampleInputEmail1" class="form-label" name="username">select role type</label>
-                      <select #type class="form-select" aria-label="Default select example" (change)="selectTypeHandler(type.value)">
+                      <select #type class="form-select" aria-label="Default select example" (change)="selectTypeHandler(type.value)" formControlName="roleType" name="type">
                         <option selected value="0">Open this select menu</option>
                         <option value="admin">admin</option>
                         <option value="employee">employee</option>
@@ -111,7 +116,7 @@
                     </div>
                     <div class="col-12">
                       <label for="exampleInputEmail1" class="form-label" name="username">select role name</label>
-                      <select class="form-select" aria-label="Default select example">
+                      <select class="form-select" aria-label="Default select example" formControlName="roleName" name="name">
                         <label>select role name</label>
                         <option selected>Open this select menu</option>
                         <option *ngFor="let name of roleNames">{{name}}</option>

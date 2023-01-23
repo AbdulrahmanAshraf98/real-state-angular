@@ -18,28 +18,22 @@ export class LoginComponent implements OnDestroy {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
-    console.log(this.loginForm);
   }
-  model: LoginInterface = {
-    email: '',
-    password: '',
-  };
 
   error = {};
   submitHandler(form: any) {
     this.isSubmit = true;
+  
     if (form.invalid) return;
-    this.subscription = this.global.post('user/login', form.value).subscribe(
+    this.global.post('user/login', form.value).subscribe(
       (response) => {
-        console.log(response);
         localStorage.setItem('token', response.data.token);
         this.route.navigateByUrl('/profile');
       },
       (error) => console.log(error)
     );
+      
   }
 
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
+  ngOnDestroy() {}
 }

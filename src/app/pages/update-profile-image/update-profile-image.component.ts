@@ -18,6 +18,7 @@ export class UpdateProfileImageComponent {
   subscription: any;
 
   profileImageSrc: string = ``;
+
   model = {
     profileImage: '',
   };
@@ -30,8 +31,9 @@ export class UpdateProfileImageComponent {
         if (this.global.currentUserInfo.profileImage)
           this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
       });
-    if (this.global.currentUserInfo.email)
+    else {
       this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
+    }
   }
 
   selectImageHandler(event: any) {
@@ -60,11 +62,10 @@ export class UpdateProfileImageComponent {
         () => {},
         () => {
           this.global.currentUserInfo = this.data;
+
           setTimeout(() => {
             this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
-          }, 100);
-
-          // console.log(this.data.profileImage);
+          }, 500);
         }
       );
   }

@@ -1,5 +1,6 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
 import { roleInterface } from 'src/app/interface/roleInterface';
 import { GlobalService } from 'src/app/services/global.service';
 
@@ -12,14 +13,19 @@ export class AdduserComponent implements OnInit {
   roleNames: string[] = [];
   roles: roleInterface[] = [];
   admin = false;
-  model = {
-    email: '',
-    fName: '',
-    lName: '',
-    password: '',
-    age: 0,
-  };
-  constructor(private global: GlobalService) {}
+  addUserForm: FormGroup;
+  isSubmit = false;
+  constructor(private global: GlobalService, private route: Router) {
+    this.addUserForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
+      fName: new FormControl('', [Validators.required]),
+      lName: new FormControl('', [Validators.required]),
+      age: new FormControl('', [Validators.required]),
+      roleType: new FormControl('', []),
+      roleName: new FormControl('', []),
+    });
+  }
 
   ngOnInit(): void {
     this.admin = false;
@@ -58,5 +64,17 @@ export class AdduserComponent implements OnInit {
     }
   }
 
-  submitHandler(f: NgForm) {}
+  submitHandler(form: any) {
+    this.isSubmit = true;
+    if (form.invalid) return;
+    console.log(form);
+
+    this.global.post('user/', form.value).subscribe(
+      (response) => {
+        console.log(response);
+        this.route.navigateByUrl('/admin/users');
+      },
+      (error) => console.log(error)
+    );
+  }
 }
