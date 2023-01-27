@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -33,6 +33,12 @@ export class GlobalService {
     return this.http.patch<any>(`${this.baseUrl}${url}`, data);
   }
   delete(url: string, data: object = {}) {
-    return this.http.delete<any>(`${this.baseUrl}${url}`, data);
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: data,
+    };
+    return this.http.delete<any>(`${this.baseUrl}${url}`, options);
   }
 }

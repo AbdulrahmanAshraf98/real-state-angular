@@ -1,0 +1,127 @@
+<section>
+  <form
+    [formGroup]="buyUnitForm"
+    class="row gy-3"
+    (ngSubmit)="submitHandler(buyUnitForm)"
+  >
+    <div class="col-12">
+      <label for="exampleInputEmail1" class="form-label" name="username"
+        >unit Id</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        formControlName="unitId"
+        [placeholder]="unitId"
+        [value]="unitId"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="buyUnitForm.controls?.['unitId']?.errors&& (buyUnitForm.controls?.['unitId']?.touched ||isSubmit) "
+      >
+        <div *ngIf="buyUnitForm.controls?.['projectId']?.errors?.['required']">
+          <h3>unitId is required</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label for="exampleInputEmail1" class="form-label" name="username"
+        >Owner Email</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        name="ownerEmail"
+        formControlName="ownerEmail"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="buyUnitForm.controls?.['ownerEmail']?.errors&& (buyUnitForm.controls?.['ownerEmail']?.touched ||isSubmit) "
+      >
+        <div *ngIf="buyUnitForm.controls?.['ownerEmail']?.errors?.['required']">
+          <h3>ownerEmail is required</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+      <label for="exampleInputEmail1" class="form-label" name="username"
+        >paymentMethod</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        name="paymentMethod"
+        formControlName="paymentMethod"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="buyUnitForm.controls?.['paymentMethod']?.errors&& (buyUnitForm.controls?.['paymentMethod']?.touched ||isSubmit) "
+      >
+        <div
+          *ngIf="buyUnitForm.controls?.['paymentMethod']?.errors?.['required']"
+        >
+          <h3>ownerEmail is required</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-12">
+        <label for="exampleInputEmail1" class="form-label" name="username"
+          >Number Of Years</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          name="paymentMethod"
+          formControlName="paymentMethod"
+        />
+        <div
+          class="alert alert-danger"
+          *ngIf="buyUnitForm.controls?.['paymentMethod']?.errors&& (buyUnitForm.controls?.['paymentMethod']?.touched ||isSubmit) "
+        >
+          <div
+            *ngIf="buyUnitForm.controls?.['paymentMethod']?.errors?.['required']"
+          >
+            <h3>ownerEmail is required</h3>
+          </div>
+        </div>
+      </div>
+    <div class="col-12">
+      <label for="exampleInputEmail1" class="form-label" name="username"
+        >Amount Paid</label
+      >
+      <input
+        type="number"
+        class="form-control"
+        name="amountPaid"
+        formControlName="amountPaid"
+      />
+      <div
+        class="alert alert-danger"
+        *ngIf="buyUnitForm.controls?.['amountPaid']?.errors&& (buyUnitForm.controls?.['amountPaid']?.touched ||isSubmit) "
+      >
+        <div *ngIf="buyUnitForm.controls?.['amountPaid']?.errors?.['required']">
+          <h3>amountPaid is required</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [class.btn-type-primary]="!loading"
+        [class.d-flex]="loading"
+        [class.text-bg-dark]="loading"
+      >
+        <ng-container *ngIf="loading">
+          <div class="col-12">
+            <app-loading-spinner></app-loading-spinner>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loading">add</ng-container>
+      </button>
+    </div>
+  </form>
+</section>

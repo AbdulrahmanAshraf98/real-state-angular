@@ -10,6 +10,7 @@ import { GlobalService } from 'src/app/services/global.service';
 })
 export class ProjectComponent implements OnDestroy {
   subscribe: any;
+  loading = false;
   project: projectInterface = {
     _id: '',
     name: '',
@@ -21,22 +22,25 @@ export class ProjectComponent implements OnDestroy {
   constructor(
     private activated: ActivatedRoute,
     private global: GlobalService
-  ) {
-   ;
-   
-  }
-  ngOnDestroy(): void {
-    this.subscribe.unsubscribe();
-  }
+  ) {}
+
   ngOnInit(): void {
+    this.loading = true;
     let projectId;
     this.activated.paramMap.subscribe((res) => {
       projectId = res.get('projectId');
     });
-    this.subscribe = this.global
-      .get(`project/${projectId}`)
-      .subscribe((response) => {
+    this.subscribe = this.global.get(`project/${projectId}`).subscribe(
+      (response) => {
         this.project = response.data;
-      });
+      },
+      (error) => {},
+      () => {
+        this.loading = false;
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    this.subscribe.unsubscribe();
   }
 }

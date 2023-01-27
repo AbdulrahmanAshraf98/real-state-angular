@@ -1,0 +1,41 @@
+
+  <ng-container *ngIf="loading">
+    <div class="col-12">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+</ng-container>
+<ng-container *ngIf="!loading">
+  <section>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let head of heads">{{ head }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let project of projects">
+            <th>{{ project._id }}</th>
+            <td scope="col" class="col-1">
+              <img
+                class="img-fluid rounded "
+                src="http://localhost:8000/api/v1/public/uploads/projects/{{project.projectImages[0]}}"
+              />
+            </td>
+            <td>{{ project.name }}</td>         
+            <td>{{ project.type }}</td>
+            <td scope="row" class="col-4">
+              <div class="row gap-2">
+                  <div class="col-12 col-md-3 "> <a class="btn btn-primary" routerLink="/projects/{{project._id}}">show</a></div>
+                  <div class="col-12 col-md-3 "> <a routerLink="{{project._id}}/edit" class="btn btn-primary ">edit</a></div>
+                  <div class="col-12 col-md-3 "> <a class="btn btn-primary " (click)="deleteUserHandler(project._id)">delete</a></div> 
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</ng-container>
+
+

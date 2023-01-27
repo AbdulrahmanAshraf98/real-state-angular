@@ -1,39 +1,51 @@
-<section>
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col" *ngFor="let head of heads">{{ head }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
-          <th>{{ user._id }}</th>
-          <td scope="col" class="col-1">
-            <img
-              class="img-fluid rounded "
-              src="http://localhost:8000/api/v1/public/uploads/users/{{
-                user.profileImage
-              }}"
-            />
-          </td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.role.name }}</td>
-         
-          <td>{{ user.fName }}</td>
-          <td>{{ user.lName }}</td>
-         
-          <td>{{ user.age?user.age:"16" }}</td>
 
-          <td scope="row" >
-            <div class="row gap-3">
-                <div class="col-12 col-lg-3 "> <a class="btn btn-primary">show</a></div>
-                <div class="col-12 col-lg-3 "> <a routerLink="{{user._id}}/edit" class="btn btn-primary ">edit</a></div>
-                <div class="col-12 col-lg-3 "> <a class="btn btn-primary " (click)="deleteUserHandler(user._id)">delete</a></div> 
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
+  <ng-container *ngIf="loading">
+    <div class="col-12">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+</ng-container>
+<ng-container *ngIf="!loading">
+
+  <section>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let head of heads">{{ head }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <th>{{ user._id }}</th>
+            <td scope="col" class="col-1">
+              <img
+                class="img-fluid rounded "
+                src="http://localhost:8000/api/v1/public/uploads/users/{{
+                  user.profileImage
+                }}"
+              />
+            </td>
+            <td class="flex-grow-1">{{ user.email }}</td>
+            <td>{{ user.role.name }}</td>
+           
+            <td>{{ user.fName }}</td>
+            <td>{{ user.lName }}</td>
+           
+            <td>{{ user.age?user.age:"16" }}</td>
+  
+            <td scope="row" class="col-4">
+              <div class="row gap-2">
+                  <div class="col-12 col-lg-3 "> <a class="btn btn-primary">show</a></div>
+                  <div class="col-12 col-lg-3 "> <a routerLink="{{user._id}}/edit" class="btn btn-primary ">edit</a></div>
+                  <div class="col-12 col-lg-3 "> <a class="btn btn-primary " (click)="deleteUserHandler(user._id)">delete</a></div> 
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+
+</ng-container>
+

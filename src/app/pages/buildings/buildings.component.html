@@ -1,3 +1,8 @@
-<section>
+<section class="row ">
+    <ng-container *ngIf="loading">
+        <div class="col-12">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+    </ng-container>
     <app-bulidings-card [items]=buildings></app-bulidings-card>
 </section>

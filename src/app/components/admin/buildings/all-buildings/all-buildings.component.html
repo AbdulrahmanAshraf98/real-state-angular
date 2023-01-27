@@ -1,0 +1,44 @@
+
+  <ng-container *ngIf="loading">
+    <div class="col-12">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+</ng-container>
+<ng-container *ngIf="!loading">
+  <section>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let head of heads">{{ head }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let building of buildings">
+            <th>{{ building._id }}</th>
+            <td scope="col" class="col-1">
+              <img
+                class="img-fluid rounded "
+                src="http://localhost:8000/api/v1/public/uploads/buildings/{{building.buildingImages[0]}}"
+              />
+            </td>
+            <td>{{ building.name }}</td>         
+            <td>{{ building.buildNumber }}</td>
+            <td>{{ building.floorNum }}</td>
+            <td>{{ building.units.length }}</td>
+            <td><a class="" routerLink="/projects/{{building.projectId}}">{{building.projectId | slice : 0  : 5 }}</a></td>
+            <td scope="row" class="col-4">
+              <div class="row gap-2">
+                  <div class="col-12 col-md-3 "> <a class="btn btn-primary" routerLink="/buildings/{{building._id}}">show</a></div>
+                  <div class="col-12 col-md-3 "> <a routerLink="{{building._id}}/edit" class="btn btn-primary ">edit</a></div>
+                  <div class="col-12 col-md-3 "> <a class="btn btn-primary " (click)="deleteUserHandler(building._id,building.projectId)">delete</a></div> 
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</ng-container>
+
+

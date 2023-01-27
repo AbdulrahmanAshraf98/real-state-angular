@@ -1,0 +1,76 @@
+<section>
+  <div class="row">
+    <div class="col content g-3">
+      <div class="col-12 text-center"></div>
+      <h5 class="">add project</h5>
+      <hr />
+      <form
+        [formGroup]="addProjectForm"
+        class="row gy-3"
+        (ngSubmit)="submitHandler(addProjectForm)"
+      >
+        <div class="col-12">
+          <label for="exampleInputEmail1" class="form-label" name="username"
+            >project Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            formControlName="name"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="addProjectForm.controls?.['name']?.errors&& (addProjectForm.controls?.['name']?.touched ||isSubmit) "
+          >
+            <div
+              *ngIf="addProjectForm.controls?.['name']?.errors?.['required']"
+            >
+              <h3>name is required</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="exampleInputEmail1" class="form-label"
+            >project Type</label
+          >
+            <select #type class="form-select" aria-label="Default select example"  formControlName="type" name="type">
+              <option  value="buy">buy</option>
+              <option value="show">show</option>
+            </select>
+     
+        </div>
+        <div class="col-12">
+          <label for="formFileMultiple" class="form-label"
+            >Select Multiple Project Images</label
+          >
+          <input
+            class="form-control"
+            type="file"
+            id="formFileMultiple"
+            formControlName="projectImages"
+            multiple
+            (change)="selectImageHandler($event)"
+          />
+        </div>
+
+        <div class="col-12">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [class.btn-type-primary]="!loading"
+            [class.d-flex]="loading"
+            [class.text-bg-dark]="loading"
+          >
+            <ng-container *ngIf="loading">
+              <div class="col-12">
+                <app-loading-spinner></app-loading-spinner>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!loading">add</ng-container>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

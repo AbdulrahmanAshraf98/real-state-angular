@@ -9,4 +9,5 @@ export interface userInterface {
   profileImage?: string;
   updatedAt?: number;
   units?: [];
+
 }

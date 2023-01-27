@@ -16,9 +16,7 @@ export class UpdateProfileImageComponent {
     { path: '/profile/change-password', name: 'changePassword' },
   ];
   subscription: any;
-
   profileImageSrc: string = ``;
-
   model = {
     profileImage: '',
   };
@@ -26,14 +24,17 @@ export class UpdateProfileImageComponent {
   constructor(private global: GlobalService) {}
   ngOnInit(): void {
     if (!this.global.currentUserInfo.email)
-      this.subscription = this.global.get('me').subscribe((responseData) => {
-        this.global.currentUserInfo = responseData.data;
-        if (this.global.currentUserInfo.profileImage)
-          this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
+      this.subscription = this.global.get('me').subscribe({
+        next: (responseData) => {
+          this.global.currentUserInfo = responseData.data;
+          if (this.global.currentUserInfo.profileImage)
+            this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
+        },
+        error: (error) => {},
+        complete: () => {},
       });
-    else {
+    if (this.global.currentUserInfo.profileImage)
       this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
-    }
   }
 
   selectImageHandler(event: any) {
@@ -48,26 +49,23 @@ export class UpdateProfileImageComponent {
     formData.append('photo', this.profileImageFile, this.profileImageFile.name);
     this.subscription = this.global
       .edit('me/changeProfileImage', formData)
-      .subscribe(
-        (responseData: any) => {
+      .subscribe({
+        next: (responseData: any) => {
           console.log(
             this.global.currentUserInfo.profileImage,
             responseData.data.profileImage
           );
           this.data = responseData.data;
           this.global.currentUserInfo = responseData.data;
-          // console.log(this.)
-          // this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
         },
-        () => {},
-        () => {
+        error: () => {},
+        complete: () => {
           this.global.currentUserInfo = this.data;
-
           setTimeout(() => {
             this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
           }, 500);
-        }
-      );
+        },
+      });
   }
   ngOnDestroy(): void {
     if (this.subscription) this.subscription.unsubscribe();

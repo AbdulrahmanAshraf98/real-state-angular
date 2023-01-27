@@ -10,15 +10,20 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 export class ProjectsComponent implements OnInit, OnDestroy {
   subscription: any;
   projects: projectInterface[] = [];
+  loading = false;
   constructor(private global: GlobalService) {}
 
   ngOnInit(): void {
-    this.subscription = this.global
-      .get('project/')
-      .subscribe((responseData) => {
+    this.loading = true;
+    this.subscription = this.global.get('project/').subscribe(
+      (responseData) => {
         this.projects = responseData.data;
-        console.log(this.projects);
-      });
+      },
+      (error) => console.log(error),
+      () => {
+        this.loading = false;
+      }
+    );
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

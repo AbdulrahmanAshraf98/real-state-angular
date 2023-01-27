@@ -1,5 +1,11 @@
 
-<section class="slider">
+  <ng-container *ngIf="loading">
+    <div class="col-12">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+</ng-container>
+<ng-container *ngIf="!loading">
+  <section class="slider">
     
     <app-carousel [images]=building.buildingImages  imagePath="http://localhost:8000/api/v1/public/uploads/buildings"></app-carousel>
    
@@ -86,3 +92,6 @@
     </div>
   </div>
 </section>
+
+</ng-container>
+

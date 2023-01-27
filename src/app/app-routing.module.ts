@@ -1,3 +1,4 @@
+import { AddBuildingComponent } from './components/admin/buildings/add-building/add-building.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
@@ -17,6 +18,13 @@ import { DashboardComponent } from './pages/admin/dashboard/dashboard.component'
 import { AlluserComponent } from './components/admin/users/alluser/alluser.component';
 import { EdituserComponent } from './components/admin/users/edituser/edituser.component';
 import { AdduserComponent } from './components/admin/users/adduser/adduser.component';
+import { AllProjectComponent } from './components/admin/project/all-project/all-project.component';
+import { EditProjectComponent } from './components/admin/project/edit-project/edit-project.component';
+import { AddProjectComponent } from './components/admin/project/add-project/add-project.component';
+import { AllBuildingsComponent } from './components/admin/buildings/all-buildings/all-buildings.component';
+import { EditBuildingComponent } from './components/admin/buildings/edit-building/edit-building.component';
+import { AllUnitsComponent } from './components/admin/units/all-units/all-units.component';
+import { BuyUnitComponent } from './components/admin/units/buy-unit/buy-unit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -78,6 +86,53 @@ const routes: Routes = [
           {
             path: ':userId/edit',
             component: EdituserComponent,
+          },
+        ],
+      },
+      {
+        path: 'projects',
+        children: [
+          {
+            path: '',
+            component: AllProjectComponent,
+          },
+          {
+            path: 'add',
+            component: AddProjectComponent,
+          },
+          {
+            path: ':projectId/edit',
+            component: EditProjectComponent,
+          },
+        ],
+      },
+      {
+        path: 'buildings',
+        children: [
+          {
+            path: '',
+            component: AllBuildingsComponent,
+          },
+          {
+            path: 'add',
+            component: AddBuildingComponent,
+          },
+          {
+            path: ':buildingId/edit',
+            component: EditBuildingComponent,
+          },
+        ],
+      },
+      {
+        path: 'units',
+        children: [
+          {
+            path: '',
+            component: AllUnitsComponent,
+          },
+          {
+            path: ':unitId/buy',
+            component: BuyUnitComponent,
           },
         ],
       },

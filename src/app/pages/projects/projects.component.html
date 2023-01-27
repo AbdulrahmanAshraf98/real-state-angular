@@ -1,4 +1,11 @@
 
-<section class="">
+
+
+<section class="row">
+    <ng-container *ngIf="loading">
+        <div class="col-12">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+    </ng-container>
     <app-project-cards [projectItems]="projects"></app-project-cards>
 </section>

@@ -1,0 +1,51 @@
+<section>
+  <form
+    [formGroup]="editForm"
+    class="row gy-3"
+    (ngSubmit)="submitHandler(editForm)"
+  >
+    <div class="col-12">
+      <label for="exampleInputEmail1" class="form-label" name="username"
+        >project Name</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        formControlName="name"
+        [placeholder]="projectInfo.name"
+        [value]="projectInfo.name"
+      />
+    </div>
+    <div class="col-12">
+      <label for="exampleInputEmail1" class="form-label">project Type</label>
+      <select #type class="form-select" aria-label="Default select example"  formControlName="type" name="type">
+        <option  value="buy">buy</option>
+        <option value="show">show</option>
+      </select>
+    </div>
+    <div class="col-12">
+      <label for="formFileMultiple" class="form-label"
+        >Select Multiple Project Images</label
+      >
+      <input class="form-control" type="file" id="formFileMultiple"   multiple (change)=" selectImageHandler($event)"/>
+    </div>
+
+    <div class="col-12">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [class.btn-type-primary]="!loading"
+        [class.d-flex]="loading"
+        [class.text-bg-dark]="loading"
+      >
+        <ng-container *ngIf="loading">
+          <div class="col-12">
+            <app-loading-spinner></app-loading-spinner>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!loading">edit</ng-container>
+      </button>
+    </div>
+  </form>
+</section>

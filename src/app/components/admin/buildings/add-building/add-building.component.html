@@ -1,0 +1,118 @@
+<section>
+    <div class="row">
+      <div class="col content g-3">
+        <div class="col-12 text-center"></div>
+        <h5 class="">add project</h5>
+        <hr />
+        <form
+          [formGroup]="addBuildingForm"
+          class="row gy-3"
+          (ngSubmit)="submitHandler(addBuildingForm)"
+        >
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label" name="projectId"
+              > project id</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="projectId"
+              formControlName="projectId"
+            />
+            <div
+              class="alert alert-danger"
+              *ngIf="addBuildingForm.controls?.['projectId']?.errors&& (addBuildingForm.controls?.['projectId']?.touched ||isSubmit) "
+            >
+              <div
+                *ngIf="addBuildingForm.controls?.['projectId']?.errors?.['required']"
+              >
+                <h3>projectId is required</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label"
+              >building Name</label
+            >
+            <input
+            type="text"
+            class="form-control"
+            name="name"
+            formControlName="name"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="addBuildingForm.controls?.['name']?.errors&& (addBuildingForm.controls?.['name']?.touched ||isSubmit) "
+          >
+            <div
+              *ngIf="addBuildingForm.controls?.['name']?.errors?.['required']"
+            >
+              <h3>building Name is required</h3>
+            </div>
+          </div>
+              <!-- <select #type class="form-select" aria-label="Default select example"  formControlName="type" name="type">
+                <option  value="buy">buy</option>
+                <option value="show">show</option>
+              </select> -->
+          </div>
+
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label"
+              >building Number</label
+            >
+            <input
+            type="text"
+            class="form-control"
+            name="buildNumber"
+            formControlName="buildNumber"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="addBuildingForm.controls?.['buildNumber']?.errors&& (addBuildingForm.controls?.['buildNumber']?.touched ||isSubmit) "
+          >
+            <div
+              *ngIf="addBuildingForm.controls?.['buildNumber']?.errors?.['required']"
+            >
+              <h3>buildNumber is required</h3>
+            </div>
+          </div>
+              <!-- <select #type class="form-select" aria-label="Default select example"  formControlName="type" name="type">
+                <option  value="buy">buy</option>
+                <option value="show">show</option>
+              </select> -->
+          </div>
+          <div class="col-12">
+            <label for="formFileMultiple" class="form-label"
+              >Select Multiple Building Images</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFileMultiple"
+              formControlName="BuildingImages"
+              multiple
+              (change)="selectImageHandler($event)"
+            />
+          </div>
+  
+          <div class="col-12">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [class.btn-type-primary]="!loading"
+              [class.d-flex]="loading"
+              [class.text-bg-dark]="loading"
+            >
+              <ng-container *ngIf="loading">
+                <div class="col-12">
+                  <app-loading-spinner></app-loading-spinner>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!loading">add</ng-container>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  

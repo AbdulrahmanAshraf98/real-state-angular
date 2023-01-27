@@ -9,6 +9,7 @@ import { userInterface } from 'src/app/interface/userInterface';
 })
 export class AlluserComponent implements OnInit {
   subscription: any;
+  loading = false;
   users: userInterface[] = [];
   heads: string[] = [
     'id',
@@ -24,18 +25,27 @@ export class AlluserComponent implements OnInit {
   change = false;
 
   ngOnInit() {
+    this.loading = true;
     this.subscription = this.global.get('user/').subscribe({
       next: (responseData) => {
         this.users = responseData.data;
       },
       error: (error) => {},
+      complete: () => {
+        this.loading = false;
+      },
     });
   }
   ngDoCheck() {
     if (this.change) {
+      this.loading = true;
       this.global.get('user/').subscribe({
         next: (responseData) => {
           this.users = responseData.data;
+        },
+        error: (error) => {},
+        complete: () => {
+          this.loading = false;
         },
       });
       this.change = false;

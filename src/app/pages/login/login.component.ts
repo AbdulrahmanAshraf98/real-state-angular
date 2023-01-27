@@ -13,6 +13,7 @@ export class LoginComponent implements OnDestroy {
   subscription: any;
   loginForm: FormGroup;
   isSubmit = false;
+  loading = false;
   constructor(private global: GlobalService, private route: Router) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -23,16 +24,18 @@ export class LoginComponent implements OnDestroy {
   error = {};
   submitHandler(form: any) {
     this.isSubmit = true;
-  
     if (form.invalid) return;
+    this.loading = true;
     this.global.post('user/login', form.value).subscribe(
       (response) => {
         localStorage.setItem('token', response.data.token);
         this.route.navigateByUrl('/profile');
       },
-      (error) => console.log(error)
+      (error) => console.log(error),
+      () => {
+        this.loading = false;
+      }
     );
-      
   }
 
   ngOnDestroy() {}

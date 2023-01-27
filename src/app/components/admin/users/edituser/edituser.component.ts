@@ -34,7 +34,7 @@ export class EdituserComponent implements OnDestroy, OnInit {
           this.UserInfo = responseData.data;
           console.log(this.UserInfo);
         });
-  }
+  } 
 
   ngOnInit(): void {}
   model = {

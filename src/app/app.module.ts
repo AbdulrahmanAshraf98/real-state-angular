@@ -32,6 +32,17 @@ import { BuildingComponent } from './pages/single/building/building.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { EdituserComponent } from './components/admin/users/edituser/edituser.component';
 import { AdduserComponent } from './components/admin/users/adduser/adduser.component';
+import { AllProjectComponent } from './components/admin/project/all-project/all-project.component';
+import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
+import { TestComponent } from './test/test.component';
+import { EditProjectComponent } from './components/admin/project/edit-project/edit-project.component';
+import { AddProjectComponent } from './components/admin/project/add-project/add-project.component';
+import { AllBuildingComponent } from './components/admin/building/all-building/all-building.component';
+import { AllBuildingsComponent } from './components/admin/buildings/all-buildings/all-buildings.component';
+import { AddBuildingComponent } from './components/admin/buildings/add-building/add-building.component';
+import { EditBuildingComponent } from './components/admin/buildings/edit-building/edit-building.component';
+import { AllUnitsComponent } from './components/admin/units/all-units/all-units.component';
+import { BuyUnitComponent } from './components/admin/units/buy-unit/buy-unit.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +73,17 @@ import { AdduserComponent } from './components/admin/users/adduser/adduser.compo
     AlluserComponent,
     EdituserComponent,
     AdduserComponent,
+    AllProjectComponent,
+    LoadingSpinnerComponent,
+    TestComponent,
+    EditProjectComponent,
+    AddProjectComponent,
+    AllBuildingComponent,
+    AllBuildingsComponent,
+    AddBuildingComponent,
+    EditBuildingComponent,
+    AllUnitsComponent,
+    BuyUnitComponent,
   ],
   imports: [
     BrowserModule,

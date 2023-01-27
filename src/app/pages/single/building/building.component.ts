@@ -19,18 +19,23 @@ export class BuildingComponent implements OnDestroy {
     units: [],
     buildingImages: [],
   };
+  loading = false;
   constructor(
     private activated: ActivatedRoute,
     private global: GlobalService
   ) {
+    this.loading = true;
     let buildingId = this.activated.snapshot.paramMap.get('buildingId');
-
-    this.subscribe = this.global
-      .get(`building/${buildingId}`)
-      .subscribe((response) => {
+    this.subscribe = this.global.get(`building/${buildingId}`).subscribe(
+      (response) => {
         console.log(response);
         this.building = response.data;
-      });
+      },
+      (error) => {},
+      () => {
+        this.loading = false;
+      }
+    );
   }
   ngOnDestroy(): void {
     this.subscribe.unsubscribe();
