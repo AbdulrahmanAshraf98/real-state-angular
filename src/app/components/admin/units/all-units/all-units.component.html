@@ -25,26 +25,21 @@
             <td>{{ unit.name }}</td>         
             <td>{{ unit.unitAddress }}</td>
             <td>{{ unit.price }}</td>
-            <td>{{ unit.status }}</td>
+            <td>{{ unit.status?"sold":"buy" }}</td>
             <td><a class="" routerLink="/buildings/{{unit.buildingId}}">{{unit.buildingId | slice : 0  : 5 }}</a></td>
             <td><a class="" routerLink="/user/{{unit.createdBy}}">{{unit.createdBy | slice : 0  : 5 }}</a></td>
-            <ng-container >
-              <td>
-                <ng-container *ngIf="!unit.status">
-                  <a class="btn btn-primary " routerLink="{{unit._id}}/buy">buy</a>
-                </ng-container>
-                <ng-container *ngIf="unit.status">
-                  sold
-                </ng-container>             
-              </td>
-            </ng-container>
-
-        
-            <td><a class="btn btn-primary" routerLink="/units/{{unit._id}}">show</a></td>
-            <td> <a routerLink="{{unit._id}}/edit" class="btn btn-primary ">edit</a></td>
-          
-            
-            <td><a class="btn btn-primary " (click)="deleteUserHandler(unit._id)">delete</a></td>
+            <td><a class="" routerLink="/user/{{unit.ownerId}}">{{unit.ownerId | slice : 0  : 5 }}</a></td>
+            <td><div class="btn-group" role="group" aria-label="Basic example">
+              <ng-container *ngIf="!unit.status">
+                <a class="btn btn-primary " routerLink="{{unit._id}}/buy">buy</a>
+              </ng-container> 
+              <a class="btn btn-primary btn-info text-light" routerLink="/units/{{unit._id}}">show</a>
+              <ng-container *ngIf="!unit.status">
+                <a routerLink="{{unit._id}}/edit" class="btn btn-primary btn-secondary">edit</a>
+              </ng-container> 
+              <a class="btn btn-primary btn-danger" (click)="deleteUserHandler(unit._id)">delete</a>
+            </div></td>
+     
          
           </tr>
         </tbody>

@@ -1,6 +1,7 @@
 import { AlluserComponent } from './components/admin/users/alluser/alluser.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,12 +38,18 @@ import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinne
 import { TestComponent } from './test/test.component';
 import { EditProjectComponent } from './components/admin/project/edit-project/edit-project.component';
 import { AddProjectComponent } from './components/admin/project/add-project/add-project.component';
-import { AllBuildingComponent } from './components/admin/building/all-building/all-building.component';
+
 import { AllBuildingsComponent } from './components/admin/buildings/all-buildings/all-buildings.component';
 import { AddBuildingComponent } from './components/admin/buildings/add-building/add-building.component';
 import { EditBuildingComponent } from './components/admin/buildings/edit-building/edit-building.component';
 import { AllUnitsComponent } from './components/admin/units/all-units/all-units.component';
 import { BuyUnitComponent } from './components/admin/units/buy-unit/buy-unit.component';
+import { EditUnitComponent } from './components/admin/units/edit-unit/edit-unit.component';
+import { AllPaymentComponent } from './components/admin/payment/all-payment/all-payment.component';
+import { NewPaidComponent } from './components/admin/payment/new-paid/new-paid.component';
+import { EditPaymentComponent } from './components/admin/payment/edit-payment/edit-payment.component';
+import { SinglePaymentComponent } from './components/admin/payment/single-payment/single-payment.component';
+import { PaymentPdfComponent } from './components/admin/payment/payment-pdf/payment-pdf.component';
 
 @NgModule({
   declarations: [
@@ -78,12 +85,17 @@ import { BuyUnitComponent } from './components/admin/units/buy-unit/buy-unit.com
     TestComponent,
     EditProjectComponent,
     AddProjectComponent,
-    AllBuildingComponent,
     AllBuildingsComponent,
     AddBuildingComponent,
     EditBuildingComponent,
     AllUnitsComponent,
     BuyUnitComponent,
+    EditUnitComponent,
+    AllPaymentComponent,
+    NewPaidComponent,
+    EditPaymentComponent,
+    SinglePaymentComponent,
+    PaymentPdfComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +103,7 @@ import { BuyUnitComponent } from './components/admin/units/buy-unit/buy-unit.com
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    PdfViewerModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

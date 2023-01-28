@@ -56,7 +56,7 @@ export class EditBuildingComponent {
     const formData = new FormData();
     formData.append('name', form.value.name);
     if (form.value['buildNumber'] != this.buildingInfo.buildNumber)
-      formData.append('buildNumber', form.value.type);
+      formData.append('buildNumber', form.value.buildNumber);
     if (this.buildingImagesFiles.length) {
       this.buildingImagesFiles.forEach((buildImageFile) => {
         formData.append('buildingImages', buildImageFile, buildImageFile.name);

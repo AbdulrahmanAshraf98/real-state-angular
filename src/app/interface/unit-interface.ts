@@ -7,4 +7,5 @@ export interface UnitInterface {
   status: boolean;
   createdBy?: string;
   unitImages: string[];
+  ownerId?: string;
 }

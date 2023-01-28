@@ -1,3 +1,5 @@
+import { AllPaymentComponent } from './components/admin/payment/all-payment/all-payment.component';
+import { EditUnitComponent } from './components/admin/units/edit-unit/edit-unit.component';
 import { AddBuildingComponent } from './components/admin/buildings/add-building/add-building.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -25,6 +27,7 @@ import { AllBuildingsComponent } from './components/admin/buildings/all-building
 import { EditBuildingComponent } from './components/admin/buildings/edit-building/edit-building.component';
 import { AllUnitsComponent } from './components/admin/units/all-units/all-units.component';
 import { BuyUnitComponent } from './components/admin/units/buy-unit/buy-unit.component';
+import { PaymentPdfComponent } from './components/admin/payment/payment-pdf/payment-pdf.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -133,6 +136,23 @@ const routes: Routes = [
           {
             path: ':unitId/buy',
             component: BuyUnitComponent,
+          },
+          {
+            path: ':unitId/edit',
+            component: EditUnitComponent,
+          },
+        ],
+      },
+      {
+        path: 'payments',
+        children: [
+          {
+            path: '',
+            component: AllPaymentComponent,
+          },
+          {
+            path: ':paymentId/paymentPdf',
+            component: PaymentPdfComponent,
           },
         ],
       },

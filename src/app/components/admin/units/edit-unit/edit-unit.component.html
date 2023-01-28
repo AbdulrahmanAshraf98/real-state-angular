@@ -6,26 +6,26 @@
     >
       <div class="col-12">
         <label for="exampleInputEmail1" class="form-label" name="name"
-          >Building Name</label
+          >unit Name</label
         >
         <input
           type="text"
           class="form-control"
           name="name"
           formControlName="name"
-          [placeholder]="buildingInfo.name"
-          [value]="buildingInfo.name"
+          [placeholder]="unitInfo.name"
+          [value]="unitInfo.name"
         />
       </div>
       <div class="col-12">
-        <label for="exampleInputEmail1" class="form-label">Building Number </label>
+        <label for="exampleInputEmail1" class="form-label">unit price </label>
         <input
-        type="text"
+        type="number"
         class="form-control"
         name="buildNumber"
-        formControlName="buildNumber"
-        [placeholder]="buildingInfo.buildNumber"
-        [value]="buildingInfo.buildNumber"
+        formControlName="price"
+        [placeholder]="unitInfo.price"
+        [value]="unitInfo.price"
       />
       </div>
       <div class="col-12">

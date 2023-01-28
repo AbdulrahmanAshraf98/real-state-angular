@@ -20,10 +20,8 @@ export class AllUnitsComponent {
     'status',
     'buildingId',
     'createdBy',
-    'buy',
-    'show',
-    'edit',
-    'delete',
+    'owner',
+    'actions',
   ];
   change: boolean = false;
   constructor(private global: GlobalService) {}
