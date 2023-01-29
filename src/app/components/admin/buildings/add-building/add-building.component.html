@@ -2,23 +2,22 @@
     <div class="row">
       <div class="col content g-3">
         <div class="col-12 text-center"></div>
-        <h5 class="">add project</h5>
+        <h5 class="">add building</h5>
         <hr />
         <form
           [formGroup]="addBuildingForm"
           class="row gy-3"
           (ngSubmit)="submitHandler(addBuildingForm)"
         >
+
           <div class="col-12">
             <label for="exampleInputEmail1" class="form-label" name="projectId"
               > project id</label
             >
-            <input
-              type="text"
-              class="form-control"
-              name="projectId"
-              formControlName="projectId"
-            />
+            <select class="form-select" aria-label="Default select example" formControlName="projectId" name="projectId">
+              <label>select project</label>
+              <option *ngFor="let project of projects" value="{{project._id}}" >{{project.name}}</option>
+            </select>
             <div
               class="alert alert-danger"
               *ngIf="addBuildingForm.controls?.['projectId']?.errors&& (addBuildingForm.controls?.['projectId']?.touched ||isSubmit) "

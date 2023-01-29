@@ -1,7 +1,8 @@
 import { Router } from '@angular/router';
 import { GlobalService } from './../../../../services/global.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { projectInterface } from 'src/app/interface/projectInterface';
 
 @Component({
   selector: 'app-add-building',
@@ -13,6 +14,7 @@ export class AddBuildingComponent {
   isSubmit = false;
   loading = false;
   buildingImagesFiles: any[] = [];
+  projects: projectInterface[] = [];
   constructor(private global: GlobalService, private router: Router) {
     this.addBuildingForm = new FormGroup({
       projectId: new FormControl('', [Validators.required]),
@@ -21,11 +23,17 @@ export class AddBuildingComponent {
       BuildingImages: new FormControl('', []),
     });
   }
+  ngOnInit() {
+    this.global.get('project').subscribe((response) => {
+      this.projects = response.data;
+    });
+  }
   selectImageHandler(event: any) {
     if (event.target.files.length == 0) return;
     this.buildingImagesFiles = [...event.target.files];
   }
   submitHandler(form: FormGroup) {
+    console.log(form.value);
     this.isSubmit = true;
     if (form.invalid) return;
     const formData = new FormData();

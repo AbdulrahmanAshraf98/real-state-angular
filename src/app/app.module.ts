@@ -1,3 +1,4 @@
+import { AddUnitComponent } from './components/admin/units/add-unit/add-unit.component';
 import { AlluserComponent } from './components/admin/users/alluser/alluser.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -96,6 +97,7 @@ import { PaymentPdfComponent } from './components/admin/payment/payment-pdf/paym
     EditPaymentComponent,
     SinglePaymentComponent,
     PaymentPdfComponent,
+    AddUnitComponent,
   ],
   imports: [
     BrowserModule,

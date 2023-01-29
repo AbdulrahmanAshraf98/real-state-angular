@@ -1,0 +1,134 @@
+<section>
+    <div class="row">
+      <div class="col content g-3">
+        <div class="col-12 text-center"></div>
+        <h5 class="">add unit</h5>
+        <hr />
+        <form
+          [formGroup]="addUnitForm"
+          class="row gy-3"
+          (ngSubmit)="submitHandler(addUnitForm)"
+        >
+
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label" name="buildingId"
+              > building id</label
+            >
+            <select class="form-select" aria-label="Default select example" formControlName="buildingId" name="buildingId">
+              <label>select building </label>
+              <option *ngFor="let building of buildings" value="{{building._id}}" >{{building.name}}</option>
+            </select>
+            <div
+              class="alert alert-danger"
+              *ngIf="addUnitForm.controls?.['buildingId']?.errors&& (addUnitForm.controls?.['buildingId']?.touched ||isSubmit) "
+            >
+              <div
+                *ngIf="addUnitForm.controls?.['buildingId']?.errors?.['required']"
+              >
+                <h3>building Id is required</h3>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label"
+              >unit Name</label
+            >
+            <input
+            type="text"
+            class="form-control"
+            name="name"
+            formControlName="name"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="addUnitForm.controls?.['name']?.errors&& (addUnitForm.controls?.['name']?.touched ||isSubmit) "
+          >
+            <div
+              *ngIf="addUnitForm.controls?.['name']?.errors?.['required']"
+            >
+              <h3>unit Name is required</h3>
+            </div>
+          </div>
+
+          </div>
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label"
+              >unit price</label
+            >
+            <input
+            type="number"
+            class="form-control"
+            name="price"
+            formControlName="price"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="addUnitForm.controls?.['price']?.errors&& (addUnitForm.controls?.['price']?.touched ||isSubmit) "
+          >
+            <div
+              *ngIf="addUnitForm.controls?.['price']?.errors?.['required']"
+            >
+              <h3>unit price is required</h3>
+            </div>
+          </div>
+
+          </div>
+
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label"
+              >unit Number</label
+            >
+            <input
+            type="text"
+            class="form-control"
+            name="unitNumber"
+            formControlName="unitNumber"
+          />
+          <div
+            class="alert alert-danger"
+            *ngIf="addUnitForm.controls?.['unitNumber']?.errors&& (addUnitForm.controls?.['unitNumber']?.touched ||isSubmit) "
+          >
+            <div
+              *ngIf="addUnitForm.controls?.['unitNumber']?.errors?.['required']"
+            >
+              <h3>unit Number is required</h3>
+            </div>
+          </div>
+
+          </div>
+
+          <div class="col-12">
+            <label for="formFileMultiple" class="form-label"
+              >Select Multiple Building unit</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="formFileMultiple"
+              formControlName="unitImages"
+              multiple
+              (change)="selectImageHandler($event)"
+            />
+          </div>
+  
+          <div class="col-12">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [class.btn-type-primary]="!loading"
+              [class.d-flex]="loading"
+              [class.text-bg-dark]="loading"
+            >
+              <ng-container *ngIf="loading">
+                <div class="col-12">
+                  <app-loading-spinner></app-loading-spinner>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!loading">add</ng-container>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  

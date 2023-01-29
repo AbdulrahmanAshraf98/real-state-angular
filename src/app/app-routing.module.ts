@@ -28,6 +28,7 @@ import { EditBuildingComponent } from './components/admin/buildings/edit-buildin
 import { AllUnitsComponent } from './components/admin/units/all-units/all-units.component';
 import { BuyUnitComponent } from './components/admin/units/buy-unit/buy-unit.component';
 import { PaymentPdfComponent } from './components/admin/payment/payment-pdf/payment-pdf.component';
+import { AddUnitComponent } from './components/admin/units/add-unit/add-unit.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -132,6 +133,10 @@ const routes: Routes = [
           {
             path: '',
             component: AllUnitsComponent,
+          },
+          {
+            path: 'add',
+            component: AddUnitComponent,
           },
           {
             path: ':unitId/buy',
