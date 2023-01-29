@@ -6,6 +6,7 @@
 </ng-container>
 <ng-container *ngIf="!loading">
   <section>
+    <a class="btn btn-primary" routerLink="buildings/add">add New building</a>
     <div class="table-responsive">
       <table class="table">
         <thead>
@@ -27,11 +28,23 @@
             <td>{{ building.floorNum }}</td>
             <td>{{ building.units.length }}</td>
             <td><a class="" routerLink="/projects/{{building.projectId}}">{{building.projectId | slice : 0  : 5 }}</a></td>
-            <td scope="row" class="col-4">
-              <div class="row gap-2">
-                  <div class="col-12 col-md-3 "> <a class="btn btn-primary" routerLink="/buildings/{{building._id}}">show</a></div>
-                  <div class="col-12 col-md-3 "> <a routerLink="{{building._id}}/edit" class="btn btn-primary ">edit</a></div>
-                  <div class="col-12 col-md-3 "> <a class="btn btn-primary " (click)="deleteUserHandler(building._id,building.projectId)">delete</a></div> 
+            <td >
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <a
+                  class="btn btn-primary btn-info text-light"
+                  routerLink="/buildings/{{ building._id }}"
+                  >show</a
+                >
+                <a
+                  routerLink="buildings/{{ building._id }}/edit"
+                  class="btn btn-primary btn-secondary"
+                  >edit</a
+                >
+                <a
+                  class="btn btn-primary btn-danger"
+                  (click)="deleteBuildingHandler(building._id,building.projectId)"
+                  >delete</a
+                >
               </div>
             </td>
           </tr>

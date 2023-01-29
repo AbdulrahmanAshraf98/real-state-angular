@@ -64,7 +64,7 @@ export class EditUnitComponent {
     }
     this.global.edit(`unit/${this.unitId}`, formData).subscribe((response) => {
       this.unitInfo = response.data;
-      this.router.navigateByUrl('/admin/units');
+      this.router.navigateByUrl('/admin');
     });
   }
 }

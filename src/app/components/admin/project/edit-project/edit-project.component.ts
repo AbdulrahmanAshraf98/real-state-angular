@@ -69,7 +69,7 @@ export class EditProjectComponent implements OnInit {
       .edit(`project/${this.projectId}`, formData)
       .subscribe((response) => {
         this.projectInfo = response.data;
-        setTimeout(() => this.router.navigateByUrl('/admin/projects'), 500);
+        setTimeout(() => this.router.navigateByUrl('/admin'), 500);
       });
   }
 }

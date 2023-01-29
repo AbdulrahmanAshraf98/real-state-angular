@@ -17,7 +17,18 @@
    
   ></app-navbar-item>
 
- 
+  <ng-container *ngIf="!isLogin">
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" routerLink="/login" routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{'exact': true}">login</a>
+        
+     </li>
+ </ng-container>
+ <ng-container *ngIf="isLogin">
+  <li class="nav-item">
+      <a class="nav-link" aria-current="page" routerLink="/" (click)="logoutHandler()">logout</a>   
+   </li>
+</ng-container>
  
   
 </ul>

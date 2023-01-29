@@ -55,8 +55,7 @@ export class AllBuildingsComponent {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  deleteUserHandler(buildingId: string, projectId: string) {
-    // console.log({ projectId });
+  deleteBuildingHandler(buildingId: string, projectId: string) {
     this.global
       .delete(`building/${buildingId}`, { projectId })
       .subscribe((response) => {

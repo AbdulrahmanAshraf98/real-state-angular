@@ -7,6 +7,7 @@
 <ng-container *ngIf="!loading">
   <section>
     <div class="table-responsive">
+      <a class="btn btn-primary" routerLink="units/add">add New unit</a>
       <table class="table">
         <thead>
           <tr>
@@ -31,13 +32,13 @@
             <td><a class="" routerLink="/user/{{unit.ownerId}}">{{unit.ownerId | slice : 0  : 5 }}</a></td>
             <td><div class="btn-group" role="group" aria-label="Basic example">
               <ng-container *ngIf="!unit.status">
-                <a class="btn btn-primary " routerLink="{{unit._id}}/buy">buy</a>
+                <a class="btn btn-primary " routerLink="units/{{unit._id}}/buy">buy</a>
               </ng-container> 
               <a class="btn btn-primary btn-info text-light" routerLink="/units/{{unit._id}}">show</a>
               <ng-container *ngIf="!unit.status">
-                <a routerLink="{{unit._id}}/edit" class="btn btn-primary btn-secondary">edit</a>
+                <a routerLink="units/{{unit._id}}/edit" class="btn btn-primary btn-secondary">edit</a>
               </ng-container> 
-              <a class="btn btn-primary btn-danger" (click)="deleteUserHandler(unit._id)">delete</a>
+              <a class="btn btn-primary btn-danger" (click)="deleteUnitHandler(unit._id)">delete</a>
             </div></td>
      
          

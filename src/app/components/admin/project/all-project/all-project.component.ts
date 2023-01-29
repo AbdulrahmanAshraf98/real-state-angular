@@ -46,7 +46,7 @@ export class AllProjectComponent implements OnInit {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  deleteUserHandler(projectId: string) {
+  deleteProjectHandler(projectId: string) {
     this.global.delete(`project/${projectId}`).subscribe((response) => {
       this.change = true;
     });

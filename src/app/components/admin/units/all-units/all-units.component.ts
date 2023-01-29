@@ -57,7 +57,7 @@ export class AllUnitsComponent {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-  deleteUserHandler(unitId: string) {
+  deleteUnitHandler(unitId: string) {
     this.global.delete(`unit/${unitId}`).subscribe((response) => {
       this.change = true;
     });

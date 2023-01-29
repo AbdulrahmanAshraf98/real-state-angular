@@ -39,7 +39,7 @@ export class AddBuildingComponent {
     }
     this.global.post(`building/`, formData).subscribe((response) => {
       setTimeout(() => {
-        this.router.navigateByUrl('/admin/buildings');
+        this.router.navigateByUrl('/admin');
       }, 500);
     });
   }

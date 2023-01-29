@@ -17,7 +17,7 @@ export class GlobalService {
     phone: [],
     role: {},
   };
-  isLogin = true;
+  isLogin = false;
   constructor(private http: HttpClient) {}
   get(url: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}${url}`);

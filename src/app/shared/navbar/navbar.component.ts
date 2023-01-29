@@ -11,7 +11,6 @@ export class NavbarComponent {
     { name: 'home', path: '' },
     { name: 'projects', path: '/projects' },
     { name: 'buildings', path: '/buildings' },
-    { name: 'login', path: '/login' },
     { name: 'profile', path: '/profile' },
     { name: 'units', path: '/units' },
   ];

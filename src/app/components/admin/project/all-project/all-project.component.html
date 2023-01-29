@@ -6,6 +6,7 @@
 </ng-container>
 <ng-container *ngIf="!loading">
   <section>
+    <a class="btn btn-primary" routerLink="projects/add">add New Project</a>
     <div class="table-responsive">
       <table class="table">
         <thead>
@@ -24,11 +25,23 @@
             </td>
             <td>{{ project.name }}</td>         
             <td>{{ project.type }}</td>
-            <td scope="row" class="col-4">
-              <div class="row gap-2">
-                  <div class="col-12 col-md-3 "> <a class="btn btn-primary" routerLink="/projects/{{project._id}}">show</a></div>
-                  <div class="col-12 col-md-3 "> <a routerLink="{{project._id}}/edit" class="btn btn-primary ">edit</a></div>
-                  <div class="col-12 col-md-3 "> <a class="btn btn-primary " (click)="deleteUserHandler(project._id)">delete</a></div> 
+            <td >
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <a
+                  class="btn btn-primary btn-info text-light"
+                  routerLink="/projects/{{ project._id }}"
+                  >show</a
+                >
+                <a
+                  routerLink="projects/{{ project._id }}/edit"
+                  class="btn btn-primary btn-secondary"
+                  >edit</a
+                >
+                <a
+                  class="btn btn-primary btn-danger"
+                  (click)="deleteProjectHandler(project._id)"
+                  >delete</a
+                >
               </div>
             </td>
           </tr>

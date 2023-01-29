@@ -66,7 +66,7 @@ export class EditBuildingComponent {
       .edit(`building/${this.buildingId}`, formData)
       .subscribe((response) => {
         this.buildingInfo = response.data;
-        setTimeout(() => this.router.navigateByUrl('/admin/buildings'), 500);
+        setTimeout(() => this.router.navigateByUrl('/admin'), 500);
       });
   }
 }

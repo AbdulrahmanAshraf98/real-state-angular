@@ -29,6 +29,7 @@ export class LoginComponent implements OnDestroy {
     this.global.post('user/login', form.value).subscribe(
       (response) => {
         localStorage.setItem('token', response.data.token);
+        this.global.isLogin = true;
         this.route.navigateByUrl('/profile');
       },
       (error) => console.log(error),

@@ -1,1 +1,46 @@
-<p>new-paid works!</p>
+<!-- <section>
+    <form
+      [formGroup]="newPaidForm"
+      class="row gy-3"
+      (ngSubmit)="submitHandler(newPaidForm)"
+    >
+   
+      <div class="col-12">
+        <label for="exampleInputEmail1" class="form-label" name="username"
+          >Amount Paid</label
+        >
+        <input
+          type="number"
+          class="form-control"
+          name="amountPaid"
+          formControlName="amountPaid"
+        />
+        <div
+          class="alert alert-danger"
+          *ngIf="newPaidForm.controls?.['amountPaid']?.errors&& (newPaidForm.controls?.['amountPaid']?.touched ||isSubmit) "
+        >
+          <div *ngIf="newPaidForm.controls?.['amountPaid']?.errors?.['required']">
+            <h3>amountPaid is required</h3>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-12">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [class.btn-type-primary]="!loading"
+          [class.d-flex]="loading"
+          [class.text-bg-dark]="loading"
+        >
+          <ng-container *ngIf="loading">
+            <div class="col-12">
+              <app-loading-spinner></app-loading-spinner>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!loading">paid</ng-container>
+        </button>
+      </div>
+    </form>
+  </section>
+   -->

@@ -45,7 +45,7 @@ export class AddProjectComponent {
     }
     this.global.post(`project/`, formData).subscribe((response) => {
       setTimeout(() => {
-        this.router.navigateByUrl('/admin/projects');
+        this.router.navigateByUrl('/admin');
       }, 500);
     });
   }

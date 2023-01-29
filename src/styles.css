@@ -23,6 +23,7 @@ body{
     color: var(--body-font-color);
     font-weight:var( --body-font-weight) ;
     line-height:var( --body-line-height);
+    overflow-x: hidden;
 }
 a{
   text-decoration: none !important;

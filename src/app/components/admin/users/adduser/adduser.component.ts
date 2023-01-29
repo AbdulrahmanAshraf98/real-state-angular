@@ -72,7 +72,7 @@ export class AdduserComponent implements OnInit {
     this.global.post('user/', form.value).subscribe(
       (response) => {
         console.log(response);
-        this.route.navigateByUrl('/admin/users');
+        this.route.navigateByUrl('/admin');
       },
       (error) => console.log(error)
     );

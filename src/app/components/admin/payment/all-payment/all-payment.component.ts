@@ -66,7 +66,7 @@ export class AllPaymentComponent {
         this.change = true;
       });
   }
-  deleteUserHandler(paymentId: string) {
+  deletePaymentHandler(paymentId: string) {
     this.global.delete(`payment/${paymentId}`).subscribe((response) => {
       this.change = true;
     });
