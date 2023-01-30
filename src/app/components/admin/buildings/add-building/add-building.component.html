@@ -14,18 +14,20 @@
             <label for="exampleInputEmail1" class="form-label" name="projectId"
               > project id</label
             >
-            <select class="form-select" aria-label="Default select example" formControlName="projectId" name="projectId">
-              <label>select project</label>
+            <select class="form-select" aria-label="Default select example" formControlName="projectId" name="projectId"
+            [class.is-valid]="addBuildingForm.controls?.['projectId']?.valid"
+            [class.is-invalid]="(addBuildingForm.controls?.['projectId']?.invalid&&(addBuildingForm.controls?.['projectId']?.touched||isSubmit))"
+            >
               <option *ngFor="let project of projects" value="{{project._id}}" >{{project.name}}</option>
             </select>
             <div
-              class="alert alert-danger"
+            class="invalid-feedback"
               *ngIf="addBuildingForm.controls?.['projectId']?.errors&& (addBuildingForm.controls?.['projectId']?.touched ||isSubmit) "
             >
               <div
                 *ngIf="addBuildingForm.controls?.['projectId']?.errors?.['required']"
               >
-                <h3>projectId is required</h3>
+                projectId is required
               </div>
             </div>
           </div>
@@ -38,21 +40,20 @@
             class="form-control"
             name="name"
             formControlName="name"
+            [class.is-valid]="addBuildingForm.controls?.['name']?.valid"
+            [class.is-invalid]="(addBuildingForm.controls?.['name']?.invalid&&(addBuildingForm.controls?.['name']?.touched||isSubmit))"
           />
           <div
-            class="alert alert-danger"
+          class="invalid-feedback"
             *ngIf="addBuildingForm.controls?.['name']?.errors&& (addBuildingForm.controls?.['name']?.touched ||isSubmit) "
           >
             <div
               *ngIf="addBuildingForm.controls?.['name']?.errors?.['required']"
             >
-              <h3>building Name is required</h3>
+              building Name is required
             </div>
           </div>
-              <!-- <select #type class="form-select" aria-label="Default select example"  formControlName="type" name="type">
-                <option  value="buy">buy</option>
-                <option value="show">show</option>
-              </select> -->
+
           </div>
 
           <div class="col-12">
@@ -64,21 +65,20 @@
             class="form-control"
             name="buildNumber"
             formControlName="buildNumber"
+            [class.is-valid]="addBuildingForm.controls?.['buildNumber']?.valid"
+            [class.is-invalid]="(addBuildingForm.controls?.['buildNumber']?.invalid&&(addBuildingForm.controls?.['buildNumber']?.touched||isSubmit))"
           />
           <div
-            class="alert alert-danger"
+          class="invalid-feedback"
             *ngIf="addBuildingForm.controls?.['buildNumber']?.errors&& (addBuildingForm.controls?.['buildNumber']?.touched ||isSubmit) "
           >
             <div
               *ngIf="addBuildingForm.controls?.['buildNumber']?.errors?.['required']"
             >
-              <h3>buildNumber is required</h3>
+              buildNumber is required
             </div>
           </div>
-              <!-- <select #type class="form-select" aria-label="Default select example"  formControlName="type" name="type">
-                <option  value="buy">buy</option>
-                <option value="show">show</option>
-              </select> -->
+
           </div>
           <div class="col-12">
             <label for="formFileMultiple" class="form-label"

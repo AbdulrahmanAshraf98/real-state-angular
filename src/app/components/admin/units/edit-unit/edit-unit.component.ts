@@ -15,15 +15,7 @@ export class EditUnitComponent {
   isSubmit: boolean = false;
   loading: boolean = false;
   unitId: any;
-  unitInfo: UnitInterface = {
-    _id: '',
-    name: '',
-    buildingId: '',
-    unitAddress: '',
-    price: 0,
-    status: false,
-    unitImages: [],
-  };
+
   unitImagesFiles: any[] = [];
   constructor(
     private global: GlobalService,
@@ -32,7 +24,7 @@ export class EditUnitComponent {
   ) {
     this.editForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      price: new FormControl('', [Validators.required]),
+      price: new FormControl(0, [Validators.required]),
     });
   }
   ngOnInit(): void {
@@ -41,11 +33,7 @@ export class EditUnitComponent {
       this.subscription = this.global
         .get(`unit/${this.unitId}`)
         .subscribe((responseData) => {
-          this.unitInfo = responseData.data;
-          this.editForm.patchValue({
-            name: this.unitInfo.name,
-            price: this.unitInfo.price,
-          });
+          this.editForm.patchValue(responseData.data);
         });
   }
   selectImageHandler(event: any) {
@@ -53,17 +41,16 @@ export class EditUnitComponent {
     this.unitImagesFiles = [...event.target.files];
   }
   submitHandler(form: any) {
+    if (form.invalid) return;
     const formData = new FormData();
     formData.append('name', form.value.name);
-    if (form.value['price'] != this.unitInfo.price)
-      formData.append('price', form.value.price);
+    formData.append('price', form.value.price);
     if (this.unitImagesFiles.length) {
       this.unitImagesFiles.forEach((unitImageFile) => {
         formData.append('unitImages', unitImageFile, unitImageFile.name);
       });
     }
     this.global.edit(`unit/${this.unitId}`, formData).subscribe((response) => {
-      this.unitInfo = response.data;
       this.router.navigateByUrl('/admin');
     });
   }

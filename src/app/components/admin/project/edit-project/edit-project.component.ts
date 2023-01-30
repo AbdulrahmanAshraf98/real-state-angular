@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,19 +16,12 @@ export class EditProjectComponent implements OnInit {
   isSubmit: boolean = false;
   loading: boolean = false;
   projectId: any;
-  projectInfo: projectInterface = {
-    _id: '',
-    name: '',
-    type: '',
-    createdBy: '',
-    buildings: [],
-    projectImages: [],
-  };
   projectImagesFiles: any[] = [];
   constructor(
     private global: GlobalService,
     private activated: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.editForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -39,12 +33,15 @@ export class EditProjectComponent implements OnInit {
     if (this.projectId)
       this.subscription = this.global
         .get(`project/${this.projectId}`)
-        .subscribe((responseData) => {
-          this.projectInfo = responseData.data;
-          this.editForm.patchValue({
-            name: this.projectInfo.name,
-            type: this.projectInfo.type,
-          });
+        .subscribe({
+          next: (responseData) => {
+            this.editForm.patchValue(responseData.data);
+          },
+          error: () => {
+            this.router.navigateByUrl('/admin');
+            this.toastr.error('project not found', '404 not found ');
+          },
+          complete: () => {},
         });
   }
   selectImageHandler(event: any) {
@@ -52,10 +49,12 @@ export class EditProjectComponent implements OnInit {
     this.projectImagesFiles = [...event.target.files];
   }
   submitHandler(form: any) {
+    this.isSubmit = true;
+    if (form.invalid) return;
+    this.loading = true;
     const formData = new FormData();
     formData.append('name', form.value.name);
-    if (form.value['type'] != this.projectInfo.type)
-      formData.append('type', form.value.type);
+    formData.append('type', form.value.type);
     if (this.projectImagesFiles.length) {
       this.projectImagesFiles.forEach((projectImageFile) => {
         formData.append(
@@ -65,11 +64,16 @@ export class EditProjectComponent implements OnInit {
         );
       });
     }
-    this.global
-      .edit(`project/${this.projectId}`, formData)
-      .subscribe((response) => {
-        this.projectInfo = response.data;
-        setTimeout(() => this.router.navigateByUrl('/admin'), 500);
-      });
+    this.global.edit(`project/${this.projectId}`, formData).subscribe({
+      next: (response) => {},
+      error: (error) => {
+        this.router.navigateByUrl('/admin');
+        this.toastr.error('project failed to edit', 'failed');
+      },
+      complete: () => {
+        this.router.navigateByUrl('/admin');
+        this.toastr.success('project edit successfully', 'project edit ');
+      },
+    });
   }
 }

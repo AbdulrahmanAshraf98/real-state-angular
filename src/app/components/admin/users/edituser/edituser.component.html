@@ -1,114 +1,139 @@
 <section>
-    <div class="row">
-        <div class="col content g-3">
-            <div class="col-12 text-center">
-                <!-- <div class="profile-image">
-                  <ng-container *ngIf="currentUserInfo.profileImage">
-                    <img
-                    src="http://localhost:8000/api/v1/public/uploads/users/{{
-                        currentUserInfo.profileImage
-                    }}"
-                    class="w-25 h-25 rounded-circle"
-                  />
-                  </ng-container>
+  <div class="row">
+    <div class="col content g-3">
+      <div class="col-12 text-center">
+        <h5 class="">Edit user</h5>
+      </div>
 
-                </div> -->
+      <hr />
+
+      <form
+        [formGroup]="editUserForm"
+        class="row gy-3"
+        (ngSubmit)="submitHandler(editUserForm)"
+      >
+        <div class="col-12">
+          <label for="exampleInputEmail1" class="form-label" name="email"
+            >email</label
+          >
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            email
+            formControlName="email"
+            [class.is-valid]="editUserForm.controls?.['email']?.valid"
+            [class.is-invalid]="(editUserForm.controls?.['email']?.invalid&&(editUserForm.controls?.['email']?.touched||isSubmit))"
+          />
+
+          <div
+            class="invalid-feedback"
+            *ngIf="editUserForm.controls?.['email']?.errors&& (editUserForm.controls?.['email']?.touched ||isSubmit) "
+          >
+            <div *ngIf="editUserForm.controls?.['email']?.errors?.['required']">
+              email is required
             </div>
-            <h5 class="">Edit user</h5>
-            <hr/>
-      
-                <form #f="ngForm" class="row gy-3" (ngSubmit)="submitHandler(f)">
-                  <div class="col-12">
-                    <label for="exampleInputEmail1" class="form-label" name="email"
-                      >email</label
-                    >
-                    <input
-                      #email="ngModel"
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      email
-                      [(ngModel)]="model.email"
-                      placeholder="{{UserInfo.email}}"
-                      [value]="UserInfo.email"
-                
-                    />
-                    <div class="alert alert-danger" *ngIf="email.invalid&&f.submitted">
-                        <div *ngIf="email.errors?.['required']">
-                          <h3>email is required</h3>
-                        </div>
-                      </div>
-                  </div>
-                  <div class=" col-12 ">
-                    <label for="exampleInputEmail1" class="form-label" name="username"
-                      >First Name</label
-                    >
-                    <input
-                      #fName="ngModel"
-                      type="text"
-                      class="form-control"
-                      name="fName"
-                      [(ngModel)]="model.fName"
-                      placeholder="{{UserInfo.fName}}"
-                      [value]="UserInfo.fName"
-                
-                    />
-                    <div class="alert alert-danger" *ngIf="fName.invalid&&f.submitted">
-                      <div *ngIf="fName.errors?.['required']">
-                        <h3>fName is required</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div class=" col-12 ">
-                    <label for="exampleInputEmail1" class="form-label" name="username"
-                      >Last Name</label
-                    >
-                    <input
-                      #lName="ngModel"
-                      type="text"
-                      class="form-control"
-                      name="lName"
-                      [(ngModel)]="model.lName"
-                      placeholder="{{UserInfo.lName}}"
-                      [value]="UserInfo.lName"
-                    
-                    />
-                    <div class="alert alert-danger" *ngIf="lName.invalid&&f.submitted">
-                      <div *ngIf="lName.errors?.['required']">
-                        <h3>lName is required</h3>
-                      </div>
-                    </div>
-                  </div>
-                  <div class=" col-12 ">
-                    <label for="exampleInputEmail1" class="form-label" name="username"
-                      >Age</label
-                    >
-                    <input
-                      #age="ngModel"
-                      type="text"
-                      class="form-control"
-                      name="age"
-                      [(ngModel)]="model.age"
-                      placeholder="{{UserInfo.age}}"
-                      [value]="UserInfo.age"
-                     
-                    />
-                    <div class="alert alert-danger" *ngIf="age.invalid&&f.submitted">
-                      <div *ngIf="age.errors?.['required']">
-                        <h3>age is required</h3>
-                      </div>
-                    </div>
-                  </div>
-            
-              
-                  <div class="col-12">
-                    <button type="submit" class="btn btn-primary btn-type-primary">
-                      update
-                    </button>
-                  </div>
-                </form>
-              
-              
+            <div *ngIf="editUserForm.controls?.['email']?.errors?.['email']">
+              email must be valid
+            </div>
+          </div>
         </div>
+
+        <div class="col-12">
+          <label for="exampleInputEmail1" class="form-label" name="username"
+            >First Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="fName"
+            formControlName="fName"
+            [class.is-valid]="editUserForm.controls?.['fName']?.valid"
+            [class.is-invalid]="(editUserForm.controls?.['fName']?.invalid&&(editUserForm.controls?.['fName']?.touched||isSubmit))"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="editUserForm.controls?.['fName']?.errors&& (editUserForm.controls?.['fName']?.touched ||isSubmit) "
+          >
+            <div *ngIf="editUserForm.controls?.['fName']?.errors?.['required']">
+              first name is required
+            </div>
+            <div
+              *ngIf="editUserForm.controls?.['fName']?.errors?.['minlength']"
+            >
+              first name min length 5
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="exampleInputEmail1" class="form-label" name="username"
+            >Last Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="lName"
+            formControlName="lName"
+            [class.is-valid]="editUserForm.controls?.['lName']?.valid"
+            [class.is-invalid]="(editUserForm.controls?.['lName']?.invalid&&(editUserForm.controls?.['lName']?.touched||isSubmit))"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="editUserForm.controls?.['lName']?.errors&& (editUserForm.controls?.['lName']?.touched||isSubmit ) "
+          >
+            <div *ngIf="editUserForm.controls?.['lName']?.errors?.['required']">
+              last name is required
+            </div>
+            <div
+              *ngIf="editUserForm.controls?.['lName']?.errors?.['minlength']"
+            >
+              last name min length 5
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="exampleInputEmail1" class="form-label" name="username"
+            >Age</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="age"
+            formControlName="age"
+            placeholder="16"
+            [class.is-valid]="editUserForm.controls?.['age']?.valid"
+            [class.is-invalid]="(editUserForm.controls?.['age']?.invalid&&(editUserForm.controls?.['age']?.touched||isSubmit))"
+          />
+          <div
+            class="invalid-feedback"
+            *ngIf="editUserForm.controls?.['age']?.errors&& (editUserForm.controls?.['age']?.touched ||isSubmit) "
+          >
+            <div *ngIf="editUserForm.controls?.['age']?.errors?.['required']">
+              age is required
+            </div>
+            <div *ngIf="editUserForm.controls?.['age']?.errors?.['min']">
+              last name min age 18
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [class.btn-type-primary]="!loading"
+            [class.d-flex]="loading"
+            [class.text-bg-dark]="loading"
+          >
+            <ng-container *ngIf="loading">
+              <div class="col-12">
+                <app-loading-spinner></app-loading-spinner>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!loading">create user</ng-container>
+          </button>
+        </div>
+      </form>
     </div>
+  </div>
 </section>

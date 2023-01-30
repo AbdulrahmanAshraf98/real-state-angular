@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { GlobalService } from './../../../../services/global.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
@@ -15,7 +16,11 @@ export class AddBuildingComponent {
   loading = false;
   buildingImagesFiles: any[] = [];
   projects: projectInterface[] = [];
-  constructor(private global: GlobalService, private router: Router) {
+  constructor(
+    private global: GlobalService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     this.addBuildingForm = new FormGroup({
       projectId: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
@@ -33,9 +38,9 @@ export class AddBuildingComponent {
     this.buildingImagesFiles = [...event.target.files];
   }
   submitHandler(form: FormGroup) {
-    console.log(form.value);
     this.isSubmit = true;
     if (form.invalid) return;
+    this.loading = true;
     const formData = new FormData();
     formData.append('projectId', form.value.projectId);
     formData.append('name', form.value.name);
@@ -45,10 +50,22 @@ export class AddBuildingComponent {
         formData.append('buildingImages', buildImageFile, buildImageFile.name);
       });
     }
-    this.global.post(`building/`, formData).subscribe((response) => {
-      setTimeout(() => {
+    this.global.post(`building/`, formData).subscribe({
+      next: (response) => {},
+      error: (error) => {
+        this.toastr.error(
+          'failed to add new building',
+          'building create failed '
+        );
+      },
+      complete: () => {
+        this.loading = false;
         this.router.navigateByUrl('/admin');
-      }, 500);
+        this.toastr.success(
+          'building created successfully',
+          'building  created '
+        );
+      },
     });
   }
 }

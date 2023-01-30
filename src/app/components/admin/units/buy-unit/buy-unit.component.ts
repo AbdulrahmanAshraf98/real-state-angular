@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
 import { Component } from '@angular/core';
 
+
 @Component({
   selector: 'app-buy-unit',
   templateUrl: './buy-unit.component.html',
@@ -25,13 +26,17 @@ export class BuyUnitComponent {
       unitId: new FormControl(this.unitId, [Validators.required]),
       ownerEmail: new FormControl('', [Validators.required]),
       paymentMethod: new FormControl('', [Validators.required]),
-      numberOfYears: new FormControl(1, [Validators.required]),
+      numberOfYears: new FormControl(1, [
+        Validators.required,
+        Validators.min(1),
+      ]),
       amountPaid: new FormControl(0, [Validators.required]),
     });
   }
   ngOnInit(): void {}
 
   submitHandler(form: any) {
+    console.log(form);
     if (form.invalid) return;
     this.global.post(`unit/sellUnit`, form.value).subscribe((response) => {
       console.log(response);

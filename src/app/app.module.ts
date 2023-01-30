@@ -2,6 +2,8 @@ import { AddUnitComponent } from './components/admin/units/add-unit/add-unit.com
 import { AlluserComponent } from './components/admin/users/alluser/alluser.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +23,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
 import { CarouselComponent } from './components/carousel/carousel.component';
-import { ErrorComponent } from './pages/error/error.component';
+import { ErrorComponent } from './shared/error/error.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ProfileInfoComponent } from './components/profile-info/profile-info.component';
@@ -105,6 +107,8 @@ import { PaymentPdfComponent } from './components/admin/payment/payment-pdf/paym
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(), // ToastrModule added
     PdfViewerModule,
   ],
   providers: [

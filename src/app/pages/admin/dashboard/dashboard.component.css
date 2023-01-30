@@ -53,12 +53,15 @@
     }
     .show
     {
+      opacity:1;
+    visibility: visible;
       margin-left: 0!important;
 
     }
     .hide
     {
-
+    opacity:0;
+    visibility: hidden;
     margin-left: -15rem!important;
     }
   }

@@ -16,14 +16,18 @@
                     class="form-control"
                     name="email"
                     email
-                    formControlName="email"            
+                    formControlName="email"
+                    [class.is-valid]="addUserForm.controls?.['email']?.valid" 
+                    [class.is-invalid]="(addUserForm.controls?.['email']?.invalid&&(addUserForm.controls?.['email']?.touched||isSubmit))"            
                   />
-                  <div class="alert alert-danger" *ngIf="addUserForm.controls?.['email']?.errors&& (addUserForm.controls?.['email']?.touched ||isSubmit) ">
+                 
+                  <div class="invalid-feedback" *ngIf="addUserForm.controls?.['email']?.errors&& (addUserForm.controls?.['email']?.touched ||isSubmit) ">
+
                     <div *ngIf="addUserForm.controls?.['email']?.errors?.['required']">
-                      <h3>email is required</h3>
+                      email is required
                     </div>
-                    <div *ngIf="addUserForm.controls?.['email']?.errors?.['email']">
-                        <h3>email must be valid</h3>
+                    <div  *ngIf="addUserForm.controls?.['email']?.errors?.['email']">
+                        email must be valid
                       </div>
                   </div>
                  </div> 
@@ -36,12 +40,13 @@
                       type="password"
                       class="form-control"
                       formControlName="password"
-                     
+                      [class.is-valid]="addUserForm.controls?.['password']?.valid" 
+                      [class.is-invalid]="(addUserForm.controls?.['password']?.invalid&&(addUserForm.controls?.['password']?.touched||isSubmit))"           
                      
                     />
-                    <div class="alert alert-danger" *ngIf="addUserForm.controls?.['password']?.errors&& (addUserForm.controls?.['password']?.touched ||isSubmit) ">
+                    <div class="invalid-feedback" *ngIf="addUserForm.controls?.['password']?.errors&& (addUserForm.controls?.['password']?.touched ||isSubmit) ">
                       <div *ngIf="addUserForm.controls?.['password']?.errors?.['required']">
-                        <h3>password is required</h3>
+                        password is required
                       </div>
                    
                     </div>
@@ -56,12 +61,16 @@
                     class="form-control"
                     name="fName"
                     formControlName="fName"
-                    
+                    [class.is-valid]="addUserForm.controls?.['fName']?.valid" 
+                    [class.is-invalid]="(addUserForm.controls?.['fName']?.invalid&&(addUserForm.controls?.['fName']?.touched||isSubmit))"  
               
                   />
-                  <div class="alert alert-danger" *ngIf="addUserForm.controls?.['fName']?.errors&& (addUserForm.controls?.['fName']?.touched ||isSubmit) ">
+                  <div class="invalid-feedback" *ngIf="addUserForm.controls?.['fName']?.errors&& (addUserForm.controls?.['fName']?.touched ||isSubmit) ">
                     <div *ngIf="addUserForm.controls?.['fName']?.errors?.['required']">
-                      <h3>first name is required</h3>
+                      first name is required
+                    </div>
+                    <div *ngIf="addUserForm.controls?.['fName']?.errors?.['minlength']">
+                      first name min length 5
                     </div>
                   </div>
                 </div>
@@ -75,13 +84,18 @@
                     class="form-control"
                     name="lName"
                     formControlName="lName"
-                
+                    [class.is-valid]="addUserForm.controls?.['lName']?.valid" 
+                    [class.is-invalid]="(addUserForm.controls?.['lName']?.invalid&&(addUserForm.controls?.['lName']?.touched||isSubmit))"  
                   
                   />
-                  <div class="alert alert-danger" *ngIf="addUserForm.controls?.['lName']?.errors&& (addUserForm.controls?.['lName']?.touched ||isSubmit) ">
+                  <div class="invalid-feedback" *ngIf="addUserForm.controls?.['lName']?.errors&& (addUserForm.controls?.['lName']?.touched||isSubmit ) ">
                     <div *ngIf="addUserForm.controls?.['lName']?.errors?.['required']">
-                      <h3>last name is required</h3>
+                      last name is required
                     </div>
+                    <div *ngIf="addUserForm.controls?.['lName']?.errors?.['minlength']">
+                      last name min length 5
+                    </div>
+                  
                   </div>
                 </div>
                 <div class=" col-12 ">
@@ -94,13 +108,18 @@
                     class="form-control"
                     name="age"
                     formControlName="age"
+                    placeholder="16"
+                    [class.is-valid]="addUserForm.controls?.['age']?.valid" 
+                    [class.is-invalid]="(addUserForm.controls?.['age']?.invalid&&(addUserForm.controls?.['age']?.touched||isSubmit))" 
                    
                   />
-                  <div class="alert alert-danger" *ngIf="addUserForm.controls?.['age']?.errors&& (addUserForm.controls?.['age']?.touched ||isSubmit) ">
+                  <div  class="invalid-feedback" *ngIf="addUserForm.controls?.['age']?.errors&& (addUserForm.controls?.['age']?.touched ||isSubmit) ">
                     <div *ngIf="addUserForm.controls?.['age']?.errors?.['required']">
-                      <h3>age  is required</h3>
+                      age  is required
                     </div>
-                 
+                    <div *ngIf="addUserForm.controls?.['age']?.errors?.['min']">
+                      last name min age 18
+                    </div>
                 </div>
                 </div>
                
@@ -108,8 +127,8 @@
                     <div class="col-12">
                       <label for="exampleInputEmail1" class="form-label" name="username">select role type</label>
                       <select #type class="form-select" aria-label="Default select example" (change)="selectTypeHandler(type.value)" formControlName="roleType" name="type">
-                        <option selected value="0">Open this select menu</option>
-                        <option value="admin">admin</option>
+                        <option selected>Open this select menu</option>
+                        <option value="admin" >admin</option>
                         <option value="employee">employee</option>
                         <option value="customer">customer</option>
                       </select>
@@ -117,18 +136,29 @@
                     <div class="col-12">
                       <label for="exampleInputEmail1" class="form-label" name="username">select role name</label>
                       <select class="form-select" aria-label="Default select example" formControlName="roleName" name="name">
-                        <label>select role name</label>
+                        <label>select role name</label>  
                         <option selected>Open this select menu</option>
-                        <option *ngFor="let name of roleNames">{{name}}</option>
+                        <option *ngFor="let name of roleNames;" value="{{name}}"  >{{name}}</option>
                       </select>
                     </div>
                 </ng-container>
               
             
                 <div class="col-12">
-                  <button type="submit" class="btn btn-primary btn-type-primary">
-                    createUser
-                  </button>
+                  <button
+                  type="submit"
+                  class="btn btn-primary"
+                  [class.btn-type-primary]="!loading"
+                  [class.d-flex]="loading"
+                  [class.text-bg-dark]="loading"
+                >
+                  <ng-container *ngIf="loading">
+                    <div class="col-12">
+                      <app-loading-spinner></app-loading-spinner>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="!loading">create user</ng-container>
+                </button>
                 </div>
               </form>
               

@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { buildingInterface } from 'src/app/interface/buildingInterface';
 import { Router } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
@@ -15,7 +16,11 @@ export class AddUnitComponent {
   loading = false;
   unitImagesFiles: any[] = [];
   buildings: buildingInterface[] = [];
-  constructor(private global: GlobalService, private router: Router) {
+  constructor(
+    private global: GlobalService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     this.addUnitForm = new FormGroup({
       buildingId: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
@@ -37,6 +42,7 @@ export class AddUnitComponent {
     console.log(form.value);
     this.isSubmit = true;
     if (form.invalid) return;
+    this.loading = true;
     const formData = new FormData();
     formData.append('buildingId', form.value.buildingId);
     formData.append('name', form.value.name);
@@ -47,10 +53,16 @@ export class AddUnitComponent {
         formData.append('unitImages', unitImageFile, unitImageFile.name);
       });
     }
-    this.global.post(`unit/`, formData).subscribe((response) => {
-      setTimeout(() => {
+    this.global.post(`unit/`, formData).subscribe({
+      next: (response) => {},
+      error: (error) => {
+        this.toastr.error('failed to add new unit', 'unit create failed ');
+      },
+      complete: () => {
+        this.loading = false;
         this.router.navigateByUrl('/admin');
-      }, 500);
+        this.toastr.success('unit created successfully', 'unit  created ');
+      },
     });
   }
 }

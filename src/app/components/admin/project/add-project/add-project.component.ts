@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,7 +17,11 @@ export class AddProjectComponent {
   loading: boolean = false;
 
   projectImagesFiles: any[] = [];
-  constructor(private global: GlobalService, private router: Router) {
+  constructor(
+    private global: GlobalService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     this.addProjectForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       type: new FormControl('buy', [Validators.required]),
@@ -43,10 +48,18 @@ export class AddProjectComponent {
         );
       });
     }
-    this.global.post(`project/`, formData).subscribe((response) => {
-      setTimeout(() => {
+    this.global.post(`project/`, formData).subscribe({
+      next: (response) => {
         this.router.navigateByUrl('/admin');
-      }, 500);
+        this.toastr.success(
+          'project created successfully',
+          'project  created '
+        );
+      },
+      error: (error) => {
+        this.toastr.error('falied to add new project', 'project failed ');
+      },
+      complete: () => {},
     });
   }
 }

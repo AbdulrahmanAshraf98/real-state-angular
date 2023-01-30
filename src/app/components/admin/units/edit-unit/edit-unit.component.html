@@ -13,20 +13,36 @@
           class="form-control"
           name="name"
           formControlName="name"
-          [placeholder]="unitInfo.name"
-          [value]="unitInfo.name"
+          [class.is-valid]="editForm.controls?.['name']?.valid"
+          [class.is-invalid]="(editForm.controls?.['name']?.invalid&&(editForm.controls?.['name']?.touched||isSubmit))"
         />
+        <div
+        class="invalid-feedback"
+          *ngIf="editForm.controls?.['name']?.errors&& (editForm.controls?.['name']?.touched ||isSubmit) "
+        >
+          <div *ngIf="editForm.controls?.['name']?.errors?.['required']">
+            name is required
+          </div>
+        </div>
       </div>
       <div class="col-12">
         <label for="exampleInputEmail1" class="form-label">unit price </label>
         <input
         type="number"
         class="form-control"
-        name="buildNumber"
+        name="price"
         formControlName="price"
-        [placeholder]="unitInfo.price"
-        [value]="unitInfo.price"
+        [class.is-valid]="editForm.controls?.['price']?.valid"
+        [class.is-invalid]="(editForm.controls?.['price']?.invalid&&(editForm.controls?.['price']?.touched||isSubmit))"
       />
+      <div
+      class="invalid-feedback"
+        *ngIf="editForm.controls?.['price']?.errors&& (editForm.controls?.['price']?.touched ||isSubmit) "
+      >
+        <div *ngIf="editForm.controls?.['price']?.errors?.['required']">
+          price is required
+        </div>
+      </div>
       </div>
       <div class="col-12">
         <label for="formFileMultiple" class="form-label"

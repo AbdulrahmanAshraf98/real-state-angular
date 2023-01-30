@@ -13,14 +13,28 @@
         class="form-control"
         name="name"
         formControlName="name"
-        [placeholder]="projectInfo.name"
-        [value]="projectInfo.name"
+        [class.is-valid]="editForm.controls?.['name']?.valid"
+        [class.is-invalid]="(editForm.controls?.['name']?.invalid&&(editForm.controls?.['name']?.touched||isSubmit))"
       />
+      <div
+        class="invalid-feedback"
+        *ngIf="editForm.controls?.['name']?.errors&& (editForm.controls?.['name']?.touched ||isSubmit) "
+      >
+        <div *ngIf="editForm.controls?.['name']?.errors?.['required']">
+          name is required
+        </div>
+      </div>
     </div>
     <div class="col-12">
       <label for="exampleInputEmail1" class="form-label">project Type</label>
-      <select #type class="form-select" aria-label="Default select example"  formControlName="type" name="type">
-        <option  value="buy">buy</option>
+      <select
+        #type
+        class="form-select"
+        aria-label="Default select example"
+        formControlName="type"
+        name="type"
+      >
+        <option value="buy">buy</option>
         <option value="show">show</option>
       </select>
     </div>
@@ -28,7 +42,13 @@
       <label for="formFileMultiple" class="form-label"
         >Select Multiple Project Images</label
       >
-      <input class="form-control" type="file" id="formFileMultiple"   multiple (change)=" selectImageHandler($event)"/>
+      <input
+        class="form-control"
+        type="file"
+        id="formFileMultiple"
+        multiple
+        (change)="selectImageHandler($event)"
+      />
     </div>
 
     <div class="col-12">

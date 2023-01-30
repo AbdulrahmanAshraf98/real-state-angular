@@ -18,15 +18,17 @@
             class="form-control"
             name="name"
             formControlName="name"
+            [class.is-valid]="addProjectForm.controls?.['name']?.valid" 
+            [class.is-invalid]="(addProjectForm.controls?.['name']?.invalid&&(addProjectForm.controls?.['name']?.touched||isSubmit))"   
           />
           <div
-            class="alert alert-danger"
+          class="invalid-feedback"
             *ngIf="addProjectForm.controls?.['name']?.errors&& (addProjectForm.controls?.['name']?.touched ||isSubmit) "
           >
             <div
               *ngIf="addProjectForm.controls?.['name']?.errors?.['required']"
             >
-              <h3>name is required</h3>
+              name is required
             </div>
           </div>
         </div>
@@ -34,7 +36,9 @@
           <label for="exampleInputEmail1" class="form-label"
             >project Type</label
           >
-            <select #type class="form-select" aria-label="Default select example"  formControlName="type" name="type">
+            <select #type class="form-select" aria-label="Default select example"  formControlName="type" name="type"
+            [class.is-valid]="addProjectForm.controls?.['type']?.valid" 
+            [class.is-invalid]="(addProjectForm.controls?.['type']?.invalid&&(addProjectForm.controls?.['type']?.touched||isSubmit))"  >
               <option  value="buy">buy</option>
               <option value="show">show</option>
             </select>

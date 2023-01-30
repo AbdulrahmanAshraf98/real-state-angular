@@ -9,7 +9,7 @@ import { BuildingsComponent } from './pages/buildings/buildings.component';
 import { UnitsComponent } from './pages/units/units.component';
 import { ProjectComponent } from './pages/single/project/project.component';
 import { LoginComponent } from './pages/login/login.component';
-import { ErrorComponent } from './pages/error/error.component';
+import { ErrorComponent } from './shared/error/error.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 import { UpdateProfileImageComponent } from './pages/update-profile-image/update-profile-image.component';

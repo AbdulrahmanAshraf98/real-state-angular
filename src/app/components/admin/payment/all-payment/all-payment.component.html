@@ -29,7 +29,10 @@
                     <a class="btn btn-primary btn-info text-light"  (click)="paidHandler(payment._id,payment.requiredAmount)">paid</a>
                 </ng-container>
                 <a class="btn btn-primary btn-info text-light" routerLink="payments/{{payment._id}}/paymentPdf" >pdf</a>
-                <a routerLink="payments/{{payment._id}}/edit" class="btn btn-primary btn-secondary">edit</a>
+                <ng-container *ngIf="payment.totalPaidAmount !=payment.unit.price">
+                  <a routerLink="payments/{{payment._id}}/edit" class="btn btn-primary btn-secondary">edit</a>
+              </ng-container>
+             
                 <a class="btn btn-primary btn-danger" (click)="deletePaymentHandler(payment._id)">delete</a>
               </div></td>
        

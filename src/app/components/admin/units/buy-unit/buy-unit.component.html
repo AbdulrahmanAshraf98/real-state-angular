@@ -13,11 +13,11 @@
         class="form-control"
         name="name"
         formControlName="unitId"
-        [placeholder]="unitId"
-        [value]="unitId"
+        [class.is-valid]="buyUnitForm.controls?.['unitId']?.valid"
+        [class.is-invalid]="(buyUnitForm.controls?.['unitId']?.invalid&&(buyUnitForm.controls?.['unitId']?.touched||isSubmit))"
       />
       <div
-        class="alert alert-danger"
+      class="invalid-feedback"
         *ngIf="buyUnitForm.controls?.['unitId']?.errors&& (buyUnitForm.controls?.['unitId']?.touched ||isSubmit) "
       >
         <div *ngIf="buyUnitForm.controls?.['projectId']?.errors?.['required']">
@@ -35,13 +35,19 @@
         class="form-control"
         name="ownerEmail"
         formControlName="ownerEmail"
+        [class.is-valid]="buyUnitForm.controls?.['ownerEmail']?.valid"
+        [class.is-invalid]="(buyUnitForm.controls?.['ownerEmail']?.invalid&&(buyUnitForm.controls?.['ownerEmail']?.touched||isSubmit))"
+        email
       />
       <div
-        class="alert alert-danger"
+      class="invalid-feedback"
         *ngIf="buyUnitForm.controls?.['ownerEmail']?.errors&& (buyUnitForm.controls?.['ownerEmail']?.touched ||isSubmit) "
       >
         <div *ngIf="buyUnitForm.controls?.['ownerEmail']?.errors?.['required']">
-          <h3>ownerEmail is required</h3>
+          ownerEmail is required
+        </div>
+        <div  *ngIf="buyUnitForm.controls?.['ownerEmail']?.errors?.['email']">
+          email must be valid
         </div>
       </div>
     </div>
@@ -54,15 +60,17 @@
         class="form-control"
         name="paymentMethod"
         formControlName="paymentMethod"
+        [class.is-valid]="buyUnitForm.controls?.['paymentMethod']?.valid"
+        [class.is-invalid]="(buyUnitForm.controls?.['paymentMethod']?.invalid&&(buyUnitForm.controls?.['paymentMethod']?.touched||isSubmit))"
       />
       <div
-        class="alert alert-danger"
+      class="invalid-feedback"
         *ngIf="buyUnitForm.controls?.['paymentMethod']?.errors&& (buyUnitForm.controls?.['paymentMethod']?.touched ||isSubmit) "
       >
         <div
           *ngIf="buyUnitForm.controls?.['paymentMethod']?.errors?.['required']"
         >
-          <h3>ownerEmail is required</h3>
+          paymentMethod is required
         </div>
       </div>
     </div>
@@ -71,19 +79,21 @@
           >Number Of Years</label
         >
         <input
-          type="text"
+          type="number"
           class="form-control"
-          name="paymentMethod"
-          formControlName="paymentMethod"
+          name="numberOfYears"
+          formControlName="numberOfYears"
+          [class.is-valid]="buyUnitForm.controls?.['numberOfYears']?.valid"
+          [class.is-invalid]="(buyUnitForm.controls?.['numberOfYears']?.invalid&&(buyUnitForm.controls?.['numberOfYears']?.touched||isSubmit))"
         />
         <div
-          class="alert alert-danger"
-          *ngIf="buyUnitForm.controls?.['paymentMethod']?.errors&& (buyUnitForm.controls?.['paymentMethod']?.touched ||isSubmit) "
+        class="invalid-feedback"
+          *ngIf="buyUnitForm.controls?.['numberOfYears']?.errors&& (buyUnitForm.controls?.['numberOfYears']?.touched ||isSubmit) "
         >
           <div
-            *ngIf="buyUnitForm.controls?.['paymentMethod']?.errors?.['required']"
+            *ngIf="buyUnitForm.controls?.['numberOfYears']?.errors?.['required']"
           >
-            <h3>ownerEmail is required</h3>
+            numberOfYears is required
           </div>
         </div>
       </div>
@@ -96,9 +106,11 @@
         class="form-control"
         name="amountPaid"
         formControlName="amountPaid"
+        [class.is-valid]="buyUnitForm.controls?.['amountPaid']?.valid"
+        [class.is-invalid]="(buyUnitForm.controls?.['amountPaid']?.invalid&&(buyUnitForm.controls?.['amountPaid']?.touched||isSubmit))"
       />
       <div
-        class="alert alert-danger"
+      class="invalid-feedback"
         *ngIf="buyUnitForm.controls?.['amountPaid']?.errors&& (buyUnitForm.controls?.['amountPaid']?.touched ||isSubmit) "
       >
         <div *ngIf="buyUnitForm.controls?.['amountPaid']?.errors?.['required']">
