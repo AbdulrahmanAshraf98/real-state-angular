@@ -1,4 +1,6 @@
-import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { MeService } from 'src/app/services/me.service';
+import { NgForm, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { userInterface } from 'src/app/interface/userInterface';
 import { GlobalService } from 'src/app/services/global.service';
@@ -16,39 +18,57 @@ export class EditProfileComponent implements OnInit, OnDestroy {
     { path: '/profile/change-password', name: 'changePassword' },
   ];
   subscription: any;
-  currentUserInfo: userInterface = {
-    fName: '',
-    lName: '',
-    email: '',
-    age: 21,
-    profileImage: '',
-  };
+  editMeForm: FormGroup;
+  isSubmit = false;
 
-  constructor(private global: GlobalService) {
-    this.currentUserInfo = this.global.currentUserInfo;
+  constructor(
+    private global: GlobalService,
+    private me: MeService,
+    private toaster: ToastrService
+  ) {
+    this.editMeForm = new FormGroup({
+      fName: new FormControl(this.me.currentUser.fName, [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      lName: new FormControl(this.me.currentUser.lName, [
+        Validators.required,
+        Validators.minLength(5),
+      ]),
+      age: new FormControl(this.me.currentUser.age, [
+        Validators.required,
+        Validators.min(18),
+      ]),
+    });
   }
   ngOnInit(): void {
-    if (!this.currentUserInfo.email)
-      this.subscription = this.global.get('me').subscribe((responseData) => {
-        this.currentUserInfo = responseData.data;
-        this.global.currentUserInfo = responseData.data;
-      });
+    if (!this.me.currentUser.email) {
+      this.me.getCurrentUserData(
+        (responseData) => {
+          this.editMeForm.patchValue(this.me.currentUser);
+        },
+        (error) => {
+          this.toaster.error(error.error.message, 'fetch user failed ');
+        },
+        () => {}
+      );
+    }
   }
-  model = {
-    fName: this.currentUserInfo.fName,
-    lName: this.currentUserInfo.lName,
-    age: this.currentUserInfo.age,
-  };
-
-  submitHandler(f: NgForm) {
-    console.log(this.model);
-    if (f.invalid) return;
-    this.subscription = this.global
-      .edit('me', this.model)
-      .subscribe((responseData) => {
-        this.global.currentUserInfo = responseData.data;
-        this.currentUserInfo = this.global.currentUserInfo;
-      });
+  get currentUserProfileImage() {
+    return this.me.currentUser.profileImage;
+  }
+  submitHandler(form: any) {
+    this.isSubmit = true;
+    if (form.invalid) return;
+    this.subscription = this.me.editProfileData(
+      form.value,
+      (response) => {
+        this.toaster.success(response.message, 'edit successfully');
+      },
+      (error) => {
+        this.toaster.error(error.error.message, 'edit failed');
+      }
+    );
   }
 
   ngOnDestroy(): void {

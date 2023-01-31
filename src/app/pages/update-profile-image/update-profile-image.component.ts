@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { userInterface } from 'src/app/interface/userInterface';
 import { GlobalService } from 'src/app/services/global.service';
+import { MeService } from 'src/app/services/me.service';
 
 @Component({
   selector: 'app-update-profile-image',
@@ -21,20 +23,23 @@ export class UpdateProfileImageComponent {
     profileImage: '',
   };
   profileImageFile: any;
-  constructor(private global: GlobalService) {}
+  constructor(
+    private global: GlobalService,
+    private me: MeService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-    if (!this.global.currentUserInfo.email)
-      this.subscription = this.global.get('me').subscribe({
-        next: (responseData) => {
-          this.global.currentUserInfo = responseData.data;
-          if (this.global.currentUserInfo.profileImage)
-            this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
-        },
-        error: (error) => {},
-        complete: () => {},
-      });
-    if (this.global.currentUserInfo.profileImage)
-      this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
+    if (!this.me.currentUser.email) {
+      this.subscription = this.me.getCurrentUserData(
+        () => {},
+        () => {},
+        () => {}
+      );
+    }
+  }
+  get currentUserImage() {
+    return this.me.currentUser.profileImage;
   }
 
   selectImageHandler(event: any) {
@@ -47,25 +52,14 @@ export class UpdateProfileImageComponent {
     if (f.invalid) return;
     const formData = new FormData();
     formData.append('photo', this.profileImageFile, this.profileImageFile.name);
-    this.subscription = this.global
-      .edit('me/changeProfileImage', formData)
-      .subscribe({
-        next: (responseData: any) => {
-          console.log(
-            this.global.currentUserInfo.profileImage,
-            responseData.data.profileImage
-          );
-          this.data = responseData.data;
-          this.global.currentUserInfo = responseData.data;
-        },
-        error: () => {},
-        complete: () => {
-          this.global.currentUserInfo = this.data;
-          setTimeout(() => {
-            this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.global.currentUserInfo.profileImage}`;
-          }, 500);
-        },
-      });
+    this.subscription = this.me.updateProfileImage(
+      formData,
+      (responseData) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {}
+    );
   }
   ngOnDestroy(): void {
     if (this.subscription) this.subscription.unsubscribe();

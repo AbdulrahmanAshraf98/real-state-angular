@@ -18,6 +18,12 @@
   ></app-navbar-item>
   <ng-container *ngIf="isLogin">
     <li class="nav-item">
+      <a class="nav-link" aria-current="page" routerLink="/profile" routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{'exact': true}">profile</a>   
+     </li>
+  </ng-container>
+  <ng-container *ngIf="isLogin && userRole!='customer'">
+    <li class="nav-item">
       <a class="nav-link" aria-current="page" routerLink="/admin" routerLinkActive="active-link"
       [routerLinkActiveOptions]="{'exact': true}">dashboard</a>   
      </li>

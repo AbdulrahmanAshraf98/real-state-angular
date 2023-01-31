@@ -8,9 +8,9 @@
       <div class="col row  p-3">
         <div class="col-12 mb-4 text-center">
             <div class="profile-image">
-              <ng-container *ngIf="profileImageSrc">
+              <ng-container *ngIf="currentUserImage">
                 <img
-                [src]=profileImageSrc
+                src="http://localhost:8000/api/v1/public/uploads/users/{{currentUserImage}}"
                 class="w-25 h-25 rounded-circle "
               />
               </ng-container>
@@ -33,6 +33,7 @@
                   required
                   [(ngModel)]="model.profileImage"
                   (change)="selectImageHandler($event)"
+                
                 />
               </div>
               <div
@@ -40,7 +41,7 @@
                 *ngIf="profileImage.invalid && f.submitted"
               >
                 <div *ngIf="profileImage.errors?.['required']">
-                  <h3>profileImage is required</h3>
+                  profileImage is required
                 </div>
               </div>
             </div>

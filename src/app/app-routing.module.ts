@@ -29,6 +29,8 @@ import { AllUnitsComponent } from './components/admin/units/all-units/all-units.
 import { BuyUnitComponent } from './components/admin/units/buy-unit/buy-unit.component';
 import { PaymentPdfComponent } from './components/admin/payment/payment-pdf/payment-pdf.component';
 import { AddUnitComponent } from './components/admin/units/add-unit/add-unit.component';
+import { CanActivateGuard } from './guards/can-activate.guard';
+import { CanActivateUserRoleGuard } from './guards/can-activate-user-role.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -68,6 +70,7 @@ const routes: Routes = [
         component: ChangePasswordComponent,
       },
     ],
+    canActivate: [CanActivateGuard],
   },
   {
     path: 'admin',
@@ -162,6 +165,7 @@ const routes: Routes = [
         ],
       },
     ],
+    canActivate: [CanActivateGuard, CanActivateUserRoleGuard],
   },
   { path: '**', component: ErrorComponent },
 ];

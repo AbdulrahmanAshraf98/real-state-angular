@@ -1,7 +1,9 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginInterface } from 'src/app/interface/login';
+import { AuthService } from 'src/app/services/auth.service';
 import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
@@ -14,11 +16,25 @@ export class LoginComponent implements OnDestroy {
   loginForm: FormGroup;
   isSubmit = false;
   loading = false;
-  constructor(private global: GlobalService, private route: Router) {
+  constructor(
+    private global: GlobalService,
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
+  }
+  private handleSuccessfullyLogin(response: any) {}
+  private handleFailedLogin(error: any) {
+    this.toastr.error(error.error.message, 'failed');
+    this.loading = false;
+  }
+  private handleCompleteLogin() {
+    this.router.navigateByUrl('/profile');
+    this.loading = false;
   }
 
   error = {};
@@ -26,18 +42,14 @@ export class LoginComponent implements OnDestroy {
     this.isSubmit = true;
     if (form.invalid) return;
     this.loading = true;
-    this.global.post('user/login', form.value).subscribe(
-      (response) => {
-        localStorage.setItem('token', response.data.token);
-        this.global.isLogin = true;
-        this.route.navigateByUrl('/profile');
-      },
-      (error) => console.log(error),
-      () => {
-        this.loading = false;
-      }
+    this.subscription = this.authService.login(
+      form.value,
+      this.handleSuccessfullyLogin.bind(this),
+      this.handleFailedLogin.bind(this),
+      this.handleCompleteLogin.bind(this)
     );
   }
-
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

@@ -1,9 +1,8 @@
+import { ProjectService } from './../../../../services/project.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { projectInterface } from 'src/app/interface/projectInterface';
-import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-edit-project',
@@ -18,7 +17,7 @@ export class EditProjectComponent implements OnInit {
   projectId: any;
   projectImagesFiles: any[] = [];
   constructor(
-    private global: GlobalService,
+    private projectService: ProjectService,
     private activated: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService
@@ -31,18 +30,17 @@ export class EditProjectComponent implements OnInit {
   ngOnInit(): void {
     this.projectId = this.activated.snapshot.paramMap.get('projectId');
     if (this.projectId)
-      this.subscription = this.global
-        .get(`project/${this.projectId}`)
-        .subscribe({
-          next: (responseData) => {
-            this.editForm.patchValue(responseData.data);
-          },
-          error: () => {
-            this.router.navigateByUrl('/admin');
-            this.toastr.error('project not found', '404 not found ');
-          },
-          complete: () => {},
-        });
+      this.subscription = this.projectService.getSingle(
+        this.projectId,
+        (response) => {
+          this.editForm.patchValue(response.data);
+        },
+        (error) => {
+          this.router.navigateByUrl('/admin');
+          this.toastr.error('project not found', '404 not found ');
+        },
+        () => {}
+      );
   }
   selectImageHandler(event: any) {
     if (event.target.files.length == 0) return;
@@ -64,16 +62,23 @@ export class EditProjectComponent implements OnInit {
         );
       });
     }
-    this.global.edit(`project/${this.projectId}`, formData).subscribe({
-      next: (response) => {},
-      error: (error) => {
+    this.subscription = this.projectService.edit(
+      this.projectId,
+      formData,
+      () => {},
+      (error) => {
+        this.loading = false;
         this.router.navigateByUrl('/admin');
         this.toastr.error('project failed to edit', 'failed');
       },
-      complete: () => {
+      () => {
+        this.loading = false;
         this.router.navigateByUrl('/admin');
         this.toastr.success('project edit successfully', 'project edit ');
-      },
-    });
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

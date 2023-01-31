@@ -18,10 +18,13 @@
           <tr *ngFor="let project of projects">
             <th>{{ project._id }}</th>
             <td scope="col" class="col-1">
-              <img
+              <ng-container *ngIf="project.projectImages[0]">
+                <img
                 class="img-fluid rounded "
                 src="http://localhost:8000/api/v1/public/uploads/projects/{{project.projectImages[0]}}"
               />
+              </ng-container>
+         
             </td>
             <td>{{ project.name }}</td>         
             <td>{{ project.type }}</td>

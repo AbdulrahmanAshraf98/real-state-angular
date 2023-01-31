@@ -1,24 +1,22 @@
+import { ProjectService } from './../../../../services/project.service';
 import { ToastrService } from 'ngx-toastr';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { projectInterface } from 'src/app/interface/projectInterface';
-import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-add-project',
   templateUrl: './add-project.component.html',
   styleUrls: ['./add-project.component.css'],
 })
-export class AddProjectComponent {
+export class AddProjectComponent implements OnDestroy {
   addProjectForm: FormGroup;
   subscription: any;
   isSubmit: boolean = false;
   loading: boolean = false;
-
   projectImagesFiles: any[] = [];
   constructor(
-    private global: GlobalService,
+    private projectService: ProjectService,
     private router: Router,
     private toastr: ToastrService
   ) {
@@ -28,6 +26,7 @@ export class AddProjectComponent {
       projectImages: new FormControl('', []),
     });
   }
+
   ngOnInit(): void {}
   selectImageHandler(event: any) {
     if (event.target.files.length == 0) return;
@@ -48,18 +47,22 @@ export class AddProjectComponent {
         );
       });
     }
-    this.global.post(`project/`, formData).subscribe({
-      next: (response) => {
+    this.subscription = this.projectService.add(
+      formData,
+      (response) => {},
+      (error) => {
+        this.toastr.error('falied to add new project', 'project failed ');
+      },
+      () => {
         this.router.navigateByUrl('/admin');
         this.toastr.success(
           'project created successfully',
           'project  created '
         );
-      },
-      error: (error) => {
-        this.toastr.error('falied to add new project', 'project failed ');
-      },
-      complete: () => {},
-    });
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

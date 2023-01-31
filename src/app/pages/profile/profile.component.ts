@@ -1,3 +1,4 @@
+import { MeService } from './../../services/me.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { userInterface } from 'src/app/interface/userInterface';
 import { GlobalService } from 'src/app/services/global.service';
@@ -15,18 +16,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     { path: '/profile/change-password', name: 'changePassword' },
   ];
   subscription: any;
-  currentUserInfo: userInterface;
 
-  constructor(private global: GlobalService) {
-    this.currentUserInfo = this.global.currentUserInfo;
+  constructor(private global: GlobalService, private me: MeService) {}
+  get currentUserInfo(): userInterface {
+    return this.me.currentUser;
   }
   ngOnInit(): void {
-    this.subscription = this.global.get('me').subscribe((responseData) => {
-      this.currentUserInfo = responseData.data;
-      this.global.currentUserInfo = responseData.data;
-    });
+    this.subscription = this.me.getCurrentUserData();
   }
-
   ngOnDestroy(): void {
     if (this.subscription) this.subscription.unsubscribe();
   }

@@ -4,10 +4,10 @@
         <div class="col content g-3">
             <div class="col-12 text-center">
                 <div class="profile-image">
-                  <ng-container *ngIf="currentUserInfo.profileImage">
+                  <ng-container *ngIf="currentUserProfileImage">
                     <img
                     src="http://localhost:8000/api/v1/public/uploads/users/{{
-                        currentUserInfo.profileImage
+                      currentUserProfileImage
                     }}"
                     class="w-25 h-25 rounded-circle"
                   />
@@ -18,23 +18,22 @@
             <h5 class="">Edit profile</h5>
             <hr/>
       
-                <form #f="ngForm" class="row gy-3" (ngSubmit)="submitHandler(f)">
+                <form  [formGroup]="editMeForm"  class="row gy-3" (ngSubmit)="submitHandler(editMeForm)">
                   <div class=" col-12 ">
                     <label for="exampleInputEmail1" class="form-label" name="username"
                       >First Name</label
                     >
                     <input
-                      #fName="ngModel"
                       type="text"
                       class="form-control"
                       name="fName"
-                      [(ngModel)]="model.fName"
-                      placeholder="{{currentUserInfo.fName}}"
-                
+                      formControlName="fName"
+                      [class.is-valid]="editMeForm.controls?.['fName']?.valid" 
+                      [class.is-invalid]="(editMeForm.controls?.['fName']?.invalid&&(editMeForm.controls?.['fName']?.touched||isSubmit))"     
                     />
-                    <div class="alert alert-danger" *ngIf="fName.invalid&&f.submitted">
-                      <div *ngIf="fName.errors?.['required']">
-                        <h3>fName is required</h3>
+                    <div class="invalid-feedback" *ngIf="editMeForm.controls?.['fName']?.errors&& (editMeForm.controls?.['fName']?.touched ||isSubmit) ">
+                      <div *ngIf="editMeForm.controls?.['fName']?.errors?.['required']">
+                        fName is required
                       </div>
                     </div>
                   </div>
@@ -43,17 +42,18 @@
                       >Last Name</label
                     >
                     <input
-                      #lName="ngModel"
+
                       type="text"
                       class="form-control"
                       name="lName"
                       required
-                      [(ngModel)]="model.lName"
-                      placeholder="{{currentUserInfo.lName}}"
+                      formControlName="lName"
+                      [class.is-valid]="editMeForm.controls?.['lName']?.valid" 
+                      [class.is-invalid]="(editMeForm.controls?.['lName']?.invalid&&(editMeForm.controls?.['lName']?.touched||isSubmit))"  
                     
                     />
-                    <div class="alert alert-danger" *ngIf="lName.invalid&&f.submitted">
-                      <div *ngIf="lName.errors?.['required']">
+                    <div  class="invalid-feedback" *ngIf="editMeForm.controls?.['lName']?.errors&& (editMeForm.controls?.['lName']?.touched ||isSubmit) ">
+                      <div *ngIf="editMeForm.controls?.['lName']?.errors?.['required']">
                         <h3>lName is required</h3>
                       </div>
                     </div>
@@ -63,17 +63,18 @@
                       >Age</label
                     >
                     <input
-                      #age="ngModel"
-                      type="text"
+                      
+                      type="number"
                       class="form-control"
                       name="age"
-                      [(ngModel)]="model.age"
-                      placeholder="{{currentUserInfo.age}}"
+                      formControlName="age"
+                      [class.is-valid]="editMeForm.controls?.['age']?.valid" 
+                      [class.is-invalid]="(editMeForm.controls?.['age']?.invalid&&(editMeForm.controls?.['age']?.touched||isSubmit))"  
                      
                     />
-                    <div class="alert alert-danger" *ngIf="age.invalid&&f.submitted">
-                      <div *ngIf="age.errors?.['required']">
-                        <h3>age is required</h3>
+                    <div class="invalid-feedback" *ngIf="editMeForm.controls?.['age']?.errors&& (editMeForm.controls?.['age']?.touched ||isSubmit) ">
+                      <div *ngIf="editMeForm.controls?.['age']?.errors?.['required']">
+                        age is required
                       </div>
                     </div>
                   </div>

@@ -1,54 +1,66 @@
-import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { ProjectService } from './../../../../services/project.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { projectInterface } from 'src/app/interface/projectInterface';
-import { GlobalService } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-all-project',
   templateUrl: './all-project.component.html',
   styleUrls: ['./all-project.component.css'],
 })
-export class AllProjectComponent implements OnInit {
+export class AllProjectComponent implements OnInit, OnDestroy {
   subscription: any;
   loading = false;
-  projects: projectInterface[] = [];
+
   heads: string[] = ['id', 'img', 'name', 'type', 'actions'];
   change: boolean = false;
-  constructor(private global: GlobalService) {}
-
+  constructor(
+    private projectService: ProjectService,
+    private toastr: ToastrService
+  ) {}
+  get projects() {
+    return this.projectService.projects;
+  }
   ngOnInit(): void {
     this.loading = true;
-    this.subscription = this.global.get('project/').subscribe({
-      next: (responseData) => {
-        this.projects = responseData.data;
-        console.log(this.projects);
-      },
-      error: (error) => console.log(error),
-      complete: () => {
+    this.subscription = this.projectService.getAll(
+      (response) => {
         this.loading = false;
       },
-    });
+      (error) => {
+        this.loading = false;
+        this.toastr.error(error.message, 'failed to fetch');
+      },
+      () => {}
+    );
   }
+
   ngDoCheck() {
     if (this.change) {
-      this.loading = true;
-      this.global.get('project/').subscribe({
-        next: (responseData) => {
-          this.projects = responseData.data;
+      this.subscription = this.projectService.getAll(
+        (response) => {},
+        (error) => {
+          this.toastr.error(error.message, 'failed to fetch');
         },
-        error: (error) => {},
-        complete: () => {
-          this.loading = false;
-        },
-      });
+        () => {}
+      );
       this.change = false;
     }
   }
+
+  deleteProjectHandler(projectId: string) {
+    this.projectService.delete(
+      projectId,
+      (response) => {
+        this.change = true;
+      },
+      (error) => {
+        this.toastr.error(error.message, 'failed to delete');
+      },
+      () => {}
+    );
+  }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
-  }
-  deleteProjectHandler(projectId: string) {
-    this.global.delete(`project/${projectId}`).subscribe((response) => {
-      this.change = true;
-    });
   }
 }
