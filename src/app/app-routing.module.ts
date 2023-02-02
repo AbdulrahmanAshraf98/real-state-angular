@@ -1,3 +1,4 @@
+import { SingleRoleComponent } from './components/admin/roles/single-role/single-role.component';
 import { AllPaymentComponent } from './components/admin/payment/all-payment/all-payment.component';
 import { EditUnitComponent } from './components/admin/units/edit-unit/edit-unit.component';
 import { AddBuildingComponent } from './components/admin/buildings/add-building/add-building.component';
@@ -31,6 +32,8 @@ import { PaymentPdfComponent } from './components/admin/payment/payment-pdf/paym
 import { AddUnitComponent } from './components/admin/units/add-unit/add-unit.component';
 import { CanActivateGuard } from './guards/can-activate.guard';
 import { CanActivateUserRoleGuard } from './guards/can-activate-user-role.guard';
+import { AddRoleComponent } from './components/admin/roles/add-role/add-role.component';
+import { EditRoleComponent } from './components/admin/roles/edit-role/edit-role.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -161,6 +164,23 @@ const routes: Routes = [
           {
             path: ':paymentId/paymentPdf',
             component: PaymentPdfComponent,
+          },
+        ],
+      },
+      {
+        path: 'role',
+        children: [
+          {
+            path: 'add',
+            component: AddRoleComponent,
+          },
+          {
+            path: ':roleName',
+            component: SingleRoleComponent,
+          },
+          {
+            path: ':roleName/edit',
+            component: EditRoleComponent,
           },
         ],
       },

@@ -1,3 +1,4 @@
+import { UserService } from './../../../../services/user.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { userInterface } from 'src/app/interface/userInterface';
@@ -10,7 +11,6 @@ import { userInterface } from 'src/app/interface/userInterface';
 export class AlluserComponent implements OnInit {
   subscription: any;
   loading = false;
-  users: userInterface[] = [];
   heads: string[] = [
     'id',
     'img',
@@ -21,40 +21,58 @@ export class AlluserComponent implements OnInit {
     'age',
     'actions',
   ];
-  constructor(private global: GlobalService) {}
+  constructor(
+    private global: GlobalService,
+    private userService: UserService
+  ) {}
   change = false;
-
+  get users() {
+    return this.userService.users;
+  }
   ngOnInit() {
     this.loading = true;
-    this.subscription = this.global.get('user/').subscribe({
-      next: (responseData) => {
-        this.users = responseData.data;
-      },
-      error: (error) => {},
-      complete: () => {
+    this.subscription = this.userService.getAll(
+      () => {},
+      () => {},
+      () => {
         this.loading = false;
-      },
-    });
+      }
+    );
+    // this.subscription = this.global.get('user/').subscribe({
+    //   next: (responseData) => {
+    //     this.users = responseData.data;
+    //   },
+    //   error: (error) => {},
+    //   complete: () => {
+    //     this.loading = false;
+    //   },
+    // });
   }
   ngDoCheck() {
     if (this.change) {
       this.loading = true;
-      this.global.get('user/').subscribe({
-        next: (responseData) => {
-          this.users = responseData.data;
-        },
-        error: (error) => {},
-        complete: () => {
+      this.subscription = this.userService.getAll(
+        () => {},
+        () => {},
+        () => {
           this.loading = false;
-        },
-      });
+        }
+      );
       this.change = false;
     }
   }
   deleteUserHandler(id: any) {
-    this.global.delete(`user/${id}`).subscribe((response) => {
-      this.change = true;
-    });
+    this.subscription = this.userService.delete(
+      id,
+      (response) => {
+        this.change = true;
+      },
+      () => {},
+      () => {}
+    );
+    // this.global.delete(`user/${id}`).subscribe((response) => {
+    //   this.change = true;
+    // });
   }
 
   ngOnDestroy(): void {}

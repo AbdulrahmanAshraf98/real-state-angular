@@ -28,6 +28,7 @@ body{
 a{
   text-decoration: none !important;
 }
+
 section{
   padding:2rem 0;
 }
@@ -38,6 +39,7 @@ p{
   font-weight:var(--body-font-weight);
   line-height:var( --body-line-height);
 }
+
 .btn-type-primary,.btn-type-primary:hover,.btn-type-primary:focus,.btn-type-primary:active,.btn-type-primary:focus-visible{
   background-color: var(--primary-color) !important;
   outline:  var(--primary-color) !important;

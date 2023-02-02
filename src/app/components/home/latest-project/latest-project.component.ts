@@ -1,12 +1,12 @@
-import { ProjectService } from './../../services/project.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ProjectService } from './../../../services/project.service';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-projects',
-  templateUrl: './projects.component.html',
-  styleUrls: ['./projects.component.css'],
+  selector: 'app-latest-project',
+  templateUrl: './latest-project.component.html',
+  styleUrls: ['./latest-project.component.css'],
 })
-export class ProjectsComponent implements OnInit, OnDestroy {
+export class LatestProjectComponent {
   subscription: any;
   loading = false;
   constructor(private projectService: ProjectService) {}
@@ -22,7 +22,7 @@ export class ProjectsComponent implements OnInit, OnDestroy {
     );
   }
   get projects() {
-    return this.projectService.projects;
+    return this.projectService.projects.slice(0, 6);
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

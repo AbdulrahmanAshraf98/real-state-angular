@@ -53,6 +53,17 @@ import { NewPaidComponent } from './components/admin/payment/new-paid/new-paid.c
 import { EditPaymentComponent } from './components/admin/payment/edit-payment/edit-payment.component';
 import { SinglePaymentComponent } from './components/admin/payment/single-payment/single-payment.component';
 import { PaymentPdfComponent } from './components/admin/payment/payment-pdf/payment-pdf.component';
+import { AllRolesComponent } from './components/admin/roles/all-roles/all-roles.component';
+import { SingleRoleComponent } from './components/admin/roles/single-role/single-role.component';
+import { AddRoleComponent } from './components/admin/roles/add-role/add-role.component';
+import { EditRoleComponent } from './components/admin/roles/edit-role/edit-role.component';
+import { AddRoleUrlComponent } from './components/admin/roles/add-role-url/add-role-url.component';
+import { HeroSectionComponent } from './components/home/hero-section/hero-section.component';
+import { OurMissionComponent } from './components/home/our-mission/our-mission.component';
+import { LatestProjectComponent } from './components/home/latest-project/latest-project.component';
+import { OurVisionComponent } from './components/home/our-vision/our-vision.component';
+import { FooterComponent } from './shared/footer/footer.component';
+
 
 @NgModule({
   declarations: [
@@ -100,6 +111,16 @@ import { PaymentPdfComponent } from './components/admin/payment/payment-pdf/paym
     SinglePaymentComponent,
     PaymentPdfComponent,
     AddUnitComponent,
+    AllRolesComponent,
+    SingleRoleComponent,
+    AddRoleComponent,
+    EditRoleComponent,
+    AddRoleUrlComponent,
+    HeroSectionComponent,
+    OurMissionComponent,
+    LatestProjectComponent,
+    OurVisionComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,75 @@
+
+  <ng-container *ngIf="loading">
+    <div class="col-12">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+</ng-container>
+<ng-container *ngIf="!loading">
+  <section>
+    <a class="btn btn-primary" routerLink="projects/add">add New url</a>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let head of heads">{{ head }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let url of urls">
+            <th>{{ url._id }}</th>
+            <td>{{ url.url }}</td>    
+            <td >
+              <ng-container *ngIf="url.params">
+                <div *ngFor="let param of url.params | keyvalue">
+                  {{param.key}}
+                </div>
+            </ng-container>
+              
+            </td>  
+            <td>
+                <ng-container *ngIf="url.querys">
+                    <div *ngFor="let query of url.querys | keyvalue">
+                        {{query.key}}
+                      </div>
+                </ng-container>
+            </td>   
+            
+            <td>
+              <ng-container *ngIf="url.methods">
+                <div *ngFor="let method of url.methods | keyvalue">
+                  {{method.key}}
+                </div>
+            </ng-container>
+
+               
+                
+                </td>
+
+            <td >
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <a
+                  class="btn btn-primary btn-info text-light"
+                  routerLink="/role/{{ role.name }}"
+                  >show</a
+                >
+                <a
+                  routerLink="role/{{ url._id }}/edit"
+                  class="btn btn-primary btn-secondary"
+                  >edit</a
+                >
+                <a
+                  class="btn btn-primary btn-danger"
+                  (click)="deleteRoleHandler(url._id)"
+                  >delete</a
+                >
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</ng-container>
+
+
+

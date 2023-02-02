@@ -1,0 +1,49 @@
+
+  <ng-container *ngIf="loading">
+    <div class="col-12">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
+</ng-container>
+<ng-container *ngIf="!loading">
+  <section>
+    <a class="btn btn-primary" routerLink="role/add">add New role</a>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col" *ngFor="let head of heads">{{ head }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let role of roles">
+            <th>{{ role._id }}</th>
+            <td>{{ role.name }}</td>         
+            <td>{{ role.type }}</td>
+
+            <td >
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <a
+                  class="btn btn-primary btn-info text-light"
+                  routerLink="role/{{ role.name }}"
+                  >show</a
+                >
+                <a
+                  routerLink="role/{{ role.name }}/edit"
+                  class="btn btn-primary btn-secondary"
+                  >edit</a
+                >
+                <a
+                  class="btn btn-primary btn-danger"
+                  (click)="deleteRoleHandler(role.name)"
+                  >delete</a
+                >
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</ng-container>
+
+

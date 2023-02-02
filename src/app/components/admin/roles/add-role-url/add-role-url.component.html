@@ -1,0 +1,93 @@
+<!-- <form
+          [formGroup]="addUrlForm"
+          class="row gy-3"
+          (ngSubmit)="submitHandler(addUrlForm)"
+        >
+
+    
+    </form> -->
+
+<!-- <section>
+    <div class="row">
+      <div class="col content g-3">
+        <div class="col-12 text-center"></div>
+        <h5 class="">add role</h5>
+        <hr />
+        <form
+          [formGroup]="editRoleForm"
+          class="row gy-3"
+          (ngSubmit)="submitHandler(editRoleForm)"
+        >
+
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label" name="type"
+              > role type</label
+            >
+            <select class="form-select" aria-label="Default select example" formControlName="type" name="type"
+            [class.is-valid]="editRoleForm.controls?.['type']?.valid"
+            [class.is-invalid]="(editRoleForm.controls?.['type']?.invalid&&(editRoleForm.controls?.['type']?.touched||isSubmit))"
+            >
+            <option value="admin">admin</option>
+            <option value="employee">employee</option>
+            <option value="customer">customer</option>
+            </select>
+            <div
+            class="invalid-feedback"
+              *ngIf="editRoleForm.controls?.['type']?.errors&& (editRoleForm.controls?.['type']?.touched ||isSubmit) "
+            >
+              <div
+                *ngIf="editRoleForm.controls?.['type']?.errors?.['required']"
+              >
+                role type is required
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="exampleInputEmail1" class="form-label"
+              >Name</label
+            >
+            <input
+            type="text"
+            class="form-control"
+            name="name"
+            formControlName="name"
+            [class.is-valid]="editRoleForm.controls?.['name']?.valid"
+            [class.is-invalid]="(editRoleForm.controls?.['name']?.invalid&&(editRoleForm.controls?.['name']?.touched||isSubmit))"
+          />
+          <div
+          class="invalid-feedback"
+            *ngIf="editRoleForm.controls?.['name']?.errors&& (editRoleForm.controls?.['name']?.touched ||isSubmit) "
+          >
+            <div
+              *ngIf="editRoleForm.controls?.['name']?.errors?.['required']"
+            >
+              role Name is required
+            </div>
+          </div>
+
+          </div>
+
+
+
+  
+          <div class="col-12">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [class.btn-type-primary]="!loading"
+              [class.d-flex]="loading"
+              [class.text-bg-dark]="loading"
+            >
+              <ng-container *ngIf="loading">
+                <div class="col-12">
+                  <app-loading-spinner></app-loading-spinner>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!loading">edit</ng-container>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+   -->
