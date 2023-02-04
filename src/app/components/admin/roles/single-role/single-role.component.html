@@ -8,7 +8,7 @@
   <section>
     <a class="btn btn-primary" routerLink="addUrl">add New url</a>
     <div class="table-responsive">
-      <table class="table">
+      <table class="table ">
         <thead>
           <tr>
             <th scope="col" *ngFor="let head of heads">{{ head }}</th>
@@ -21,7 +21,14 @@
             <td >
               <ng-container *ngIf="url.params">
                 <div *ngFor="let param of url.params | keyvalue">
-                  {{param.key}}
+                  <div class="d-flex gap-2 justify-content-between align-items-start mb-2">
+                    <p class="mb-0">{{param.key}}</p>
+                    <a
+                    class="btn btn-danger"
+                    (click)="deleteParamHandler(url._id,param.key)"
+                    >delete</a
+                  >
+                  </div>
                 </div>
             </ng-container>
               
@@ -29,24 +36,34 @@
             <td>
                 <ng-container *ngIf="url.querys">
                     <div *ngFor="let query of url.querys | keyvalue">
-                        {{query.key}}
+                      <div class="d-flex gap-2 justify-content-between align-items-start mb-2">
+                        <p class="mb-0">{{query.key}}</p>
+                        <a
+                        class="btn btn-danger"
+                        (click)="deleteQueryHandler(url._id,query.key)"
+                        >delete</a
+                      >
+                      </div>
+                  
                       </div>
                 </ng-container>
             </td>   
             
-            <td>
+            <td  class="" scope="row">
               <ng-container *ngIf="url.methods">
-                <div *ngFor="let method of url.methods | keyvalue">
-                  <div class="row">
-                    <div>{{method.key}}</div>
-                    <!-- <a
-                    class="btn btn-primary btn-danger"
+                <ng-container    *ngFor="let method of url.methods | keyvalue">
+                  <div class="d-flex gap-2 justify-content-between align-items-start mb-2">
+                    <p class="mb-0">{{method.key}}</p>
+                    <a
+                    class="btn btn-danger"
                     (click)="deleteMethodHandler(url._id,method.key)"
                     >delete</a
-                  > -->
+                  >
                   </div>
+                   
+                   
                   
-                </div>
+                </ng-container>
             </ng-container>
 
                
@@ -55,7 +72,6 @@
 
             <td >
               <div class="btn-group" role="group" aria-label="Basic example">
-
                 <a
                   routerLink="role/{{ url._id }}/edit"
                   class="btn btn-primary btn-secondary"

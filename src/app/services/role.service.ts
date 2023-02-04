@@ -161,4 +161,42 @@ export class RoleService implements CrudServicesInterface {
       },
     });
   }
+  removeUrlParam(
+    name: string,
+    successHandler = (response: any) => {},
+    errorHandler = (error: any) => {},
+    completeHandler = () => {},
+    data: any = {}
+  ) {
+    return this.global.delete(`role/${name}/param`, data).subscribe({
+      next: (response) => {
+        successHandler(response);
+      },
+      error: (error) => {
+        errorHandler(error);
+      },
+      complete: () => {
+        completeHandler();
+      },
+    });
+  }
+  removeUrlQuery(
+    name: string,
+    successHandler = (response: any) => {},
+    errorHandler = (error: any) => {},
+    completeHandler = () => {},
+    data: any = {}
+  ) {
+    return this.global.delete(`role/${name}/query`, data).subscribe({
+      next: (response) => {
+        successHandler(response);
+      },
+      error: (error) => {
+        errorHandler(error);
+      },
+      complete: () => {
+        completeHandler();
+      },
+    });
+  }
 }

@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { roleInterface } from 'src/app/interface/roleInterface';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -10,7 +11,7 @@ import { RoleService } from 'src/app/services/role.service';
 })
 export class SingleRoleComponent implements OnInit, OnDestroy {
   subscription: any;
-  heads = ['_id', 'link', 'params', 'query', 'method'];
+  heads = ['_id', 'link', 'params', 'query', 'method', 'actions'];
   role: roleInterface = {
     name: '',
     type: '',
@@ -18,9 +19,11 @@ export class SingleRoleComponent implements OnInit, OnDestroy {
   };
   roleName: any;
   loading = false;
+  change = false;
   constructor(
     private roleService: RoleService,
-    private activated: ActivatedRoute
+    private activated: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +40,26 @@ export class SingleRoleComponent implements OnInit, OnDestroy {
       }
     );
   }
+
   get urls() {
     return this.role.urls;
+  }
+  ngDoCheck() {
+    if (this.change) {
+      this.subscription = this.roleService.getSingle(
+        this.roleName,
+        (response) => {
+          this.loading = false;
+          this.role = response.data;
+        },
+        (error) => {
+          this.toastr.error(error.message, 'failed to fetch');
+        },
+        () => {}
+      );
+
+      this.change = false;
+    }
   }
   deleteRoleHandler(urlId: string) {
     this.roleService.removeUrlFromRole(
@@ -48,23 +69,57 @@ export class SingleRoleComponent implements OnInit, OnDestroy {
         console.log(response);
       },
       (error) => {
-        console.log(error);
+        this.toastr.error(error.error.message, 'failed to delete');
       },
-      () => {}
+      () => {
+        this.change = true;
+      },
+      {}
     );
   }
   deleteMethodHandler(urlId: string, methodName: any) {
-    console.log(urlId);
     this.roleService.removeUrlMethod(
       this.roleName,
       (response) => {
         console.log(response);
       },
       (error) => {
-        console.log(error);
+        this.toastr.error(error.error.message, 'failed to delete');
       },
-      () => {},
+      () => {
+        this.change = true;
+      },
       { urlId: urlId, method: methodName }
+    );
+  }
+  deleteParamHandler(urlId: string, paramName: any) {
+    this.roleService.removeUrlParam(
+      this.roleName,
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        this.toastr.error(error.error.message, 'failed to delete');
+      },
+      () => {
+        this.change = true;
+      },
+      { urlId: urlId, param: paramName }
+    );
+  }
+  deleteQueryHandler(urlId: string, queryName: any) {
+    this.roleService.removeUrlQuery(
+      this.roleName,
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        this.toastr.error(error.error.message, 'failed to delete');
+      },
+      () => {
+        this.change = true;
+      },
+      { urlId: urlId, query: queryName }
     );
   }
   ngOnDestroy(): void {
