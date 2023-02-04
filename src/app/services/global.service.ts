@@ -33,6 +33,7 @@ export class GlobalService {
     return this.http.patch<any>(`${this.baseUrl}${url}`, data);
   }
   delete(url: string, data: object = {}) {
+    console.log(data);
     const options = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

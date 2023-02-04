@@ -1,3 +1,4 @@
+import { AddRoleUrlComponent } from './components/admin/roles/add-role-url/add-role-url.component';
 import { SingleRoleComponent } from './components/admin/roles/single-role/single-role.component';
 import { AllPaymentComponent } from './components/admin/payment/all-payment/all-payment.component';
 import { EditUnitComponent } from './components/admin/units/edit-unit/edit-unit.component';
@@ -181,6 +182,10 @@ const routes: Routes = [
           {
             path: ':roleName/edit',
             component: EditRoleComponent,
+          },
+          {
+            path: ':roleName/addUrl',
+            component: AddRoleUrlComponent,
           },
         ],
       },

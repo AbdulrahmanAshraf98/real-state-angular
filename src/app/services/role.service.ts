@@ -101,4 +101,64 @@ export class RoleService implements CrudServicesInterface {
       },
     });
   }
+  createNewUrl(
+    name: string,
+    successHandler = (response: any) => {},
+    errorHandler = (error: any) => {},
+    completeHandler = () => {},
+    data: any = {}
+  ) {
+    return this.global.post(`role/${name}/newRoleUrl`, data).subscribe({
+      next: (response) => {
+        successHandler(response);
+      },
+      error: (error) => {
+        errorHandler(error);
+      },
+      complete: () => {
+        completeHandler();
+      },
+    });
+  }
+  removeUrlFromRole(
+    name: string,
+    urlId: string,
+    successHandler = (response: any) => {},
+    errorHandler = (error: any) => {},
+    completeHandler = () => {},
+    data: any = {}
+  ) {
+    return this.global
+      .delete(`role/${name}/removeUrlFromRole/${urlId}`)
+      .subscribe({
+        next: (response) => {
+          successHandler(response);
+        },
+        error: (error) => {
+          errorHandler(error);
+        },
+        complete: () => {
+          completeHandler();
+        },
+      });
+  }
+  removeUrlMethod(
+    name: string,
+    successHandler = (response: any) => {},
+    errorHandler = (error: any) => {},
+    completeHandler = () => {},
+    data: any = {}
+  ) {
+    return this.global.delete(`role/${name}/method`, data).subscribe({
+      next: (response) => {
+        successHandler(response);
+      },
+      error: (error) => {
+        errorHandler(error);
+      },
+      complete: () => {
+        completeHandler();
+      },
+    });
+  }
 }

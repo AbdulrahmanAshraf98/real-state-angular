@@ -1,93 +1,136 @@
-<!-- <form
-          [formGroup]="addUrlForm"
-          class="row gy-3"
-          (ngSubmit)="submitHandler(addUrlForm)"
-        >
-
-    
-    </form> -->
-
-<!-- <section>
-    <div class="row">
-      <div class="col content g-3">
-        <div class="col-12 text-center"></div>
-        <h5 class="">add role</h5>
-        <hr />
-        <form
-          [formGroup]="editRoleForm"
-          class="row gy-3"
-          (ngSubmit)="submitHandler(editRoleForm)"
-        >
-
-          <div class="col-12">
-            <label for="exampleInputEmail1" class="form-label" name="type"
-              > role type</label
-            >
-            <select class="form-select" aria-label="Default select example" formControlName="type" name="type"
-            [class.is-valid]="editRoleForm.controls?.['type']?.valid"
-            [class.is-invalid]="(editRoleForm.controls?.['type']?.invalid&&(editRoleForm.controls?.['type']?.touched||isSubmit))"
-            >
-            <option value="admin">admin</option>
-            <option value="employee">employee</option>
-            <option value="customer">customer</option>
-            </select>
-            <div
-            class="invalid-feedback"
-              *ngIf="editRoleForm.controls?.['type']?.errors&& (editRoleForm.controls?.['type']?.touched ||isSubmit) "
-            >
-              <div
-                *ngIf="editRoleForm.controls?.['type']?.errors?.['required']"
-              >
-                role type is required
-              </div>
-            </div>
-          </div>
-          <div class="col-12">
-            <label for="exampleInputEmail1" class="form-label"
-              >Name</label
-            >
-            <input
+<section>
+  <div class="row">
+    <div class="col content g-3">
+      <div class="col-12 text-center"></div>
+      <h5 class="">add role</h5>
+      <hr />
+      <form
+        [formGroup]="addUrlForm"
+        class="row gy-3"
+        (ngSubmit)="submitHandler(addUrlForm)"
+      >
+        <div class="col-12">
+          <label for="exampleInputEmail1" class="form-label" name="url"
+            >link</label
+          >
+          <input
             type="text"
             class="form-control"
-            name="name"
-            formControlName="name"
-            [class.is-valid]="editRoleForm.controls?.['name']?.valid"
-            [class.is-invalid]="(editRoleForm.controls?.['name']?.invalid&&(editRoleForm.controls?.['name']?.touched||isSubmit))"
+            name="url"
+            formControlName="url"
+            [class.is-valid]="addUrlForm.controls?.['url']?.valid"
+            [class.is-invalid]="(addUrlForm.controls?.['url']?.invalid&&(addUrlForm.controls?.['url']?.touched||isSubmit))"
           />
           <div
-          class="invalid-feedback"
-            *ngIf="editRoleForm.controls?.['name']?.errors&& (editRoleForm.controls?.['name']?.touched ||isSubmit) "
+            class="invalid-feedback"
+            *ngIf="addUrlForm.controls?.['url']?.errors&& (addUrlForm.controls?.['url']?.touched ||isSubmit) "
           >
-            <div
-              *ngIf="editRoleForm.controls?.['name']?.errors?.['required']"
-            >
-              role Name is required
+            <div *ngIf="addUrlForm.controls?.['url']?.errors?.['required']">
+              link type is required
             </div>
           </div>
-
-          </div>
-
-
-
-  
-          <div class="col-12">
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [class.btn-type-primary]="!loading"
-              [class.d-flex]="loading"
-              [class.text-bg-dark]="loading"
+        </div>
+        <div class="col-12">
+          <div formArrayName="methods">
+            <ng-container
+              class=""
+              *ngFor="
+                let methodController of methodsFormGroups.controls;
+                let i = index;
+                let f = first
+              "
+              formGroupName="{{ i }}"
             >
-              <ng-container *ngIf="loading">
-                <div class="col-12">
-                  <app-loading-spinner></app-loading-spinner>
+              <label for="exampleInputEmail1" class="form-label"
+                >Method Name</label
+              >
+              <input
+                type="text"
+                class="form-control mb-3"
+                formControlName="method"
+                [class.is-valid]="addUrlForm.controls?.['method']?.valid"
+                [class.is-invalid]="(addUrlForm.controls?.['method']?.invalid&&(addUrlForm.controls?.['method']?.touched||isSubmit))"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="addUrlForm.controls?.['method']?.errors&& (addUrlForm.controls?.['method']?.touched ||isSubmit) "
+              >
+                <div
+                  *ngIf="addUrlForm.controls?.['method']?.errors?.['required']"
+                >
+                  method Name is required
                 </div>
-              </ng-container>
-              <ng-container *ngIf="!loading">edit</ng-container>
+              </div>
+            </ng-container>
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="addNewFormGroupHandler('method')"
+            >
+              Add New Method
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+
+        <div class="col-12">
+          <div formArrayName="params">
+            <ng-container
+              class=""
+              *ngFor="
+                let paramController of paramsFormGroups.controls;
+                let i = index;
+                let f = first
+              "
+              formGroupName="{{ i }}"
+            >
+              <label for="exampleInputEmail1" class="form-label"
+                >param Name</label
+              >
+              <input
+                type="text"
+                class="form-control mb-3"
+                formControlName="param"
+                [class.is-valid]="addUrlForm.controls?.['param']?.valid"
+                [class.is-invalid]="(addUrlForm.controls?.['param']?.invalid&&(addUrlForm.controls?.['param']?.touched||isSubmit))"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="addUrlForm.controls?.['param']?.errors&& (addUrlForm.controls?.['param']?.touched ||isSubmit) "
+              >
+                <div
+                  *ngIf="addUrlForm.controls?.['param']?.errors?.['required']"
+                >
+                  param Name is required
+                </div>
+              </div>
+            </ng-container>
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="addNewFormGroupHandler('param')"
+            >
+              Add New param
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [class.btn-type-primary]="!loading"
+            [class.d-flex]="loading"
+            [class.text-bg-dark]="loading"
+          >
+            <ng-container *ngIf="loading">
+              <div class="col-12">
+                <app-loading-spinner></app-loading-spinner>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="!loading">add</ng-container>
+          </button>
+        </div>
+      </form>
     </div>
-  </section>
-   -->
+  </div>
+</section>

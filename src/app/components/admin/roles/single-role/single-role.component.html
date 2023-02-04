@@ -6,7 +6,7 @@
 </ng-container>
 <ng-container *ngIf="!loading">
   <section>
-    <a class="btn btn-primary" routerLink="projects/add">add New url</a>
+    <a class="btn btn-primary" routerLink="addUrl">add New url</a>
     <div class="table-responsive">
       <table class="table">
         <thead>
@@ -37,7 +37,15 @@
             <td>
               <ng-container *ngIf="url.methods">
                 <div *ngFor="let method of url.methods | keyvalue">
-                  {{method.key}}
+                  <div class="row">
+                    <div>{{method.key}}</div>
+                    <!-- <a
+                    class="btn btn-primary btn-danger"
+                    (click)="deleteMethodHandler(url._id,method.key)"
+                    >delete</a
+                  > -->
+                  </div>
+                  
                 </div>
             </ng-container>
 
@@ -47,11 +55,7 @@
 
             <td >
               <div class="btn-group" role="group" aria-label="Basic example">
-                <a
-                  class="btn btn-primary btn-info text-light"
-                  routerLink="/role/{{ role.name }}"
-                  >show</a
-                >
+
                 <a
                   routerLink="role/{{ url._id }}/edit"
                   class="btn btn-primary btn-secondary"

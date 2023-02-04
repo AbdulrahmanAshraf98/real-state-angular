@@ -16,7 +16,7 @@ export class SingleRoleComponent implements OnInit, OnDestroy {
     type: '',
     urls: [],
   };
-
+  roleName: any;
   loading = false;
   constructor(
     private roleService: RoleService,
@@ -25,20 +25,48 @@ export class SingleRoleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-    let roleName: string | null = '';
 
     this.activated.paramMap.subscribe((res) => {
-      roleName = res.get('roleName');
+      this.roleName = res.get('roleName');
     });
-    this.subscription = this.roleService.getSingle(roleName, (response) => {
-      this.loading = false;
-      this.role = response.data;
-    });
+    this.subscription = this.roleService.getSingle(
+      this.roleName,
+      (response) => {
+        this.loading = false;
+        this.role = response.data;
+      }
+    );
   }
   get urls() {
     return this.role.urls;
   }
-  deleteRoleHandler(urlId: string) {}
+  deleteRoleHandler(urlId: string) {
+    this.roleService.removeUrlFromRole(
+      this.roleName,
+      urlId,
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {}
+    );
+  }
+  deleteMethodHandler(urlId: string, methodName: any) {
+    console.log(urlId);
+    this.roleService.removeUrlMethod(
+      this.roleName,
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {},
+      { urlId: urlId, method: methodName }
+    );
+  }
   ngOnDestroy(): void {
     if (this.subscription) this.subscription.unsubscribe();
   }
