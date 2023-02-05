@@ -44,7 +44,7 @@ export class AllRolesComponent implements OnInit, OnDestroy {
       roleName,
       (response) => {},
       (error) => {
-        this.toastr.error(error.message, 'failed to deleted');
+        this.toastr.error(error.error.message, 'failed to deleted');
       },
       () => {
         this.change = true;

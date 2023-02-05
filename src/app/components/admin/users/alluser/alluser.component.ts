@@ -67,7 +67,7 @@ export class AlluserComponent implements OnInit {
       (response) => {
         this.change = true;
       },
-      () => {},
+      (error) => {},
       () => {}
     );
     // this.global.delete(`user/${id}`).subscribe((response) => {
