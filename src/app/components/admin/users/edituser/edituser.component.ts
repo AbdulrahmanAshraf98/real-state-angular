@@ -1,3 +1,4 @@
+import { UserService } from './../../../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -17,7 +18,7 @@ export class EdituserComponent implements OnDestroy, OnInit {
   userId: any;
   loading = false;
   constructor(
-    private global: GlobalService,
+    private userService: UserService,
     private activated: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService
@@ -42,36 +43,40 @@ export class EdituserComponent implements OnDestroy, OnInit {
       this.router.navigateByUrl('/');
       return;
     }
-    this.subscription = this.global.get(`user/${this.userId}`).subscribe({
-      next: (responseData) => {
-        this.editUserForm.patchValue(responseData.data);
+    this.loading = true;
+    this.subscription = this.userService.getSingle(
+      this.userId,
+      (response) => {
+        this.editUserForm.patchValue(response.data);
+        this.loading = false;
       },
-      error: (error) => {
+      (error) => {
+        this.loading = false;
         this.router.navigateByUrl('/admin');
         this.toastr.error('user not found', '404 not found ');
       },
-      complete: () => {},
-    });
+      () => {}
+    );
   }
 
-  submitHandler(f: any) {
+  submitHandler(form: any) {
     this.isSubmit = true;
-    if (f.invalid) return;
+    if (form.invalid) return;
     this.loading = true;
-    this.subscription = this.global
-      .edit(`user/${this.userId}`, f.value)
-      .subscribe({
-        next: (responseData) => {},
-        error: (error) => {
-          this.router.navigateByUrl('/admin');
-          this.toastr.error('user failed to edit', 'failed ');
-        },
-        complete: () => {
-          this.loading = false;
-          this.router.navigateByUrl('/admin');
-          this.toastr.success('user edit successfully', 'user edit ');
-        },
-      });
+    this.subscription = this.userService.edit(
+      this.userId,
+      form.value,
+      () => {},
+      (error) => {
+        this.toastr.error('failed to edit user', 'failed edit');
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+        this.router.navigateByUrl('/admin');
+        this.toastr.success('user edit successfully', 'user edit ');
+      }
+    );
   }
 
   ngOnDestroy(): void {

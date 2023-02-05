@@ -1,3 +1,7 @@
+import { MeService } from 'src/app/services/me.service';
+import { RoleService } from 'src/app/services/role.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from './../../../../services/user.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
@@ -11,14 +15,20 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./adduser.component.css'],
 })
 export class AdduserComponent implements OnInit {
+  subscription: any;
   roleNames: string[] = [];
-  roles: roleInterface[] = [];
+
   admin = false;
   addUserForm: FormGroup;
   isSubmit = false;
   loading = false;
+  get roles() {
+    return this.roleService.roles;
+  }
   constructor(
-    private global: GlobalService,
+    private meService: MeService,
+    private userService: UserService,
+    private roleService: RoleService,
     private route: Router,
     private toastr: ToastrService
   ) {
@@ -41,25 +51,47 @@ export class AdduserComponent implements OnInit {
 
   ngOnInit(): void {
     this.admin = false;
-    if (!this.global.currentUserInfo.email) {
-      this.global.get('me').subscribe((response) => {
-        this.global.currentUserInfo = response.data;
-        if (this.global.currentUserInfo.role.type == 'admin') {
+    if (!this.meService.currentUser.role.type) {
+      this.loading = true;
+      this.meService.getCurrentUserData(
+        (response) => {
           this.admin = true;
-          this.global.get('role').subscribe((response) => {
-            this.roles = response.data;
-            this.roleNames = this.roles.map((role) => role.name);
-          });
+          this.roleService.getAll(
+            (response) => {
+              this.roleNames = this.roles.map((role) => role.name);
+            },
+            (error) => {
+              this.toastr.error(error.error.message, 'role');
+              this.loading = false;
+            },
+            () => {}
+          );
+        },
+        (error) => {
+          this.toastr.error(
+            error.error.message,
+            'failed fetch current user data'
+          );
+          this.loading = false;
+        },
+        () => {
+          this.loading = false;
         }
-      });
-    }
-
-    if (this.global.currentUserInfo.role.type == 'admin') {
+      );
+    } else if (this.meService.currentUser.role.type == 'admin') {
       this.admin = true;
-      this.global.get('role').subscribe((response) => {
-        this.roles = response.data;
-        this.roleNames = this.roles.map((role) => role.name);
-      });
+      this.loading = true;
+      this.roleService.getAll(
+        (response) => {
+          this.roleNames = this.roles.map((role) => role.name);
+          this.loading = false;
+        },
+        (error) => {
+          this.toastr.error(error.error.message, 'role');
+          this.loading = false;
+        },
+        () => {}
+      );
     }
   }
   selectTypeHandler(selected: any) {
@@ -77,29 +109,28 @@ export class AdduserComponent implements OnInit {
   }
 
   submitHandler(form: any) {
-    console.log(form);
     this.isSubmit = true;
     if (form.invalid) return;
     this.loading = true;
-    console.log(form);
-
-    this.global.post('user/', form.value).subscribe({
-      next: (response) => {
+    this.subscription = this.userService.add(
+      form.value,
+      (response) => {},
+      (error) => {
+        this.loading = false;
+        if (error.error.data.code == 11000) {
+          this.toastr.error('email created before ', 'users');
+        } else {
+          this.toastr.error(error.error.message, 'users');
+        }
+      },
+      () => {
         this.loading = false;
         this.route.navigateByUrl('/admin');
-        this.toastr.success(response.data.message, 'user created');
-      },
-      error: (error) => {
-        this.loading = false;
-        console.log(error);
-        if (error.error.data.code == 11000) {
-          this.toastr.error('email created before ', 'users');
-        }
-        if (error.error.data.code == 11000) {
-          this.toastr.error('email created before ', 'users');
-        }
-      },
-      complete: () => {},
-    });
+        this.toastr.success('user', 'user created');
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

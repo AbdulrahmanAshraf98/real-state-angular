@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from './../../../../services/user.service';
 import { GlobalService } from 'src/app/services/global.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -22,8 +23,8 @@ export class AlluserComponent implements OnInit {
     'actions',
   ];
   constructor(
-    private global: GlobalService,
-    private userService: UserService
+    private userService: UserService,
+    private toastr: ToastrService
   ) {}
   change = false;
   get users() {
@@ -32,28 +33,23 @@ export class AlluserComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     this.subscription = this.userService.getAll(
-      () => {},
-      () => {},
+      (response) => {},
+      (error) => {
+        this.toastr.error(error.error.message, 'failed to fetch users');
+      },
       () => {
         this.loading = false;
       }
     );
-    // this.subscription = this.global.get('user/').subscribe({
-    //   next: (responseData) => {
-    //     this.users = responseData.data;
-    //   },
-    //   error: (error) => {},
-    //   complete: () => {
-    //     this.loading = false;
-    //   },
-    // });
   }
   ngDoCheck() {
     if (this.change) {
       this.loading = true;
       this.subscription = this.userService.getAll(
         () => {},
-        () => {},
+        (error) => {
+          this.toastr.error(error.error.message, 'failed to fetch users');
+        },
         () => {
           this.loading = false;
         }
@@ -67,13 +63,14 @@ export class AlluserComponent implements OnInit {
       (response) => {
         this.change = true;
       },
-      (error) => {},
+      (error) => {
+        this.toastr.error(error.error.message, 'failed to delete user');
+      },
       () => {}
     );
-    // this.global.delete(`user/${id}`).subscribe((response) => {
-    //   this.change = true;
-    // });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
+  }
 }
