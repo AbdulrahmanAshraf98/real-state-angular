@@ -1,3 +1,5 @@
+import { ToastrService } from 'ngx-toastr';
+import { BuildingService } from './../../../../services/building.service';
 import { Component } from '@angular/core';
 import { buildingInterface } from 'src/app/interface/buildingInterface';
 import { GlobalService } from 'src/app/services/global.service';
@@ -10,7 +12,7 @@ import { GlobalService } from 'src/app/services/global.service';
 export class AllBuildingsComponent {
   subscription: any;
   loading = false;
-  buildings: buildingInterface[] = [];
+
   heads: string[] = [
     'id',
     'img',
@@ -22,44 +24,54 @@ export class AllBuildingsComponent {
     'actions',
   ];
   change: boolean = false;
-  constructor(private global: GlobalService) {}
+  get buildings() {
+    return this.buildingService.buildings;
+  }
+  constructor(
+    private buildingService: BuildingService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.subscription = this.global.get('building/').subscribe({
-      next: (responseData) => {
-        this.buildings = responseData.data;
-        console.log(this.buildings);
+    this.subscription = this.buildingService.getAll(
+      (response) => {},
+      (error) => {
+        this.toastr.error(error.message, 'failed to fetch');
       },
-      error: (error) => console.log(error),
-      complete: () => {
+      () => {
         this.loading = false;
-      },
-    });
+      }
+    );
   }
   ngDoCheck() {
     if (this.change) {
       this.loading = true;
-      this.global.get('building/').subscribe({
-        next: (responseData) => {
-          this.buildings = responseData.data;
+      this.subscription = this.buildingService.getAll(
+        (response) => {},
+        (error) => {
+          this.toastr.error(error.message, 'failed to fetch');
         },
-        error: (error) => {},
-        complete: () => {
+        () => {
           this.loading = false;
-        },
-      });
+        }
+      );
       this.change = false;
     }
   }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+
   deleteBuildingHandler(buildingId: string, projectId: string) {
-    this.global
-      .delete(`building/${buildingId}`, { projectId })
-      .subscribe((response) => {
-        this.change = true;
-      });
+    this.subscription = this.buildingService.delete(
+      buildingId,
+      () => {},
+      (error) => {
+        this.toastr.error(error.error.message, 'failed to delete');
+      },
+      () => {},
+      { projectId }
+    );
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

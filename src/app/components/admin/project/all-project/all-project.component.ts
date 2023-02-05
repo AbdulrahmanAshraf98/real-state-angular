@@ -55,7 +55,7 @@ export class AllProjectComponent implements OnInit, OnDestroy {
         this.change = true;
       },
       (error) => {
-        this.toastr.error(error.message, 'failed to delete');
+        this.toastr.error(error.error.message, 'failed to delete');
       },
       () => {}
     );

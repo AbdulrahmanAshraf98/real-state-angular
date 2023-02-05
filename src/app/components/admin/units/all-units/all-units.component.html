@@ -38,7 +38,7 @@
               <ng-container *ngIf="!unit.status">
                 <a routerLink="units/{{unit._id}}/edit" class="btn btn-primary btn-secondary">edit</a>
               </ng-container> 
-              <a class="btn btn-primary btn-danger" (click)="deleteUnitHandler(unit._id)">delete</a>
+              <a class="btn btn-primary btn-danger" (click)="deleteUnitHandler(unit._id,unit.buildingId)">delete</a>
             </div></td>
      
          

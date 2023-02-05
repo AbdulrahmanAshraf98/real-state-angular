@@ -1,3 +1,4 @@
+import { BuildingService } from './../../../services/building.service';
 import { GlobalService } from './../../../services/global.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnDestroy } from '@angular/core';
@@ -20,24 +21,26 @@ export class BuildingComponent implements OnDestroy {
     buildingImages: [],
   };
   loading = false;
+
   constructor(
     private activated: ActivatedRoute,
-    private global: GlobalService
+    private global: GlobalService,
+    private buildingService: BuildingService
   ) {
     this.loading = true;
-    let buildingId = this.activated.snapshot.paramMap.get('buildingId');
-    this.subscribe = this.global.get(`building/${buildingId}`).subscribe(
+    let buildingId: any = this.activated.snapshot.paramMap.get('buildingId');
+    this.subscribe = this.buildingService.getSingle(
+      buildingId,
       (response) => {
-        console.log(response);
         this.building = response.data;
       },
-      (error) => {},
+      () => {},
       () => {
         this.loading = false;
       }
     );
   }
   ngOnDestroy(): void {
-    this.subscribe.unsubscribe();
+    if (this.subscribe) this.subscribe.unsubscribe();
   }
 }

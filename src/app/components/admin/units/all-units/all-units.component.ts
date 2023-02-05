@@ -1,6 +1,8 @@
+import { ToastrService } from 'ngx-toastr';
 import { GlobalService } from 'src/app/services/global.service';
 import { Component } from '@angular/core';
 import { UnitInterface } from 'src/app/interface/unit-interface';
+import { UnitService } from 'src/app/services/unit.service';
 
 @Component({
   selector: 'app-all-units',
@@ -10,7 +12,7 @@ import { UnitInterface } from 'src/app/interface/unit-interface';
 export class AllUnitsComponent {
   subscription: any;
   loading = false;
-  units: UnitInterface[] = [];
+
   heads: string[] = [
     '_id',
     'img',
@@ -24,42 +26,59 @@ export class AllUnitsComponent {
     'actions',
   ];
   change: boolean = false;
-  constructor(private global: GlobalService) {}
+  get units() {
+    return this.uniteServices.units;
+  }
+  constructor(
+    private uniteServices: UnitService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.subscription = this.global.get('unit/').subscribe({
-      next: (responseData) => {
-        this.units = responseData.data;
-        console.log(this.units);
-      },
-      error: (error) => console.log(error),
-      complete: () => {
+    this.subscription = this.uniteServices.getAll(
+      (response) => {},
+      (error) => {
+        this.toastr.error('failed delete', 'failed to fetch data');
         this.loading = false;
       },
-    });
+      () => {
+        this.loading = false;
+      }
+    );
   }
   ngDoCheck() {
     if (this.change) {
       this.loading = true;
-      this.global.get('unit/').subscribe({
-        next: (responseData) => {
-          this.units = responseData.data;
-        },
-        error: (error) => {},
-        complete: () => {
+      this.subscription = this.uniteServices.getAll(
+        (response) => {},
+        (error) => {
+          this.toastr.error('failed delete', 'failed to fetch data');
           this.loading = false;
         },
-      });
+        () => {
+          this.loading = false;
+        }
+      );
       this.change = false;
     }
   }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+
+  deleteUnitHandler(unitId: string, buildingId: string) {
+    this.subscription = this.uniteServices.delete(
+      unitId,
+      (response) => {},
+      (error) => {
+        this.loading = false;
+        this.toastr.error('failed delete', error.error.message);
+      },
+      () => {
+        this.change = true;
+      },
+      { buildingId }
+    );
   }
-  deleteUnitHandler(unitId: string) {
-    this.global.delete(`unit/${unitId}`).subscribe((response) => {
-      this.change = true;
-    });
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

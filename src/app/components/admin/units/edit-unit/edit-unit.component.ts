@@ -1,8 +1,10 @@
+import { ToastrService } from 'ngx-toastr';
 import { UnitInterface } from './../../../../interface/unit-interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from './../../../../services/global.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Component } from '@angular/core';
+import { UnitService } from 'src/app/services/unit.service';
 
 @Component({
   selector: 'app-edit-unit',
@@ -18,9 +20,10 @@ export class EditUnitComponent {
 
   unitImagesFiles: any[] = [];
   constructor(
-    private global: GlobalService,
+    private uniteServices: UnitService,
     private activated: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.editForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -29,19 +32,29 @@ export class EditUnitComponent {
   }
   ngOnInit(): void {
     this.unitId = this.activated.snapshot.paramMap.get('unitId');
-    if (this.unitId)
-      this.subscription = this.global
-        .get(`unit/${this.unitId}`)
-        .subscribe((responseData) => {
-          this.editForm.patchValue(responseData.data);
-        });
+    this.loading = true;
+    this.subscription = this.uniteServices.getSingle(
+      this.unitId,
+      (response) => {
+        this.editForm.patchValue(response.data);
+      },
+      (error) => {
+        this.toastr.error('failed delete', 'failed to fetch  unit data');
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+      }
+    );
   }
   selectImageHandler(event: any) {
     if (event.target.files.length == 0) return;
     this.unitImagesFiles = [...event.target.files];
   }
   submitHandler(form: any) {
+    this.isSubmit = true;
     if (form.invalid) return;
+    this.loading = true;
     const formData = new FormData();
     formData.append('name', form.value.name);
     formData.append('price', form.value.price);
@@ -50,8 +63,22 @@ export class EditUnitComponent {
         formData.append('unitImages', unitImageFile, unitImageFile.name);
       });
     }
-    this.global.edit(`unit/${this.unitId}`, formData).subscribe((response) => {
-      this.router.navigateByUrl('/admin');
-    });
+    this.subscription = this.uniteServices.edit(
+      this.unitId,
+      formData,
+      (response) => {},
+      (error) => {
+        this.toastr.error('building failed to edit', 'failed');
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+        this.router.navigateByUrl('/admin');
+        this.toastr.success('unit edit successfully', 'unit edit ');
+      }
+    );
+  }
+  ngOnDestroy() {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

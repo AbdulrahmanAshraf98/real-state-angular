@@ -1,3 +1,5 @@
+import { ProjectService } from './../../../../services/project.service';
+import { BuildingService } from './../../../../services/building.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { GlobalService } from './../../../../services/global.service';
@@ -12,12 +14,17 @@ import { projectInterface } from 'src/app/interface/projectInterface';
 })
 export class AddBuildingComponent {
   addBuildingForm: FormGroup;
+  subscription: any;
   isSubmit = false;
   loading = false;
   buildingImagesFiles: any[] = [];
-  projects: projectInterface[] = [];
+
+  get projects() {
+    return this.projectService.projects;
+  }
   constructor(
-    private global: GlobalService,
+    private projectService: ProjectService,
+    private buildingService: BuildingService,
     private router: Router,
     private toastr: ToastrService
   ) {
@@ -29,9 +36,11 @@ export class AddBuildingComponent {
     });
   }
   ngOnInit() {
-    this.global.get('project').subscribe((response) => {
-      this.projects = response.data;
-    });
+    this.subscription = this.projectService.getAll(
+      (response) => {},
+      () => {},
+      () => {}
+    );
   }
   selectImageHandler(event: any) {
     if (event.target.files.length == 0) return;
@@ -50,22 +59,26 @@ export class AddBuildingComponent {
         formData.append('buildingImages', buildImageFile, buildImageFile.name);
       });
     }
-    this.global.post(`building/`, formData).subscribe({
-      next: (response) => {},
-      error: (error) => {
+    this.subscription = this.buildingService.add(
+      formData,
+      (response) => {},
+      (error) => {
         this.toastr.error(
           'failed to add new building',
           'building create failed '
         );
       },
-      complete: () => {
+      () => {
         this.loading = false;
         this.router.navigateByUrl('/admin');
         this.toastr.success(
           'building created successfully',
           'building  created '
         );
-      },
-    });
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

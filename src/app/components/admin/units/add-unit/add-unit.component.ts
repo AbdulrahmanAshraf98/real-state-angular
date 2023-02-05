@@ -1,3 +1,5 @@
+import { BuildingService } from './../../../../services/building.service';
+import { UnitService } from 'src/app/services/unit.service';
 import { ToastrService } from 'ngx-toastr';
 import { buildingInterface } from 'src/app/interface/buildingInterface';
 import { Router } from '@angular/router';
@@ -12,12 +14,18 @@ import { Component } from '@angular/core';
 })
 export class AddUnitComponent {
   addUnitForm: FormGroup;
+  subscription: any;
   isSubmit = false;
   loading = false;
   unitImagesFiles: any[] = [];
-  buildings: buildingInterface[] = [];
+
+  get buildings() {
+    return this.BuildingService.buildings;
+  }
   constructor(
     private global: GlobalService,
+    private unitService: UnitService,
+    private BuildingService: BuildingService,
     private router: Router,
     private toastr: ToastrService
   ) {
@@ -30,9 +38,16 @@ export class AddUnitComponent {
     });
   }
   ngOnInit() {
-    this.global.get('building').subscribe((response) => {
-      this.buildings = response.data;
-    });
+    this.loading = true;
+    this.BuildingService.getAll(
+      (response) => {
+        this.loading = false;
+      },
+      (error) => {
+        this.toastr.error('failed to fetch', ' failed to fetch buildings');
+      },
+      () => {}
+    );
   }
   selectImageHandler(event: any) {
     if (event.target.files.length == 0) return;
@@ -47,22 +62,26 @@ export class AddUnitComponent {
     formData.append('buildingId', form.value.buildingId);
     formData.append('name', form.value.name);
     formData.append('price', form.value.price);
-    formData.append('unitNumber', form.value.buildNumber);
+    formData.append('unitNumber', form.value.unitNumber);
     if (this.unitImagesFiles.length) {
       this.unitImagesFiles.forEach((unitImageFile) => {
         formData.append('unitImages', unitImageFile, unitImageFile.name);
       });
     }
-    this.global.post(`unit/`, formData).subscribe({
-      next: (response) => {},
-      error: (error) => {
+    this.subscription = this.unitService.add(
+      formData,
+      (response) => {},
+      (error) => {
         this.toastr.error('failed to add new unit', 'unit create failed ');
       },
-      complete: () => {
+      () => {
         this.loading = false;
         this.router.navigateByUrl('/admin');
         this.toastr.success('unit created successfully', 'unit  created ');
-      },
-    });
+      }
+    );
+  }
+  ngOnDestroy(): void {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

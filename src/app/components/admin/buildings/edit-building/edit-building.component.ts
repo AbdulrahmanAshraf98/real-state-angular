@@ -1,3 +1,4 @@
+import { BuildingService } from './../../../../services/building.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
@@ -19,7 +20,7 @@ export class EditBuildingComponent {
 
   buildingImagesFiles: any[] = [];
   constructor(
-    private global: GlobalService,
+    private buildingService: BuildingService,
     private activated: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService
@@ -31,23 +32,28 @@ export class EditBuildingComponent {
   }
   ngOnInit(): void {
     this.buildingId = this.activated.snapshot.paramMap.get('buildingId');
-    if (this.buildingId)
-      this.subscription = this.global
-        .get(`building/${this.buildingId}`)
-        .subscribe((responseData) => {
-          this.editForm.patchValue(responseData.data);
-        });
+    this.loading = true;
+    this.subscription = this.buildingService.getSingle(
+      this.buildingId,
+      (response) => {
+        this.editForm.patchValue(response.data);
+        this.loading = false;
+      },
+      (error) => {
+        this.toastr.error('failed delete', 'failed to fetch  building data');
+      },
+      () => {}
+    );
   }
   selectImageHandler(event: any) {
     if (event.target.files.length == 0) return;
     this.buildingImagesFiles = [...event.target.files];
   }
   submitHandler(form: any) {
+    this.isSubmit = true;
+    if (form.invalid) return;
+
     this.loading = true;
-    if (form.invalid) {
-      this.loading = false;
-      return;
-    }
     const formData = new FormData();
     formData.append('name', form.value.name);
     formData.append('buildNumber', form.value.buildNumber);
@@ -56,19 +62,22 @@ export class EditBuildingComponent {
         formData.append('buildingImages', buildImageFile, buildImageFile.name);
       });
     }
-    this.global.edit(`building/${this.buildingId}`, formData).subscribe({
-      next: (response) => {
+    this.subscription = this.buildingService.edit(
+      this.buildingId,
+      formData,
+      () => {},
+      (error) => {
+        this.toastr.error('building failed to edit', 'failed');
+        this.loading = false;
+      },
+      () => {
         this.loading = false;
         this.router.navigateByUrl('/admin');
-      },
-      error: () => {
-        this.router.navigateByUrl('/admin');
-        this.toastr.error('building failed to edit', 'failed');
-      },
-      complete: () => {
-        this.router.navigateByUrl('/admin');
         this.toastr.success('building edit successfully', 'building edit ');
-      },
-    });
+      }
+    );
+  }
+  ngOnDestroy() {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 }

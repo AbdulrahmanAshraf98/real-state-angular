@@ -1,8 +1,9 @@
+import { ToastrService } from 'ngx-toastr';
+import { UnitService } from './../../../../services/unit.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from 'src/app/services/global.service';
 import { Component } from '@angular/core';
-
 
 @Component({
   selector: 'app-buy-unit',
@@ -17,9 +18,10 @@ export class BuyUnitComponent {
   unitId: any;
   paymentData: any;
   constructor(
-    private global: GlobalService,
+    private unitService: UnitService,
     private activated: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.unitId = this.activated.snapshot.paramMap.get('unitId');
     this.buyUnitForm = new FormGroup({
@@ -36,10 +38,21 @@ export class BuyUnitComponent {
   ngOnInit(): void {}
 
   submitHandler(form: any) {
-    console.log(form);
+    this.isSubmit = true;
     if (form.invalid) return;
-    this.global.post(`unit/sellUnit`, form.value).subscribe((response) => {
-      console.log(response);
-    });
+    this.loading = true;
+    this.subscription = this.unitService.buyUnit(
+      form.value,
+      (response) => {},
+      (error) => {
+        this.toastr.success('failed sold unit ', 'sold unit failed ');
+        this.loading = false;
+      },
+      () => {
+        this.loading = false;
+        this.router.navigateByUrl('/admin');
+        this.toastr.success('unit sold successfully', 'unit sold ');
+      }
+    );
   }
 }

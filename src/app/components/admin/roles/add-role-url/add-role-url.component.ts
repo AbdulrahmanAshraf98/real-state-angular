@@ -23,7 +23,9 @@ export class AddRoleUrlComponent implements OnInit {
   roleName: any = '';
   constructor(
     private roleService: RoleService,
-    private activated: ActivatedRoute
+    private activated: ActivatedRoute,
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.addUrlForm = new FormGroup({
       url: new FormControl('', [Validators.required]),
@@ -91,6 +93,8 @@ export class AddRoleUrlComponent implements OnInit {
 
   submitHandler(addUrlForm: any) {
     this.isSubmit = true;
+    if (addUrlForm.invalid) return;
+    this.loading = true;
     const { value } = addUrlForm;
     let methods = {};
     let params = {};
@@ -144,7 +148,11 @@ export class AddRoleUrlComponent implements OnInit {
         console.log(response);
       },
       () => {},
-      () => {},
+      () => {
+        this.loading = false;
+        this.router.navigateByUrl(`/admin/role/${this.roleName}`);
+        this.toastr.success('link created successfully', 'link  created ');
+      },
       roleUrl
     );
   }
