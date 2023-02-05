@@ -67,7 +67,9 @@ export class AllBuildingsComponent {
       (error) => {
         this.toastr.error(error.error.message, 'failed to delete');
       },
-      () => {},
+      () => {
+        this.change = true;
+      },
       { projectId }
     );
   }

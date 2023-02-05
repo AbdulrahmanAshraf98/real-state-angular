@@ -8,9 +8,9 @@
       <div class="col row  p-3">
         <div class="col-12 mb-4 text-center">
             <div class="profile-image">
-              <ng-container *ngIf="currentUserImage">
+              <ng-container *ngIf="profileImageSrc">
                 <img
-                src="http://localhost:8000/api/v1/public/uploads/users/{{currentUserImage}}"
+                src="{{profileImageSrc}}"
                 class="w-25 h-25 rounded-circle "
               />
               </ng-container>

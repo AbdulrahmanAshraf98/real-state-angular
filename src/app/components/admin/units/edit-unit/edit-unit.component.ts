@@ -58,7 +58,7 @@ export class EditUnitComponent {
     const formData = new FormData();
     formData.append('name', form.value.name);
     formData.append('price', form.value.price);
-    if (this.unitImagesFiles.length) {
+    if (this.unitImagesFiles.length > 0) {
       this.unitImagesFiles.forEach((unitImageFile) => {
         formData.append('unitImages', unitImageFile, unitImageFile.name);
       });
@@ -72,9 +72,12 @@ export class EditUnitComponent {
         this.loading = false;
       },
       () => {
-        this.loading = false;
-        this.router.navigateByUrl('/admin');
-        this.toastr.success('unit edit successfully', 'unit edit ');
+        setTimeout(() => {
+          this.loading = false;
+          this.router.navigateByUrl('/admin');
+          this.toastr.success('unit edit successfully', 'unit edit ');
+        }, 500);
+  
       }
     );
   }

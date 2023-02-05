@@ -54,11 +54,13 @@ export class AddProjectComponent implements OnDestroy {
         this.toastr.error('falied to add new project', 'project failed ');
       },
       () => {
+        setTimeout(() => {}, 500);
         this.router.navigateByUrl('/admin');
         this.toastr.success(
           'project created successfully',
           'project  created '
         );
+     
       }
     );
   }

@@ -32,14 +32,16 @@ export class UpdateProfileImageComponent {
   ngOnInit(): void {
     if (!this.me.currentUser.email) {
       this.subscription = this.me.getCurrentUserData(
-        () => {},
+        (response) => {
+          this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.me.currentUser.profileImage}`;
+        },
         () => {},
         () => {}
       );
+    } else {
+      this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.me.currentUser.profileImage}`;
     }
-  }
-  get currentUserImage() {
-    return this.me.currentUser.profileImage;
+
   }
 
   selectImageHandler(event: any) {
@@ -58,7 +60,11 @@ export class UpdateProfileImageComponent {
       (error) => {
         console.log(error);
       },
-      () => {}
+      () => {
+        setTimeout(() => {
+          this.profileImageSrc = `http://localhost:8000/api/v1/public/uploads/users/${this.me.currentUser.profileImage}`;
+        }, 500);
+      }
     );
   }
   ngOnDestroy(): void {

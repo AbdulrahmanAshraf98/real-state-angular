@@ -71,9 +71,11 @@ export class EditBuildingComponent {
         this.loading = false;
       },
       () => {
-        this.loading = false;
-        this.router.navigateByUrl('/admin');
-        this.toastr.success('building edit successfully', 'building edit ');
+        setTimeout(() => {
+          this.loading = false;
+          this.router.navigateByUrl('/admin');
+          this.toastr.success('building edit successfully', 'building edit ');
+        }, 500);
       }
     );
   }

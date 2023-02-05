@@ -41,6 +41,7 @@ export class AddUnitComponent {
     this.loading = true;
     this.BuildingService.getAll(
       (response) => {
+        this.addUnitForm.patchValue({ buildingId: response.data[0]._id });
         this.loading = false;
       },
       (error) => {
@@ -63,21 +64,25 @@ export class AddUnitComponent {
     formData.append('name', form.value.name);
     formData.append('price', form.value.price);
     formData.append('unitNumber', form.value.unitNumber);
-    if (this.unitImagesFiles.length) {
+    if (this.unitImagesFiles.length > 0) {
       this.unitImagesFiles.forEach((unitImageFile) => {
         formData.append('unitImages', unitImageFile, unitImageFile.name);
       });
     }
     this.subscription = this.unitService.add(
       formData,
-      (response) => {},
+      (response) => {
+        console.log(response.data);
+      },
       (error) => {
         this.toastr.error('failed to add new unit', 'unit create failed ');
       },
       () => {
-        this.loading = false;
-        this.router.navigateByUrl('/admin');
-        this.toastr.success('unit created successfully', 'unit  created ');
+        setTimeout(() => {
+          this.loading = false;
+          this.router.navigateByUrl('/admin');
+          this.toastr.success('unit created successfully', 'unit  created ');
+        }, 500);
       }
     );
   }

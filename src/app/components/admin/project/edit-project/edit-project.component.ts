@@ -72,9 +72,11 @@ export class EditProjectComponent implements OnInit {
         this.toastr.error('project failed to edit', 'failed');
       },
       () => {
+      setTimeout(() => {
         this.loading = false;
         this.router.navigateByUrl('/admin');
         this.toastr.success('project edit successfully', 'project edit ');
+      }, 500);
       }
     );
   }

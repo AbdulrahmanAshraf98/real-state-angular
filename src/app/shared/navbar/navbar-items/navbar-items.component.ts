@@ -26,7 +26,7 @@ export class NavbarItemsComponent {
     return this.authService.getIsLogin;
   }
   public get userRole(): string {
-    return this.authService.currentUserInfo.role.type;
+    return this.authService.currentUserInfo?.role?.type;
   }
   logoutHandler() {
     this.subscription = this.authService.logout();

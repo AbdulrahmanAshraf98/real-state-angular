@@ -69,12 +69,15 @@ export class AddBuildingComponent {
         );
       },
       () => {
-        this.loading = false;
-        this.router.navigateByUrl('/admin');
-        this.toastr.success(
-          'building created successfully',
-          'building  created '
-        );
+        setTimeout(() => {
+          this.loading = false;
+          this.router.navigateByUrl('/admin');
+          this.toastr.success(
+            'building created successfully',
+            'building  created '
+          );
+        }, 500);
+       
       }
     );
   }
